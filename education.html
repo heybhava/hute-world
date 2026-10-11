@@ -1,0 +1,441 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HUMAN for Education | HUMAN by HUTE</title>
+<meta name="description" content="HUMAN for Education: an AI-powered social experience that helps students discover, connect, and meet inside their university community.">
+<link rel="icon" type="image/png" href="favicon.png?v=2">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+<script>document.documentElement.className+=" js";</script><style>
+:root{--cream:#FDFBF5;--ink:#121212;--grey:#5C5B57;--purple:#5E17EB;--lav:#E6DBFF;--line:rgba(18,18,18,.14);--serif:'EB Garamond',Georgia,serif;--sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{-webkit-user-drag:none;user-select:none}
+a{color:inherit}
+.wrap{width:min(1180px,100% - 48px);margin:0 auto}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(2.7rem,6.4vw,5.6rem);line-height:.98}
+h1 i,h2 i{font-style:italic}
+h2{font-size:clamp(2.1rem,4.6vw,3.9rem);line-height:1.04}
+h3{font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.1}
+p{margin:0 0 1em}
+.lead{font-size:clamp(1.05rem,1.5vw,1.3rem);color:var(--grey);max-width:640px}
+.eyebrow{display:inline-block;font:600 .74rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:18px}
+
+/* nav: cream floating bar with segmented For Business / For Education switch */
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(1180px,100% - 28px);z-index:100;display:flex;align-items:center;gap:14px;padding:10px 12px 10px 20px;background:rgba(253,251,245,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:2px solid rgba(18,18,18,.12);border-radius:22px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.brand img{height:28px;filter:brightness(0)}
+.brand span{font-family:var(--serif);font-size:2rem;line-height:1;letter-spacing:-.02em}
+.seg{display:flex;padding:4px;background:#E7E4D6;border:2px solid #DDD9C8;border-radius:999px;margin:0 auto 0 18px}
+.seg a{text-decoration:none;font-weight:500;font-size:.97rem;padding:10px 22px;border-radius:999px;transition:background .2s;white-space:nowrap}
+.seg a:hover{background:rgba(255,255,255,.6)}
+.seg a.on{background:#fff;box-shadow:inset 0 0 0 2px #E1DED0}
+.navr{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.nl{text-decoration:none;color:var(--grey);font-weight:500;font-size:.97rem;padding:10px 14px;border-radius:12px;transition:color .2s,background .2s}
+.nl:hover{color:var(--ink);background:rgba(18,18,18,.06)}
+.navr .btn{margin-left:8px}
+.burger{display:none;width:46px;height:46px;margin-left:8px;border:2px solid var(--ink);border-radius:12px;background:transparent;cursor:pointer;padding:0;align-items:center;justify-content:center;flex-direction:column;gap:4px;flex-shrink:0}
+.burger i{display:block;width:18px;height:2px;background:var(--ink);transition:transform .25s,opacity .25s}
+.nav.open .burger i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav.open .burger i:nth-child(2){opacity:0}
+.nav.open .burger i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.drop{display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;padding:8px;background:var(--cream);border:2px solid rgba(18,18,18,.12);border-radius:20px;box-shadow:0 24px 50px rgba(0,0,0,.14);flex-direction:column}
+.nav.open .drop{display:flex}
+.drop a{text-decoration:none;font-weight:500;font-size:1.05rem;padding:14px 16px;border-radius:12px}
+.drop a:hover,.drop a.on{background:rgba(18,18,18,.06)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 1rem/1 var(--sans);text-decoration:none;padding:15px 24px;border-radius:14px;background:var(--lav);color:var(--ink);border:1.5px solid var(--ink);cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 0 -2px rgba(18,18,18,.9)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.pur{background:var(--purple);color:#fff;border-color:var(--purple)}
+.btn.ghost{background:transparent}
+.btn.sm{padding:11px 18px;font-size:.92rem;border-radius:12px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+
+/* hero */
+.hero{padding:150px 0 80px}
+.hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero .tag{margin-top:34px;color:var(--grey);font-size:.98rem}
+.mock{border-radius:34px;background:radial-gradient(circle at 50% 30%,#35108f 0%,#16102b 55%,#0b0b10 100%);padding:20px 22px 26px;color:#fff;min-height:560px;display:flex;flex-direction:column;gap:14px;box-shadow:0 40px 90px rgba(94,23,235,.25);position:relative;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif}
+.mock .sb{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;font-weight:600;padding:0 6px;color:rgba(255,255,255,.92)}
+.mock .sb svg{height:12px;width:auto;fill:#fff;margin-left:6px}
+.mock .bar{display:flex;align-items:center;gap:12px;background:#fff;color:var(--ink);border-radius:999px;padding:9px 9px 9px 20px;font-size:1rem;min-height:56px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.mock .bar .t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mock .bar .t::after{content:'';display:inline-block;width:2px;height:1.1em;background:var(--purple);margin-left:3px;vertical-align:-.15em;animation:bl .8s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.mock .go{width:38px;height:38px;border-radius:50%;background:var(--purple);display:grid;place-items:center;flex:none;transition:transform .2s}
+.mock .go.press{transform:scale(.88)}
+.mock .stage{position:relative;flex:1;display:flex;flex-direction:column;gap:10px;min-height:380px}
+.mock .srch{display:flex;align-items:center;gap:10px;font-size:.9rem;color:rgba(255,255,255,.75);padding:6px 8px;opacity:0;transition:opacity .25s;position:absolute;top:0;left:0;right:0}
+.mock .srch.on{opacity:1}
+.mock .srch i{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.mock .cnt{font-size:.78rem;color:rgba(255,255,255,.55);padding:4px 8px 0;opacity:0;transition:opacity .3s}.mock .cnt.on{opacity:1}
+.mock .card{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:12px 12px 12px 12px;opacity:0;transform:translateY(14px) scale(.98);transition:opacity .45s,transform .45s}
+.mock .card.on{opacity:1;transform:none}
+.mock .av{width:46px;height:46px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:600;font-size:.95rem;color:#fff;position:relative;box-shadow:inset 0 0 0 2px rgba(255,255,255,.25)}
+.mock .av::after{content:'';position:absolute;right:0;bottom:1px;width:11px;height:11px;border-radius:50%;background:#34D27B;border:2px solid #1b1536}
+.mock .meta{flex:1;min-width:0}
+.mock .nm{font-size:.98rem;font-weight:600;display:flex;align-items:center;gap:5px;line-height:1.25}
+.mock .nm svg{width:14px;height:14px;flex:none}
+.mock .sub{font-size:.8rem;color:rgba(255,255,255,.62);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mock .tg{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.mock .tg b{font-weight:500;font-size:.7rem;padding:3px 9px;border-radius:999px;background:rgba(124,77,255,.28);color:#D9CCFF}
+.mock .tg b.g{background:rgba(52,210,123,.18);color:#8EF0BC}
+.mock .ask{flex:none;font:600 .8rem/1 inherit;padding:10px 14px;border-radius:999px;background:#fff;color:#111;border:0;transition:background .3s,color .3s,transform .2s;white-space:nowrap}
+.mock .ask.sent{background:rgba(52,210,123,.2);color:#8EF0BC}
+.mock .ask.press{transform:scale(.92)}
+.mock .mplan{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.94);color:#111;border-radius:20px;padding:12px 14px;opacity:0;transform:translateY(18px);transition:opacity .45s,transform .45s;box-shadow:0 18px 40px rgba(0,0,0,.35);margin-top:2px}
+.mock .mplan.on{opacity:1;transform:none}
+.mock .mplan .ic{width:36px;height:36px;border-radius:10px;background:var(--purple);display:grid;place-items:center;flex:none;font-family:var(--serif);color:#fff;font-size:1.3rem;line-height:1}
+.mock .mplan b{display:block;font-size:.9rem}.mock .mplan span{font-size:.8rem;color:#555}
+.mock .mplan .ok{margin-left:auto;width:24px;height:24px;border-radius:50%;background:#34D27B;display:grid;place-items:center;flex:none}
+.mock .ill{position:absolute;right:20px;bottom:8px;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+
+/* band */
+.band{background:var(--ink);color:#fff;padding:54px 0}
+.band .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.band .c{font-family:var(--serif);font-size:clamp(1.7rem,3.2vw,2.8rem);line-height:1.05;border-top:1px solid rgba(255,255,255,.25);padding-top:18px}
+.band .c i{display:block;font-family:var(--sans);font-style:normal;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px}
+.band.one{text-align:center}.band.one .c{border:0;padding:0;font-size:clamp(1.5rem,3vw,2.4rem)}
+
+/* sections */
+.sec{padding:clamp(70px,10vw,130px) 0}
+.sec.dark{background:var(--ink);color:#fff}
+.sec.dark .lead,.sec.dark p{color:rgba(255,255,255,.72)}
+.sec.dark .eyebrow{color:#B79BFF}
+.sec.tint{background:#F5F1E6}
+.head{max-width:860px;margin-bottom:clamp(36px,5vw,64px)}
+.head.c{margin-inline:auto;text-align:center}.head.c .lead{margin-inline:auto}
+.story{max-width:760px}
+.story p{font-size:clamp(1.1rem,1.7vw,1.4rem);color:var(--grey)}
+.story p.big{font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.5rem);line-height:1.12;color:var(--ink)}
+.sec.dark .story p{color:rgba(255,255,255,.72)}.sec.dark .story p.big{color:#fff}
+.outro{margin-top:clamp(34px,5vw,60px);font-family:var(--serif);font-size:clamp(1.6rem,3.2vw,2.7rem);line-height:1.1;max-width:900px}
+.outro i{color:var(--purple)}.sec.dark .outro i{color:#B79BFF}
+.after{margin-top:26px;color:var(--grey);max-width:720px;font-size:1.1rem}.sec.dark .after{color:rgba(255,255,255,.72)}
+
+/* prompt bubbles */
+.bubbles{display:flex;flex-wrap:wrap;gap:12px 14px}
+.bub{background:#007AFF;color:#fff;padding:11px 18px;border-radius:20px;font-size:clamp(.98rem,1.4vw,1.15rem);line-height:1.35;letter-spacing:-.01em;max-width:100%;transition:transform .25s}
+.bub:hover{transform:translateY(-3px) rotate(-.6deg)}
+.reply{margin-top:28px;display:inline-block;background:#E9E9EB;color:#000;padding:13px 20px;border-radius:20px;max-width:640px;font-size:1.05rem;line-height:1.4}
+
+/* feature blocks */
+.blk{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,80px);align-items:center;padding:clamp(28px,4vw,52px) 0}
+.blk:nth-child(even) .vis{order:2}
+.blk .vis{border-radius:30px;min-height:340px;padding:30px;display:flex;flex-wrap:wrap;align-content:flex-end;gap:10px;position:relative;overflow:hidden;border:1.5px solid rgba(18,18,18,.9)}
+.blk .vis .n{position:absolute;left:26px;top:14px;font-family:var(--serif);font-size:clamp(5rem,10vw,8rem);line-height:1;opacity:.9}
+.chip{background:#fff;color:#111;border-radius:999px;padding:9px 16px;font-size:.95rem;font-weight:500;border:1.5px solid #111;transform:rotate(var(--r,0deg))}
+.blk h3{margin-bottom:14px}.blk p{color:var(--grey);font-size:1.12rem;max-width:520px}
+.sec.dark .blk p{color:rgba(255,255,255,.72)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(var(--n,5),1fr);gap:16px;counter-reset:s}
+.step{border:1.5px solid var(--line);border-radius:24px;padding:26px 22px 28px;background:#fff;position:relative;transition:transform .25s}
+.step:hover{transform:translateY(-4px)}
+.step .no{font-family:var(--serif);font-size:3rem;line-height:1;color:var(--purple);margin-bottom:34px;display:block}
+.step h3{font-size:1.5rem;margin-bottom:10px}.step p{color:var(--grey);font-size:.98rem;margin:0}
+.sec.dark .step{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.16)}.sec.dark .step .no{color:#B79BFF}.sec.dark .step p{color:rgba(255,255,255,.7)}
+
+/* lists */
+.lists{display:grid;grid-template-columns:repeat(var(--n,1),1fr);gap:28px}
+.lbox h3{margin-bottom:16px}
+.ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ul li{display:flex;gap:12px;align-items:flex-start;font-size:1.06rem;padding:14px 0;border-bottom:1px solid var(--line)}
+.sec.dark .ul li{border-color:rgba(255,255,255,.16)}
+.ul li::before{content:'';flex:none;width:9px;height:9px;border-radius:50%;background:var(--purple);margin-top:.55em}
+.sec.dark .ul li::before{background:#B79BFF}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:start}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 22px;padding-top:14px}
+.card{position:relative;border:1.5px solid var(--ink);border-radius:26px;padding:34px 26px 28px;background:#fff;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 0 -6px var(--ink)}
+.card .pill{position:absolute;top:-15px;left:24px;padding:6px 16px;border-radius:999px;border:1.5px solid var(--ink);font:600 .82rem/1 var(--sans)}
+.card h3{font-size:1.55rem;margin-bottom:10px}.card p{margin:0;color:var(--grey);font-size:1rem}
+.sec.dark .card{background:#1b1b1f;border-color:rgba(255,255,255,.85)}.sec.dark .card p{color:rgba(255,255,255,.7)}
+.cards.c4{grid-template-columns:repeat(2,1fr)}
+
+/* statement */
+.state{margin-top:clamp(34px,5vw,60px);border-radius:30px;background:var(--purple);color:#fff;padding:clamp(30px,5vw,60px);font-family:var(--serif);font-size:clamp(1.7rem,3.6vw,3rem);line-height:1.08}
+
+/* pricing */
+.price{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 22px;padding-top:16px;align-items:stretch}
+.plan{position:relative;border:1.5px solid var(--ink);border-radius:30px;padding:46px 28px 30px;background:#fff;display:flex;flex-direction:column;text-align:center}
+.plan .pill{position:absolute;top:-16px;left:50%;transform:translateX(-50%);padding:7px 20px;border-radius:999px;border:1.5px solid var(--ink);font:600 .9rem/1 var(--sans);white-space:nowrap}
+.plan .amt{font-family:var(--serif);font-size:2.6rem;line-height:1;margin:6px 0 18px}
+.plan p{color:var(--grey);flex:1}
+.fine{margin-top:26px;color:var(--grey);font-size:.98rem}
+.fine p{margin:0 0 6px}
+
+/* faq */
+.faq{max-width:860px}
+.q{border-bottom:1.5px solid var(--line)}
+.q button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;cursor:pointer;font-family:var(--serif);font-size:clamp(1.3rem,2.2vw,1.8rem);line-height:1.15}
+.q button:focus-visible{outline:2px solid var(--purple);outline-offset:4px;border-radius:6px}
+.q .pm{flex:none;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--ink);position:relative;transition:transform .3s,background .3s}
+.q .pm::before,.q .pm::after{content:'';position:absolute;left:50%;top:50%;width:12px;height:1.5px;background:var(--ink);transform:translate(-50%,-50%)}
+.q .pm::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .3s}
+.q.open .pm{background:var(--lav);transform:rotate(180deg)}.q.open .pm::after{transform:translate(-50%,-50%) rotate(0)}
+.q .a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.q.open .a{grid-template-rows:1fr}
+.q .a>div{overflow:hidden}
+.q .a p{margin:0 0 26px;color:var(--grey);font-size:1.1rem;max-width:720px}
+
+/* close */
+.close{background:var(--ink);color:#fff;padding:clamp(80px,11vw,140px) 0}
+.close .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,6vw,90px);align-items:center}
+.close h2{margin-bottom:22px}.close p{color:rgba(255,255,255,.75);font-size:1.2rem}
+.form{background:#fff;color:var(--ink);border-radius:30px;padding:30px}
+.form h3{font-size:1.7rem;margin-bottom:6px}.form .s{color:var(--grey);font-size:.95rem;margin-bottom:20px}
+.f{display:block;margin-bottom:14px}.f span{display:block;font-size:.8rem;font-weight:600;margin-bottom:6px}
+.f input,.f select{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:14px;font:400 16px var(--sans);background:var(--cream);color:var(--ink)}
+.f input:focus,.f select:focus{outline:none;border-color:var(--purple)}
+.form .btn{width:100%;margin-top:6px}
+.thanks{display:none;text-align:center;padding:30px 6px}.thanks h3{margin-bottom:8px}
+.form.sent form{display:none}.form.sent .thanks{display:block}
+
+/* footer */
+.ft{background:var(--ink);color:#fff;text-align:center;padding:30px 20px 60px;border-top:1px solid rgba(255,255,255,.12)}
+.ft .brandbig{display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,28px);margin-bottom:30px}
+.ft .brandbig img{height:clamp(4rem,12vw,12rem);filter:invert(1)}
+.ft .brandbig b{font-family:var(--serif);font-weight:500;font-size:clamp(4rem,12vw,12rem);line-height:1;letter-spacing:-.02em;white-space:nowrap}
+.ft p{color:rgba(255,255,255,.6);max-width:620px;margin:0 auto 10px}
+.ft .soc{display:flex;gap:24px;justify-content:center;margin:34px 0 18px}
+.ft .soc a{color:rgba(255,255,255,.55);transition:color .2s,transform .2s;display:flex}.ft .soc a:hover{color:#fff;transform:translateY(-2px)}
+.ft .soc svg{width:22px;height:22px;fill:currentColor}
+.ft .leg{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;font-size:.92rem}.ft .leg a{color:rgba(255,255,255,.55);text-decoration:none}.ft .leg a:hover{color:#fff}
+.ft .cp{margin-top:16px;color:rgba(255,255,255,.35);font-size:.85rem}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.js .rv.in{opacity:1;transform:none}
+
+/* HUMAN word hover */
+.human-word{position:relative;display:inline-block;white-space:nowrap}
+.human-word::before,.human-word::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;height:100%;font:inherit;letter-spacing:inherit;line-height:inherit;font-style:inherit;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;pointer-events:none;opacity:0;transition:opacity .2s}
+.human-word::before{background-color:var(--hm-prev,transparent)}
+.human-word::after{background-color:var(--hm-cur,#ff9f1c);clip-path:circle(0% at 50% 100%)}
+.human-word.hm-on::before,.human-word.hm-on::after{opacity:1}
+.human-word.hm-on::after{animation:hmFill .7s cubic-bezier(.35,.55,.3,1) infinite}
+@keyframes hmFill{0%{clip-path:circle(0% at 50% 100%)}100%{clip-path:circle(115% at 50% 100%)}}
+
+/* responsive */
+@media(max-width:980px){
+  .hero .grid,.close .grid,.two{grid-template-columns:1fr}
+  .hero{padding-top:130px}
+  .blk{grid-template-columns:1fr}.blk:nth-child(even) .vis{order:0}
+  .steps{grid-template-columns:repeat(2,1fr)}.steps .step:last-child:nth-child(odd){grid-column:1/-1}
+  .cards,.price{grid-template-columns:1fr 1fr}
+  .band .cols{grid-template-columns:1fr}
+}
+@media(max-width:1000px){
+  .seg,.nl{display:none}
+  .burger{display:flex}
+}
+@media(max-width:520px){
+  .nav{padding:8px 8px 8px 14px;border-radius:18px;top:10px;width:calc(100% - 20px)}
+  .brand span{font-size:1.6rem}
+  .navr .btn{padding:11px 14px;font-size:.9rem;margin-left:0}
+  .burger{width:42px;height:42px;margin-left:6px}
+}
+@media(max-width:620px){
+  .wrap{width:calc(100% - 36px)}
+  .brand span{font-size:1.6rem}
+  .steps,.cards,.price,.cards.c4{grid-template-columns:1fr}
+  .btn{padding:14px 20px}.btns .btn{flex:1 1 100%}
+  .mock{padding:16px 14px 22px;min-height:540px;border-radius:28px}.mock .tg b:nth-child(n+3){display:none}
+  .blk .vis{min-height:260px;padding:22px}
+  .form{padding:22px}
+  .q button{padding:20px 0}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none}}
+</style></head><body>
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="index.html"><img src="HUTE.png" alt="HUTE"><span>HUMAN</span></a>
+  <div class="seg" role="group" aria-label="HUMAN for">
+    <a href="business.html">For Business</a>
+    <a href="education.html" class="on">For Education</a>
+  </div>
+  <div class="navr"><a class="nl" href="index.html">Home</a><a class="nl" href="#faq">FAQs</a>
+    <a class="btn sm" href="#contact"><span>Bring HUMAN to campus</span></a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="drop"><i></i><i></i><i></i></button></div>
+  <div class="drop" id="drop">
+    <a href="business.html">For Business</a>
+    <a href="education.html" class="on">For Education</a>
+    <a href="index.html">Home</a>
+    <a href="#faq">FAQs</a>
+  </div>
+</nav>
+<header class="hero"><div class="wrap grid">
+  <div class="rv"><span class="eyebrow">HUMAN for Education</span><h1>A campus full of people. <i>Find yours.</i></h1>
+  <div style="margin-top:26px"><p class="lead">Thousands of students. Millions of possible connections. Friendships, late-night conversations, study partners, first dates, new interests, spontaneous adventures, and people who might change your life.</p><p class="lead">HUMAN makes finding your people feel effortless.</p><p class="lead">An AI-powered social experience that helps students discover, connect, and meet inside their university community.</p></div>
+  <div class="btns"><a class="btn" href="#contact"><span>Bring HUMAN to campus</span></a><a class="btn ghost" href="#how"><span>Explore HUMAN</span></a></div>
+  <p class="tag">For universities. For students. For life beyond the classroom.</p></div>
+  <div class="mock rv" aria-hidden="true">
+    <div class="sb"><span>9:41</span><span><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12"><rect x="0.5" y="0.5" width="22" height="11" rx="3" fill="none" stroke="#fff" opacity=".6"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="24" y="4" width="2" height="4" rx="1"/></svg></span></div>
+    <div class="bar"><span class="t" id="typer"></span><span class="go" id="go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+    <div class="stage"><div class="srch" id="srch"><i></i><span>Searching your community&hellip;</span></div><div class="cnt" id="cnt"></div><div id="res" style="display:flex;flex-direction:column;gap:10px"></div>
+    <div class="mplan" id="plan"><span class="ic">H</span><div><b id="plan-t"></b><span id="plan-s"></span></div><span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+    <span class="ill">Illustrative</span>
+  </div>
+</div></header>
+<div class="band one"><div class="wrap"><div class="c rv">For universities. For students. For life beyond the classroom.</div></div></div>
+<section class="sec"><div class="wrap"><div class="head rv"><h2>The best part of university is often <i>who you meet.</i></h2></div><div class="story rv"><p>You can walk past hundreds of people every day and never know what you have in common.</p>
+<p>The person sitting beside you might become your closest friend. Someone in another faculty might share the exact same interests. A stranger across campus might become the person you build a company with, travel the world with, or fall in love with.</p>
+<p>Those possibilities exist everywhere.</p>
+<p class="big">HUMAN makes them discoverable.</p></div></div></section>
+<section class="sec tint" id="how"><div class="wrap"><div class="head rv"><h2>Find anyone you're looking for. <i>Just ask.</i></h2><p class="lead">No endless scrolling. No awkward cold messages. No hoping you&#x27;ll bump into the right person.</p><p class="lead">Tell HUMAN what you&#x27;re looking for.</p></div><div class="bubbles"><span class="bub rv">&quot;Find someone who wants to study with me tonight.&quot;</span><span class="bub rv">&quot;Who wants to go for coffee after class?&quot;</span><span class="bub rv">&quot;Find students who love Formula 1.&quot;</span><span class="bub rv">&quot;I want to start a band. Who plays guitar?&quot;</span><span class="bub rv">&quot;Find someone who&#x27;s new to Melbourne like me.&quot;</span><span class="bub rv">&quot;Who wants to explore the city this weekend?&quot;</span><span class="bub rv">&quot;Find people interested in startups and robotics.&quot;</span><span class="bub rv">&quot;Help me find a gym partner.&quot;</span><span class="bub rv">&quot;Find people going to the same concert.&quot;</span><span class="bub rv">&quot;I&#x27;d like to meet someone who&#x27;s also open to dating.&quot;</span></div><div class="reply rv">HUMAN searches among people who have chosen to participate, understands mutual interests and intentions, and helps arrange introductions.</div><div class="outro rv">The right people. Right here. <i>Right now.</i></div></div></section>
+<section class="sec"><div class="wrap"><div class="head rv"><h2>Your entire university. <i>A world of possibilities.</i></h2></div><div class="blk rv"><div class="vis" style="background:#FF6A00;color:#111111"><span class="n">01</span><span class="chip" style="--r:-3deg">Shared interests</span><span class="chip" style="--r:2deg">Shared experiences</span><span class="chip" style="--r:-1.5deg">Sense of humour</span></div><div><h3>Friends</h3><p>Find people who share your interests, experiences, and sense of humour. Whether it&#x27;s your first semester or final year, there&#x27;s always someone new to meet.</p></div></div><div class="blk rv"><div class="vis" style="background:#39FF14;color:#111111"><span class="n">02</span><span class="chip" style="--r:-3deg">Classmates</span><span class="chip" style="--r:2deg">Study partners</span><span class="chip" style="--r:-1.5deg">Reading groups</span></div><div><h3>Study</h3><p>Discover classmates, study partners, reading groups, and people working through the same subjects and challenges.</p></div></div><div class="blk rv"><div class="vis" style="background:#1F4BFF;color:#FFFFFF"><span class="n">03</span><span class="chip" style="--r:-3deg">Eligible adults</span><span class="chip" style="--r:2deg">Private and consensual</span><span class="chip" style="--r:-1.5deg">Separate from administration</span></div><div><h3>Love</h3><p>Eligible adults can choose to discover others open to dating, where the feature is permitted. A private, consensual experience separate from academic administration.</p></div></div><div class="blk rv"><div class="vis" style="background:#FF2E93;color:#111111"><span class="n">04</span><span class="chip" style="--r:-3deg">Sports</span><span class="chip" style="--r:2deg">Gym</span><span class="chip" style="--r:-1.5deg">Music</span><span class="chip" style="--r:3deg">Movies</span><span class="chip" style="--r:-2deg">Hiking</span><span class="chip" style="--r:1.5deg">Concerts</span></div><div><h3>Activities</h3><p>Find people to play sports, go to the gym, make music, watch movies, go hiking, attend concerts, and explore the world with.</p></div></div><div class="blk rv"><div class="vis" style="background:#FFE600;color:#111111"><span class="n">05</span><span class="chip" style="--r:-3deg">Clubs</span><span class="chip" style="--r:2deg">Societies</span><span class="chip" style="--r:-1.5deg">Interest circles</span><span class="chip" style="--r:3deg">Cultural communities</span></div><div><h3>Communities</h3><p>Discover student clubs, societies, interest circles, cultural communities, and spontaneous gatherings.</p></div></div><div class="blk rv"><div class="vis" style="background:#00E5FF;color:#111111"><span class="n">06</span><span class="chip" style="--r:-3deg">Companies</span><span class="chip" style="--r:2deg">Art</span><span class="chip" style="--r:-1.5deg">Films</span><span class="chip" style="--r:3deg">Products</span></div><div><h3>Ideas</h3><p>Meet people who want to build companies, create art, make films, design products, and bring ambitious ideas to life.</p></div></div><div class="blk rv"><div class="vis" style="background:#5E17EB;color:#FFFFFF"><span class="n">07</span><span class="chip" style="--r:-3deg">Lunch</span><span class="chip" style="--r:2deg">Groceries</span><span class="chip" style="--r:-1.5deg">A new neighbourhood</span><span class="chip" style="--r:3deg">A conversation</span></div><div><h3>Life</h3><p>Meet someone to grab lunch with, go grocery shopping with, explore a new neighbourhood with, or simply talk to.</p></div></div><div class="outro rv">Whatever you're into, <i>there are people for that.</i></div></div></section>
+<section class="sec dark"><div class="wrap"><div class="head rv"><h2>New university. New city. <i>A whole new world.</i></h2><p class="lead">For many students, arriving at university means starting over.</p><p class="lead">A new campus. An unfamiliar city. Thousands of strangers. Maybe even a new country.</p><p class="lead">HUMAN makes those first connections easier.</p></div><div class="cards c4"><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#FF6A00;color:#111111">Before your first class</span><h3>Before your first class</h3><p>Discover incoming students, orientation groups, shared interests, and other people who want to connect.</p></div><div class="card rv" style="transition-delay:80ms"><span class="pill" style="background:#39FF14;color:#111111">During your first week</span><h3>During your first week</h3><p>Find friends for lunch, activities, campus events, study sessions, and exploring the city.</p></div><div class="card rv" style="transition-delay:160ms"><span class="pill" style="background:#1F4BFF;color:#FFFFFF">Throughout university</span><h3>Throughout university</h3><p>Meet people outside your classes, accommodation, faculty, and existing social circle.</p></div><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#FF2E93;color:#111111">After graduation</span><h3>After graduation</h3><p>Keep the relationships you&#x27;ve made. With mutual consent, your personal network can continue beyond the university.</p></div></div><div class="outro rv">The first day should be the beginning of <i>belonging.</i></div></div></section>
+<section class="sec"><div class="wrap"><div class="head rv"><h2>Don't just find a match. <i>Make a memory.</i></h2><p class="lead">HUMAN turns the intention to meet someone into an opportunity to actually meet them.</p></div><div class="steps" style="--n:5"><div class="step rv" style="transition-delay:0ms"><span class="no">01</span><h3>Say what you&#x27;re looking for.</h3><p>A friend, study partner, activity, date, or spontaneous plan.</p></div><div class="step rv" style="transition-delay:80ms"><span class="no">02</span><h3>HUMAN finds interested people.</h3><p>Your AI searches the university&#x27;s participating community based on chosen preferences, relevant interests, and availability.</p></div><div class="step rv" style="transition-delay:160ms"><span class="no">03</span><h3>Both people decide.</h3><p>Introduction requests are optional, visible, and consent-based.</p></div><div class="step rv" style="transition-delay:240ms"><span class="no">04</span><h3>HUMAN makes the plan easier.</h3><p>Your AI helps start a conversation, suggests activities, and can coordinate times when authorised.</p></div><div class="step rv" style="transition-delay:320ms"><span class="no">05</span><h3>The real world takes over.</h3><p>Go for coffee. Study together. Make music. Explore the city. Form a friendship.</p></div></div><div class="outro rv">The goal was never another hour on your phone. <i>It was everything waiting outside it.</i></div></div></section>
+<section class="sec tint"><div class="wrap"><div class="head rv"><h2>Every club. Every interest. <i>Every opportunity to belong.</i></h2><p class="lead">Universities have extraordinary communities.</p><p class="lead">But students often don&#x27;t know which ones exist, who&#x27;s involved, or how to get started.</p><p class="lead">HUMAN makes student communities easier to discover and participate in.</p></div><div class="lists" style="--n:2"><div class="lbox rv"><h3>For students</h3><ul class="ul"><li>Find clubs and societies around your interests.</li><li>Discover other members before attending an event.</li><li>Join spontaneous group activities.</li><li>Find people attending the same campus events.</li><li>Organise plans and invite interested students.</li><li>Explore groups beyond your existing faculty.</li></ul></div><div class="lbox rv"><h3>For student organisations</h3><ul class="ul"><li>Welcome interested new members.</li><li>Help members meet one another.</li><li>Publish opt-in activities and gatherings.</li><li>Support introductions between willing participants.</li><li>Create more opportunities for meaningful participation.</li></ul></div></div><div class="outro rv">Don't just join a society. <i>Find your place in it.</i></div></div></section>
+<section class="sec"><div class="wrap"><div class="head rv"><h2>Studying together should be easier than <i>studying alone.</i></h2></div><div class="story rv"><p>Your ideal study partner might be sitting a few rows away.</p>
+<p>Someone in your class understands the exact concept you&#x27;re struggling with. Someone else wants to practise the same language, revise for the same exam, or work through the same assignment.</p>
+<p>HUMAN helps people find one another.</p>
+<p>Search by subject, timetable, study habits, campus location, interests, or shared academic goals—using information students voluntarily provide.</p>
+<p>Find a study partner. Form a revision group. Make plans around everyone&#x27;s availability.</p></div><div class="outro rv">Learning happens in classrooms. <i>So much more happens between people.</i></div></div></section>
+<section class="sec dark"><div class="wrap"><div class="head rv"><h2>The university experience shouldn't stop at the <i>edge of campus.</i></h2></div><div class="story rv"><p>Meet students across residences, departments, faculties, and approved campus communities.</p>
+<p>Discover people interested in the same music, food, sports, ideas, or experiences, even when your classes never overlap.</p>
+<p>For international students, that can mean finding friends who speak your language or people who want to help explore a new city.</p>
+<p>For postgraduate students, it can mean meeting others who share a research interest or are simply looking for company.</p>
+<p>For alumni, HUMAN can become a way to maintain and expand voluntary relationships long after graduation.</p>
+<p class="big">One university. Countless ways to connect.</p></div></div></section>
+<section class="sec"><div class="wrap"><div class="head rv"><h2>A personal AI that <i>grows with you.</i></h2><p class="lead">Your university introduces you to HUMAN. But HUMAN isn&#x27;t limited to your university.</p><p class="lead">Each person can have an AI that helps them navigate the people and experiences in their life.</p></div><div class="cards"><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#1F4BFF;color:#FFFFFF">Finds people</span><h3>Your AI finds people.</h3><p>Describe who you&#x27;d like to meet or what you&#x27;d like to do. HUMAN helps discover people who have chosen to be available.</p></div><div class="card rv" style="transition-delay:80ms"><span class="pill" style="background:#FF2E93;color:#111111">Communicates</span><h3>Your AI helps you communicate.</h3><p>With permission, it can assist with messages, calls, introductions, and follow-ups.</p></div><div class="card rv" style="transition-delay:160ms"><span class="pill" style="background:#FFE600;color:#111111">Remembers</span><h3>Your AI remembers relationships.</h3><p>Keep track of people, shared experiences, important conversations, and promises you choose to remember.</p></div><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#00E5FF;color:#111111">Grows</span><h3>Your AI helps your network grow.</h3><p>Discover relevant new connections without manually searching every time.</p></div><div class="card rv" style="transition-delay:80ms"><span class="pill" style="background:#5E17EB;color:#FFFFFF">Handles</span><h3>Your AI handles the details.</h3><p>Coordinate plans, schedules, replies, and authorised everyday tasks.</p></div><div class="card rv" style="transition-delay:160ms"><span class="pill" style="background:#FF6A00;color:#111111">Twin</span><h3>Your AI twin represents you.</h3><p>Let other people or their AI agents discover appropriate information about you, within boundaries you&#x27;ve chosen.</p></div></div><div class="state rv">Your human world goes everywhere. HUMAN is being designed for a future where AI and social discovery extend beyond phones into wearable and spatial computing.</div><div class="outro rv">Your university community is one chapter. <i>Your HUMAN is for life.</i></div></div></section>
+<section class="sec dark"><div class="wrap"><div class="head rv"><h2>The next generation of <i>campus belonging.</i></h2><p class="lead">Universities invest in classrooms, libraries, residences, and student facilities.</p><p class="lead">But the connections between students are just as important to the university experience.</p><p class="lead">HUMAN gives institutions a new way to support:</p></div><div class="cards"><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#FF6A00;color:#111111">Student belonging</span><h3>Student belonging</h3><p>Help students find peers, friends, activities, and interest communities.</p></div><div class="card rv" style="transition-delay:80ms"><span class="pill" style="background:#39FF14;color:#111111">First-year transition</span><h3>First-year transition</h3><p>Make orientation a continuing social experience instead of a single week of events.</p></div><div class="card rv" style="transition-delay:160ms"><span class="pill" style="background:#1F4BFF;color:#FFFFFF">International students</span><h3>International student experience</h3><p>Help students settling into a new country discover people, places, and communities.</p></div><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#FF2E93;color:#111111">Engagement</span><h3>Student engagement</h3><p>Make clubs, societies, events, and group activities easier to discover and participate in.</p></div><div class="card rv" style="transition-delay:80ms"><span class="pill" style="background:#FFE600;color:#111111">Peer learning</span><h3>Peer learning</h3><p>Support voluntary academic connections between students who want to study and learn together.</p></div><div class="card rv" style="transition-delay:160ms"><span class="pill" style="background:#00E5FF;color:#111111">Campus community</span><h3>Campus community</h3><p>Create opportunities for people to connect beyond faculties, courses, and accommodation.</p></div><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#5E17EB;color:#FFFFFF">Alumni</span><h3>Alumni relationships</h3><p>Help graduates preserve their personal relationships and participate in optional alumni communities.</p></div></div><div class="outro rv">A university is more than the place students attend. <i>It's the people they become part of.</i></div></div></section>
+<section class="sec"><div class="wrap"><div class="head rv"><h2>Built for students. <i>Designed with universities in mind.</i></h2></div><div class="cards"><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#FF2E93;color:#111111">Verified</span><h3>Verified university communities</h3><p>Students join through approved verification methods and access only communities they&#x27;re eligible to enter.</p></div><div class="card rv" style="transition-delay:80ms"><span class="pill" style="background:#FFE600;color:#111111">Choice</span><h3>Personal choice</h3><p>Every student&#x27;s participation, discoverability, interests, and introductions remain under their control.</p></div><div class="card rv" style="transition-delay:160ms"><span class="pill" style="background:#00E5FF;color:#111111">Safety</span><h3>Community safety</h3><p>Blocking, reporting, moderation, and transparent community rules support a safer experience.</p></div><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#5E17EB;color:#FFFFFF">Administration</span><h3>Institutional administration</h3><p>Universities manage eligible membership, institutional settings, approved spaces, and community-level programmes.</p></div><div class="card rv" style="transition-delay:80ms"><span class="pill" style="background:#FF6A00;color:#111111">Privacy</span><h3>Privacy by design</h3><p>Private conversations, dating preferences, personal AI memories, and individual search histories aren&#x27;t disclosed to university administrators.</p></div><div class="card rv" style="transition-delay:160ms"><span class="pill" style="background:#39FF14;color:#111111">Insights</span><h3>Useful campus insights</h3><p>Understand aggregate participation, group engagement, and voluntarily reported outcomes without turning the experience into student surveillance.</p></div><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#1F4BFF;color:#FFFFFF">Accessible</span><h3>Accessible participation</h3><p>Design for people with different communication preferences, accessibility needs, cultures, and levels of confidence.</p></div></div><div class="outro rv">Campus-wide opportunity. <i>Individual control.</i></div></div></section>
+<section class="sec dark"><div class="wrap"><div class="head rv"><h2>One campus. <i>One connected community.</i></h2></div><div class="steps" style="--n:5"><div class="step rv" style="transition-delay:0ms"><span class="no">01</span><h3>Launch your university community.</h3><p>Work with HUMAN to define membership, identity verification, approved features, and participating campus groups.</p></div><div class="step rv" style="transition-delay:80ms"><span class="no">02</span><h3>Invite students to discover HUMAN.</h3><p>Students verify their eligibility, create their own personal AI experience, and choose what they&#x27;re looking for.</p></div><div class="step rv" style="transition-delay:160ms"><span class="no">03</span><h3>Bring campus life together.</h3><p>Introduce optional university clubs, societies, residence communities, orientation groups, and events.</p></div><div class="step rv" style="transition-delay:240ms"><span class="no">04</span><h3>Help students find one another.</h3><p>HUMAN assists with discovery, mutual introductions, social activities, and real-world meetups.</p></div><div class="step rv" style="transition-delay:320ms"><span class="no">05</span><h3>Learn what works.</h3><p>Review privacy-preserving participation data and voluntarily collected feedback to understand the programme.</p></div></div><div class="outro rv">From a university full of strangers to <i>a university full of possibilities.</i></div></div></section>
+<section class="sec"><div class="wrap"><div class="head rv"><h2>From your first semester to <i>your entire life.</i></h2></div><div class="story rv"><p>The people you meet at university don&#x27;t stop mattering when you graduate.</p>
+<p>Your friends move cities. Your classmates start companies. Your study partners become lifelong connections. Your world keeps changing.</p>
+<p>HUMAN is designed so your personal identity and relationships can grow with you—across universities, workplaces, cities, and communities.</p>
+<p>Your university membership may end. Your personal HUMAN journey doesn&#x27;t have to.</p>
+<p class="big">One HUMAN. An entire life of people.</p></div></div></section>
+<section class="sec tint"><div class="wrap"><div class="head c rv"><h2>Bring HUMAN to <i>your university.</i></h2></div><div class="price"><div class="plan rv" style="transition-delay:0ms"><span class="pill" style="background:#FF6A00;color:#111111">Orientation Pilot</span><div class="amt">Tailored</div><p>Introduce HUMAN to an opt-in cohort of incoming students, a residence, a faculty, or a student society.</p><a class="btn " href="#contact"><span>Launch a pilot</span></a></div><div class="plan rv" style="transition-delay:90ms"><span class="pill" style="background:#1F4BFF;color:#FFFFFF">Campus</span><div class="amt">Tailored</div><p>Offer an institution-sponsored experience to eligible students, with university communities, student organisation support, and campus administration.</p><a class="btn dark" href="#contact"><span>Talk to our team</span></a></div><div class="plan rv" style="transition-delay:180ms"><span class="pill" style="background:#FFE600;color:#111111">University Network</span><div class="amt">Tailored</div><p>Support multiple campuses, faculties, residences, optional alumni communities, and more complex institutional requirements.</p><a class="btn " href="#contact"><span>Contact education sales</span></a></div></div><div class="fine rv"><p>Institutional pricing depends on eligible population, deployment scope, and support requirements.</p><p>For students at participating institutions, core community access can be institution-sponsored.</p></div></div></section>
+<section class="sec" id="faq"><div class="wrap"><div class="head rv"><h2>Frequently asked <i>questions.</i></h2></div><div class="faq"><div class="q rv"><button type="button" aria-expanded="false"><span>Is HUMAN a dating app for universities?</span><span class="pm"></span></button><div class="a"><div><p>No. HUMAN helps students make friends, discover activities, study together, find communities, and build real relationships. Dating can be a separately optional experience for eligible adults where permitted.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Can students use HUMAN outside their university?</span><span class="pm"></span></button><div class="a"><div><p>Yes. HUMAN&#x27;s wider personal network can exist alongside verified university communities, with distinct access and privacy settings.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Do universities see personal conversations?</span><span class="pm"></span></button><div class="a"><div><p>No. University administration should be separated from personal messages, private interests, romantic preferences, individual searches, and personal AI memories.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Can students opt out of being discovered?</span><span class="pm"></span></button><div class="a"><div><p>Yes. Students should be able to manage visibility, decline introductions, block people, and leave the experience.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>How are students verified?</span><span class="pm"></span></button><div class="a"><div><p>Institutional email verification, supported university identity systems, or approved enrolment checks can establish eligibility.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Can clubs and student societies use HUMAN?</span><span class="pm"></span></button><div class="a"><div><p>Yes. They can be supported through verified communities, membership discovery, activities, and opt-in introductions.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Does HUMAN replace university learning management systems?</span><span class="pm"></span></button><div class="a"><div><p>No. HUMAN is primarily a social discovery and connection platform. It can complement campus services without becoming an academic records system.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Is HUMAN designed for under-18 students?</span><span class="pm"></span></button><div class="a"><div><p>The initial proposed education offering is for higher-education students aged 18 and older. Any future service for minors would require a separate safety, legal, and product design.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Can alumni continue using HUMAN?</span><span class="pm"></span></button><div class="a"><div><p>Personal HUMAN accounts can continue after graduation. Access to verified alumni or university communities depends on institutional arrangements and eligibility.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>How can our university begin?</span><span class="pm"></span></button><div class="a"><div><p>Start with a voluntary, time-limited pilot, measure engagement and real-world connection outcomes, and expand based on what students actually value.</p></div></div></div></div></div></section>
+<section class="close" id="contact"><div class="wrap grid">
+  <div class="rv"><h2>An unforgettable education begins with the <i>people you meet.</i></h2><p>Thousands of people already share your campus.</p><p>Imagine if finding yours was effortless.</p></div>
+  <div class="form rv"><form id="enquiry"><h3>Bring HUMAN to campus</h3><p class="s">Tell us a little about your university and we will be in touch.</p>
+    <label class="f"><span>Your name</span><input required name="name" autocomplete="name" placeholder="Full name"></label>
+    <label class="f"><span>University email</span><input required type="email" name="email" autocomplete="email" placeholder="you@university.com"></label>
+    <label class="f"><span>University</span><input required name="org" autocomplete="organization" placeholder="Your university"></label>
+    <label class="f"><span>Approximate size</span><select name="size"><option>Under 100</option><option>100 &ndash; 1,000</option><option>1,000 &ndash; 10,000</option><option>10,000+</option></select></label>
+    <button class="btn pur" type="submit"><span>Bring HUMAN to campus</span></button></form>
+    <div class="thanks"><h3>Thank you.</h3><p>We&rsquo;ve noted your interest and will be in touch.</p></div></div>
+</div></section>
+<footer class="ft"><div class="brandbig"><img src="HUTE.png" alt="HUTE logo"><b>HUTE, Inc.</b></div>
+<p>HUMAN for Education — by HUTE.</p><p><em>Made for a world that needs more human.</em></p>
+<div class="soc"><a href="https://x.com/huteinc" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><svg viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a>
+<a href="https://www.instagram.com/hute.inc" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+<a href="https://www.linkedin.com/company/hute.inc/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></div>
+<div class="leg"><a href="index.html">HUMAN</a><a href="business.html">For Business</a><a href="education.html">For Education</a><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a><a href="security.html">Security</a></div>
+<div class="cp">&copy; 2026 HUTE, Inc. All rights reserved.</div></footer>
+<script>window.DEMOS=[{"prompt": "Find someone who wants to study with me tonight.", "results": [["Mia C.", "Biomedicine · Year 2", "Same subject", "Free 7 pm"], ["Arjun S.", "Biomedicine · Year 2", "Same subject", "Free 7 pm"], ["Chloe T.", "Pharmacology · Year 3", "Exam week", "Free 8 pm"]], "plan": ["Arjun accepted", "7:00 pm · Library, level 3"]}, {"prompt": "Who wants to go for coffee after class?", "results": [["Noah F.", "Commerce · Year 1", "Coffee · After 1", "Free 1 pm"], ["Ella R.", "Arts · Year 2", "Coffee · After 1", "Free 1:15"], ["Sam D.", "Law · Year 1", "Coffee · After 2", "Free 2 pm"]], "plan": ["Ella accepted", "1:15 pm · Union Café"]}, {"prompt": "I want to start a band. Who plays guitar?", "results": [["Zoe H.", "Music · Year 2", "Guitar", "Free Fri"], ["Kai M.", "Engineering · Year 3", "Drums", "Free Fri"], ["Leo B.", "Law · Year 1", "Bass", "Free Sat"]], "plan": ["First jam booked", "Fri 6:00 pm · Music Room 2"]}, {"prompt": "Find someone who's new to Melbourne like me.", "results": [["Sana K.", "Exchange · from Toronto", "New to the city", "Free Sat"], ["Luca G.", "Arts · from Milan", "New to the city", "Free Sat"], ["Yuki O.", "Masters · from Osaka", "New to the city", "Free Sun"]], "plan": ["Sana accepted", "Sat 10:00 am · The Lanes"]}];</script><script>
+(function(){
+  var nav=document.querySelector('.nav'),bg=nav.querySelector('.burger');
+  bg.addEventListener('click',function(){var o=nav.classList.toggle('open');bg.setAttribute('aria-expanded',o)});
+  nav.querySelectorAll('.drop a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open')})});
+  document.addEventListener('click',function(e){if(!nav.contains(e.target))nav.classList.remove('open')});
+
+  // reveal on scroll
+  var rv=[].slice.call(document.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.12});
+    rv.forEach(function(e){io.observe(e)});
+  } else rv.forEach(function(e){e.classList.add('in')});
+  // safety net: never leave content hidden if scroll-reveal fails
+  setTimeout(function(){rv.forEach(function(e){e.classList.add('in')})},2500);
+
+  // FAQ accordion
+  document.querySelectorAll('.q button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var q=b.parentNode,open=q.classList.toggle('open');b.setAttribute('aria-expanded',open);
+    });
+  });
+
+  // hero demo: type a prompt -> search -> matches -> introduction -> plan, then the next prompt
+  var t=document.getElementById('typer');
+  if(t&&window.DEMOS){
+    var D=window.DEMOS,di=0,res=document.getElementById('res'),srch=document.getElementById('srch'),cnt=document.getElementById('cnt'),plan=document.getElementById('plan'),go=document.getElementById('go');
+    var GR=['#FF6A00,#FF2E93','#1F4BFF,#00B7D4','#7B3CFF,#FF2E93','#00A86B,#39C46A','#E8A100,#FF6A00','#C2185B,#7B3CFF'];
+    var TICK='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#5E8BFF"/><polyline points="7 12.5 10.5 16 17 9" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function w(ms){return new Promise(function(r){setTimeout(r,ms)})}
+    function init(n){return n.split(' ').map(function(x){return x[0]}).join('').slice(0,2)}
+    function build(d){
+      res.innerHTML='';
+      d.results.forEach(function(r,i){
+        var c=document.createElement('div');c.className='card';
+        c.innerHTML='<div class="av" style="background:linear-gradient(135deg,'+GR[(di*3+i)%GR.length].replace(',',',')+')">'+init(r[0])+'</div>'+
+          '<div class="meta"><div class="nm">'+r[0]+TICK+'</div><div class="sub">'+r[1]+'</div><div class="tg"><b>'+r[2]+'</b><b class="g">'+r[3]+'</b></div></div>'+
+          '<button type="button" class="ask" tabindex="-1">Introduce</button>';
+        res.appendChild(c);
+      });
+    }
+    async function loop(){
+      for(;;){
+        var d=D[di%D.length];
+        // reset
+        res.innerHTML='';plan.classList.remove('on');cnt.classList.remove('on');srch.classList.remove('on');t.textContent='';
+        // type
+        for(var c=1;c<=d.prompt.length;c++){t.textContent=d.prompt.slice(0,c);await w(reduce?0:48)}
+        await w(450);go.classList.add('press');await w(180);go.classList.remove('press');
+        srch.classList.add('on');await w(1100);srch.classList.remove('on');
+        build(d);cnt.textContent=d.results.length+' people interested \u00b7 all verified members';cnt.classList.add('on');
+        var cards=[].slice.call(res.children);
+        for(var i=0;i<cards.length;i++){await w(180);cards[i].classList.add('on')}
+        await w(1300);
+        var b=cards[0].querySelector('.ask');b.classList.add('press');await w(180);b.classList.remove('press');b.textContent='Request sent';b.classList.add('sent');
+        await w(1300);
+        document.getElementById('plan-t').textContent=d.plan[0];document.getElementById('plan-s').textContent=d.plan[1];plan.classList.add('on');
+        await w(3600);
+        // erase
+        plan.classList.remove('on');cards.forEach(function(c){c.classList.remove('on')});cnt.classList.remove('on');await w(500);
+        for(var e=d.prompt.length;e>=0;e-=2){t.textContent=d.prompt.slice(0,e);await w(14)}
+        di++;await w(300);
+      }
+    }
+    loop();
+  }
+
+  // enquiry form (front-end only for now)
+  var f=document.getElementById('enquiry');
+  // Paste your form link between the quotes to start receiving enquiries:
+  window.FORM_ENDPOINT='';
+  if(f)f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ep=(window.FORM_ENDPOINT||'').trim(),btn=f.querySelector('button[type=submit]'),note=f.querySelector('.err');
+    if(!note){note=document.createElement('p');note.className='err';note.style.cssText='color:#c0392b;font-size:.92rem;margin:10px 0 0';f.appendChild(note)}
+    note.textContent='';
+    if(!ep){console.error('FORM_ENDPOINT is empty');note.textContent="This form isn't connected yet. Please try again soon.";return}
+    var fd=new FormData(f);fd.append('page',document.title);btn.disabled=true;
+    fetch(ep,{method:'POST',body:fd,headers:{Accept:'application/json'}}).then(function(r){if(!r.ok)throw new Error(r.status);f.parentNode.classList.add('sent')}).catch(function(){btn.disabled=false;note.textContent='Something went wrong. Please try again.'});
+  });
+
+  // HUMAN word: wrap + colour-fill hover
+  var skip={SCRIPT:1,STYLE:1,TEXTAREA:1,INPUT:1,OPTION:1,SELECT:1,TITLE:1};
+  var re=/\bHUMAN\b/;
+  function walk(n){
+    if(n.nodeType===1){if(skip[n.tagName]||n.classList.contains('human-word'))return;[].slice.call(n.childNodes).forEach(walk)}
+    else if(n.nodeType===3&&re.test(n.nodeValue)){
+      var fr=document.createDocumentFragment();
+      n.nodeValue.split(/(\bHUMAN\b)/).forEach(function(p){
+        if(p==='HUMAN'){var s=document.createElement('span');s.className='human-word';s.setAttribute('data-t','HUMAN');s.textContent='HUMAN';fr.appendChild(s)}
+        else if(p)fr.appendChild(document.createTextNode(p));
+      });
+      n.parentNode.replaceChild(fr,n);
+    }
+  }
+  walk(document.body);
+  var COLS=['#ff9f1c','#39ff14','#00e5ff','#1f4bff','#ff2e93','#ffe600','#b100ff','#ff3b30'],idx=new WeakMap();
+  function wd(x){return x&&x.closest?x.closest('.human-word'):null}
+  document.addEventListener('mouseover',function(e){var w=wd(e.target);if(!w||w.contains(e.relatedTarget))return;idx.set(w,0);w.style.setProperty('--hm-prev','transparent');w.style.setProperty('--hm-cur',COLS[0]);w.classList.add('hm-on')});
+  document.addEventListener('mouseout',function(e){var w=wd(e.target);if(!w||w.contains(e.relatedTarget))return;w.classList.remove('hm-on')});
+  document.addEventListener('animationiteration',function(e){
+    if(e.animationName!=='hmFill')return;var w=e.target;if(!w.classList||!w.classList.contains('human-word'))return;
+    var i=idx.get(w)||0,n=(i+1)%COLS.length;w.style.setProperty('--hm-prev',COLS[i]);w.style.setProperty('--hm-cur',COLS[n]);idx.set(w,n);
+  });
+  document.addEventListener('dragstart',function(e){e.preventDefault()},true);
+})();
+</script></body></html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privacy Policy — HUMAN</title>
+    <link rel="icon" type="image/png" href="favicon.png?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #050505;
+            --orange: #FF6B00;
+            --offwhite: #FAFAF5;
+            --gray: #333333;
+            --text-muted: rgba(250, 250, 245, 0.7);
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            background-color: var(--black);
+            font-family: 'Inter', sans-serif;
+            color: var(--offwhite);
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 30px 60px; display: flex; justify-content: space-between; align-items: center;
+            box-sizing: border-box; z-index: 50;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .logo { height: 24px; object-fit: contain; }
+
+        .nav-btn {
+            width: 140px; height: 40px; display: flex; justify-content: center; align-items: center;
+            background: transparent; border: 1px solid rgba(255, 107, 0, 0.5);
+            color: var(--orange); font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em;
+            cursor: pointer; text-decoration: none; border-radius: 4px; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: var(--orange); color: var(--black); }
+
+        .hero {
+            padding: 180px 60px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--gray);
+        }
+        .hero h1 {
+            font-family: 'EB Garamond', serif;
+            font-size: 4rem;
+            font-weight: 400;
+            color: var(--orange);
+            margin: 0 0 1rem 0;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px;
+            gap: 80px;
+        }
+
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 120px;
+            height: max-content;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0; margin: 0;
+        }
+        .sidebar li {
+            margin-bottom: 15px;
+        }
+        .sidebar a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            display: block;
+            line-height: 1.4;
+        }
+        .sidebar a:hover {
+            color: var(--orange);
+        }
+
+        .content {
+            flex-grow: 1;
+            max-width: 740px;
+        }
+        .content section {
+            margin-bottom: 60px;
+            scroll-margin-top: 140px;
+        }
+        .content h2 {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--orange);
+            margin: 0 0 1.5rem 0;
+            font-weight: 500;
+            border-bottom: 1px solid var(--gray);
+            padding-bottom: 15px;
+        }
+        .content p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--offwhite);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        .content strong {
+            font-weight: 600;
+            color: var(--orange);
+        }
+        .content ul {
+            padding-left: 20px;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+        }
+        .content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        .content a {
+            color: var(--orange);
+            text-decoration: none;
+        }
+        .content a:hover {
+            text-decoration: underline;
+        }
+
+        .site-footer {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 60px;
+            border-top: 1px solid var(--gray);
+        }
+        .footer-left { display: flex; align-items: center; gap: 40px; }
+        .footer-logo { height: 20px; }
+        .footer-nav { display: flex; gap: 20px; }
+        .footer-nav a { color: var(--orange); text-decoration: none; font-size: 0.9rem; opacity: 0.8; }
+        .footer-nav a:hover { opacity: 1; }
+        .footer-right { color: var(--orange); font-size: 0.85rem; opacity: 0.6; }
+
+        @media (max-width: 900px) {
+            .container { flex-direction: column; gap: 40px; padding: 40px 20px; }
+            .sidebar { display: none; }
+            .hero { padding: 120px 20px 60px; }
+            .hero h1 { font-size: 3rem; }
+            header { padding: 20px; }
+            .site-footer { flex-direction: column; gap: 20px; padding: 40px 20px; text-align: center; }
+            .footer-left { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html"><img src="HUTE.png" alt="HUTE Logo" class="logo"></a>
+        <a href="index.html#join" class="nav-btn">Join Now</a>
+    </header>
+
+    <div class="hero">
+        <h1>Privacy Policy</h1>
+        <p>Last Updated: October 2026</p>
+    </div>
+
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="#introduction">1. Introduction</a></li>
+                <li><a href="#collect">2. Information We Collect</a></li>
+                <li><a href="#use">3. How We Use Your Information</a></li>
+                <li><a href="#ai-processing">4. AI Processing & Third Parties</a></li>
+                <li><a href="#sharing">5. Sharing and Disclosure</a></li>
+                <li><a href="#retention">6. Data Retention & Security</a></li>
+                <li><a href="#rights">7. Your Privacy Rights</a></li>
+                <li><a href="#children">8. Children's Privacy</a></li>
+                <li><a href="#contact">9. Contact Information</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <section id="introduction">
+                <h2>1. Introduction</h2>
+                <p>At HUMAN, operated by HUTE, Inc. ("[Insert ACN/ABN]"), we recognize that human connection involves deeply personal and sensitive information. This Privacy Policy details how we collect, use, protect, and share your personal data in accordance with the Australian Privacy Principles (APPs) under the <em>Privacy Act 1988</em> (Cth), the General Data Protection Regulation (GDPR), and other applicable global privacy laws.</p>
+            </section>
+
+            <section id="collect">
+                <h2>2. Information We Collect</h2>
+                <p>We collect information directly from you, automatically through your use of the platform, and via connected third-party services.</p>
+                <ul>
+                    <li><strong>Account & Identity:</strong> Name, phone number, email address, age verification, and government ID (if required for safety verification).</li>
+                    <li><strong>Relationships & Social Connections:</strong> Data regarding who you interact with, connection history, and relationship preferences to facilitate introductions.</li>
+                    <li><strong>Communications:</strong> The content of messages, emails, and authorised calls processed through HUMAN.</li>
+                    <li><strong>AI Twins & Likeness:</strong> Voice models, photographs, digital likenesses, and conversational memory utilized to generate and contextualize your personal AI and AI Twin.</li>
+                    <li><strong>Location Data:</strong> Precise GPS coordinates (when live location sharing is actively enabled for meetings) and approximate geographic location (for nearby discovery).</li>
+                    <li><strong>Financial Information:</strong> Transaction histories and payment metadata (Note: we do not store raw credit card numbers; these are handled directly by our PCI-compliant payment processors).</li>
+                    <li><strong>Technical Data:</strong> IP addresses, device identifiers, cookies, and analytics regarding how you interact with our platform.</li>
+                </ul>
+            </section>
+
+            <section id="use">
+                <h2>3. How We Use Your Information</h2>
+                <p>We strictly utilize your data to operate, secure, and personalize the HUMAN platform.</p>
+                <ul>
+                    <li>To facilitate human matching, real-world introductions, and nearby discovery.</li>
+                    <li>To power your personal AI and contextualize your AI Twin's interactions.</li>
+                    <li>To authenticate your account and process payments.</li>
+                    <li>To enforce our Trust and Safety guidelines, detect fraud, and prevent harassment.</li>
+                    <li>To comply with legal and regulatory obligations.</li>
+                </ul>
+                <p>We do not sell your personal information or private messages to data brokers.</p>
+            </section>
+
+            <section id="ai-processing">
+                <h2>4. AI Processing & Third Parties</h2>
+                <p><strong>4.1 Connected Accounts:</strong> When you link third-party services (e.g., calendars, email accounts), we only access data permitted by your explicitly granted OAuth scopes. You may revoke these permissions at any time.</p>
+                <p><strong>4.2 AI Model Providers:</strong> We utilize secure API connections to industry-leading Large Language Models to process natural language. We strictly maintain data processing agreements (DPAs) ensuring that <strong>your private data is not used by external model providers to train their foundational AI models.</strong></p>
+                <p><strong>4.3 Automated Decision-Making:</strong> We utilize algorithms to suggest potential connections and detect abusive behavior. You have the right to request human review of decisions that significantly affect your account standing.</p>
+            </section>
+
+            <section id="sharing">
+                <h2>5. Sharing and Disclosure</h2>
+                <p>We share your data only in explicitly defined circumstances:</p>
+                <ul>
+                    <li><strong>With Other Users:</strong> Information you choose to make public on your profile or explicitly share (like your live location) will be visible to authorised connections.</li>
+                    <li><strong>Service Providers:</strong> We share necessary data with cloud hosting providers, payment processors, and SMS gateways bound by strict confidentiality agreements.</li>
+                    <li><strong>Legal & Safety Obligations:</strong> We will disclose information if compelled by a lawful subpoena, court order, or if we believe in good faith that disclosure is necessary to prevent imminent physical harm, sexual exploitation, or severe illegal activity.</li>
+                    <li><strong>International Transfers:</strong> HUTE operates globally. Your data may be processed in Australia, the United States, or the European Union. We employ Standard Contractual Clauses (SCCs) where necessary.</li>
+                </ul>
+            </section>
+
+            <section id="retention">
+                <h2>6. Data Retention & Security</h2>
+                <p>We retain your personal data only as long as your account is active or as needed to provide you the Service and comply with our legal obligations. Private communications and live location telemetry are subjected to automated lifecycle deletion.</p>
+                <p>We implement robust encryption at rest and in transit, strict access controls, and regular vulnerability scanning. In the event of a notifiable data breach, we will inform you and relevant authorities in compliance with applicable law.</p>
+                <p>For more details on our defensive architecture, please review our <a href="security.html">Security & Trust</a> page.</p>
+            </section>
+
+            <section id="rights">
+                <h2>7. Your Privacy Rights</h2>
+                <p>Depending on your jurisdiction (including the GDPR and Australian Privacy Act), you possess the right to:</p>
+                <ul>
+                    <li><strong>Access & Portability:</strong> Request a copy of the personal data we hold about you.</li>
+                    <li><strong>Correction:</strong> Update inaccurate or incomplete information.</li>
+                    <li><strong>Deletion (Right to be Forgotten):</strong> Request the permanent deletion of your account and associated personal data (subject to legal retention requirements).</li>
+                    <li><strong>Revocation of Consent:</strong> Withdraw your consent for location sharing, third-party integrations, or AI twin hosting at any time through the app settings.</li>
+                </ul>
+                <p>To exercise these rights, contact us using the details below.</p>
+            </section>
+
+            <section id="children">
+                <h2>8. Children's Privacy</h2>
+                <p>HUMAN is strictly for individuals aged 18 and older. We do not knowingly collect personal data from anyone under 18. If we become aware that a minor has provided us with personal information, we will take immediate steps to delete the account and associated data.</p>
+            </section>
+
+            <section id="contact">
+                <h2>9. Contact Information</h2>
+                <p>If you have any questions, concerns, or wish to exercise your privacy rights, please contact our Privacy Officer:<br>
+                <strong>Email:</strong> [Insert Privacy Email Address]<br>
+                <strong>Mailing Address:</strong> Privacy Officer, HUTE, Inc., [Insert Registered Office Address, Sydney, NSW, Australia]</p>
+            </section>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-left">
+            <img src="HUTE.png" alt="HUMAN Logo" class="footer-logo">
+            <nav class="footer-nav">
+                <a href="#">Updates</a>
+                <a href="security.html">Security</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+            </nav>
+        </div>
+        <div class="footer-right">
+            HUMAN is a product of HUTE, Inc. &copy; 2026 HUTE, Inc.
+        </div>
+    </footer>
+
+</body>
+</html>

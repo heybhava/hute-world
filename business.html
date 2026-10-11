@@ -1,0 +1,434 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HUMAN for Business | HUMAN by HUTE</title>
+<meta name="description" content="HUMAN for Business: an AI-powered social network for your organisation. Private communities, verified people, real-world connections.">
+<link rel="icon" type="image/png" href="favicon.png?v=2">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+<script>document.documentElement.className+=" js";</script><style>
+:root{--cream:#FDFBF5;--ink:#121212;--grey:#5C5B57;--purple:#5E17EB;--lav:#E6DBFF;--line:rgba(18,18,18,.14);--serif:'EB Garamond',Georgia,serif;--sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{-webkit-user-drag:none;user-select:none}
+a{color:inherit}
+.wrap{width:min(1180px,100% - 48px);margin:0 auto}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(2.7rem,6.4vw,5.6rem);line-height:.98}
+h1 i,h2 i{font-style:italic}
+h2{font-size:clamp(2.1rem,4.6vw,3.9rem);line-height:1.04}
+h3{font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.1}
+p{margin:0 0 1em}
+.lead{font-size:clamp(1.05rem,1.5vw,1.3rem);color:var(--grey);max-width:640px}
+.eyebrow{display:inline-block;font:600 .74rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:18px}
+
+/* nav: cream floating bar with segmented For Business / For Education switch */
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(1180px,100% - 28px);z-index:100;display:flex;align-items:center;gap:14px;padding:10px 12px 10px 20px;background:rgba(253,251,245,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:2px solid rgba(18,18,18,.12);border-radius:22px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.brand img{height:28px;filter:brightness(0)}
+.brand span{font-family:var(--serif);font-size:2rem;line-height:1;letter-spacing:-.02em}
+.seg{display:flex;padding:4px;background:#E7E4D6;border:2px solid #DDD9C8;border-radius:999px;margin:0 auto 0 18px}
+.seg a{text-decoration:none;font-weight:500;font-size:.97rem;padding:10px 22px;border-radius:999px;transition:background .2s;white-space:nowrap}
+.seg a:hover{background:rgba(255,255,255,.6)}
+.seg a.on{background:#fff;box-shadow:inset 0 0 0 2px #E1DED0}
+.navr{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.nl{text-decoration:none;color:var(--grey);font-weight:500;font-size:.97rem;padding:10px 14px;border-radius:12px;transition:color .2s,background .2s}
+.nl:hover{color:var(--ink);background:rgba(18,18,18,.06)}
+.navr .btn{margin-left:8px}
+.burger{display:none;width:46px;height:46px;margin-left:8px;border:2px solid var(--ink);border-radius:12px;background:transparent;cursor:pointer;padding:0;align-items:center;justify-content:center;flex-direction:column;gap:4px;flex-shrink:0}
+.burger i{display:block;width:18px;height:2px;background:var(--ink);transition:transform .25s,opacity .25s}
+.nav.open .burger i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav.open .burger i:nth-child(2){opacity:0}
+.nav.open .burger i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.drop{display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;padding:8px;background:var(--cream);border:2px solid rgba(18,18,18,.12);border-radius:20px;box-shadow:0 24px 50px rgba(0,0,0,.14);flex-direction:column}
+.nav.open .drop{display:flex}
+.drop a{text-decoration:none;font-weight:500;font-size:1.05rem;padding:14px 16px;border-radius:12px}
+.drop a:hover,.drop a.on{background:rgba(18,18,18,.06)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 1rem/1 var(--sans);text-decoration:none;padding:15px 24px;border-radius:14px;background:var(--lav);color:var(--ink);border:1.5px solid var(--ink);cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 0 -2px rgba(18,18,18,.9)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.pur{background:var(--purple);color:#fff;border-color:var(--purple)}
+.btn.ghost{background:transparent}
+.btn.sm{padding:11px 18px;font-size:.92rem;border-radius:12px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+
+/* hero */
+.hero{padding:150px 0 80px}
+.hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero .tag{margin-top:34px;color:var(--grey);font-size:.98rem}
+.mock{border-radius:34px;background:radial-gradient(circle at 50% 30%,#35108f 0%,#16102b 55%,#0b0b10 100%);padding:20px 22px 26px;color:#fff;min-height:560px;display:flex;flex-direction:column;gap:14px;box-shadow:0 40px 90px rgba(94,23,235,.25);position:relative;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif}
+.mock .sb{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;font-weight:600;padding:0 6px;color:rgba(255,255,255,.92)}
+.mock .sb svg{height:12px;width:auto;fill:#fff;margin-left:6px}
+.mock .bar{display:flex;align-items:center;gap:12px;background:#fff;color:var(--ink);border-radius:999px;padding:9px 9px 9px 20px;font-size:1rem;min-height:56px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.mock .bar .t{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mock .bar .t::after{content:'';display:inline-block;width:2px;height:1.1em;background:var(--purple);margin-left:3px;vertical-align:-.15em;animation:bl .8s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.mock .go{width:38px;height:38px;border-radius:50%;background:var(--purple);display:grid;place-items:center;flex:none;transition:transform .2s}
+.mock .go.press{transform:scale(.88)}
+.mock .stage{position:relative;flex:1;display:flex;flex-direction:column;gap:10px;min-height:380px}
+.mock .srch{display:flex;align-items:center;gap:10px;font-size:.9rem;color:rgba(255,255,255,.75);padding:6px 8px;opacity:0;transition:opacity .25s;position:absolute;top:0;left:0;right:0}
+.mock .srch.on{opacity:1}
+.mock .srch i{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.mock .cnt{font-size:.78rem;color:rgba(255,255,255,.55);padding:4px 8px 0;opacity:0;transition:opacity .3s}.mock .cnt.on{opacity:1}
+.mock .card{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:12px 12px 12px 12px;opacity:0;transform:translateY(14px) scale(.98);transition:opacity .45s,transform .45s}
+.mock .card.on{opacity:1;transform:none}
+.mock .av{width:46px;height:46px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:600;font-size:.95rem;color:#fff;position:relative;box-shadow:inset 0 0 0 2px rgba(255,255,255,.25)}
+.mock .av::after{content:'';position:absolute;right:0;bottom:1px;width:11px;height:11px;border-radius:50%;background:#34D27B;border:2px solid #1b1536}
+.mock .meta{flex:1;min-width:0}
+.mock .nm{font-size:.98rem;font-weight:600;display:flex;align-items:center;gap:5px;line-height:1.25}
+.mock .nm svg{width:14px;height:14px;flex:none}
+.mock .sub{font-size:.8rem;color:rgba(255,255,255,.62);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mock .tg{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.mock .tg b{font-weight:500;font-size:.7rem;padding:3px 9px;border-radius:999px;background:rgba(124,77,255,.28);color:#D9CCFF}
+.mock .tg b.g{background:rgba(52,210,123,.18);color:#8EF0BC}
+.mock .ask{flex:none;font:600 .8rem/1 inherit;padding:10px 14px;border-radius:999px;background:#fff;color:#111;border:0;transition:background .3s,color .3s,transform .2s;white-space:nowrap}
+.mock .ask.sent{background:rgba(52,210,123,.2);color:#8EF0BC}
+.mock .ask.press{transform:scale(.92)}
+.mock .mplan{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.94);color:#111;border-radius:20px;padding:12px 14px;opacity:0;transform:translateY(18px);transition:opacity .45s,transform .45s;box-shadow:0 18px 40px rgba(0,0,0,.35);margin-top:2px}
+.mock .mplan.on{opacity:1;transform:none}
+.mock .mplan .ic{width:36px;height:36px;border-radius:10px;background:var(--purple);display:grid;place-items:center;flex:none;font-family:var(--serif);color:#fff;font-size:1.3rem;line-height:1}
+.mock .mplan b{display:block;font-size:.9rem}.mock .mplan span{font-size:.8rem;color:#555}
+.mock .mplan .ok{margin-left:auto;width:24px;height:24px;border-radius:50%;background:#34D27B;display:grid;place-items:center;flex:none}
+.mock .ill{position:absolute;right:20px;bottom:8px;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+
+/* band */
+.band{background:var(--ink);color:#fff;padding:54px 0}
+.band .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.band .c{font-family:var(--serif);font-size:clamp(1.7rem,3.2vw,2.8rem);line-height:1.05;border-top:1px solid rgba(255,255,255,.25);padding-top:18px}
+.band .c i{display:block;font-family:var(--sans);font-style:normal;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px}
+.band.one{text-align:center}.band.one .c{border:0;padding:0;font-size:clamp(1.5rem,3vw,2.4rem)}
+
+/* sections */
+.sec{padding:clamp(70px,10vw,130px) 0}
+.sec.dark{background:var(--ink);color:#fff}
+.sec.dark .lead,.sec.dark p{color:rgba(255,255,255,.72)}
+.sec.dark .eyebrow{color:#B79BFF}
+.sec.tint{background:#F5F1E6}
+.head{max-width:860px;margin-bottom:clamp(36px,5vw,64px)}
+.head.c{margin-inline:auto;text-align:center}.head.c .lead{margin-inline:auto}
+.story{max-width:760px}
+.story p{font-size:clamp(1.1rem,1.7vw,1.4rem);color:var(--grey)}
+.story p.big{font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.5rem);line-height:1.12;color:var(--ink)}
+.sec.dark .story p{color:rgba(255,255,255,.72)}.sec.dark .story p.big{color:#fff}
+.outro{margin-top:clamp(34px,5vw,60px);font-family:var(--serif);font-size:clamp(1.6rem,3.2vw,2.7rem);line-height:1.1;max-width:900px}
+.outro i{color:var(--purple)}.sec.dark .outro i{color:#B79BFF}
+.after{margin-top:26px;color:var(--grey);max-width:720px;font-size:1.1rem}.sec.dark .after{color:rgba(255,255,255,.72)}
+
+/* prompt bubbles */
+.bubbles{display:flex;flex-wrap:wrap;gap:12px 14px}
+.bub{background:#007AFF;color:#fff;padding:11px 18px;border-radius:20px;font-size:clamp(.98rem,1.4vw,1.15rem);line-height:1.35;letter-spacing:-.01em;max-width:100%;transition:transform .25s}
+.bub:hover{transform:translateY(-3px) rotate(-.6deg)}
+.reply{margin-top:28px;display:inline-block;background:#E9E9EB;color:#000;padding:13px 20px;border-radius:20px;max-width:640px;font-size:1.05rem;line-height:1.4}
+
+/* feature blocks */
+.blk{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,80px);align-items:center;padding:clamp(28px,4vw,52px) 0}
+.blk:nth-child(even) .vis{order:2}
+.blk .vis{border-radius:30px;min-height:340px;padding:30px;display:flex;flex-wrap:wrap;align-content:flex-end;gap:10px;position:relative;overflow:hidden;border:1.5px solid rgba(18,18,18,.9)}
+.blk .vis .n{position:absolute;left:26px;top:14px;font-family:var(--serif);font-size:clamp(5rem,10vw,8rem);line-height:1;opacity:.9}
+.chip{background:#fff;color:#111;border-radius:999px;padding:9px 16px;font-size:.95rem;font-weight:500;border:1.5px solid #111;transform:rotate(var(--r,0deg))}
+.blk h3{margin-bottom:14px}.blk p{color:var(--grey);font-size:1.12rem;max-width:520px}
+.sec.dark .blk p{color:rgba(255,255,255,.72)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(var(--n,5),1fr);gap:16px;counter-reset:s}
+.step{border:1.5px solid var(--line);border-radius:24px;padding:26px 22px 28px;background:#fff;position:relative;transition:transform .25s}
+.step:hover{transform:translateY(-4px)}
+.step .no{font-family:var(--serif);font-size:3rem;line-height:1;color:var(--purple);margin-bottom:34px;display:block}
+.step h3{font-size:1.5rem;margin-bottom:10px}.step p{color:var(--grey);font-size:.98rem;margin:0}
+.sec.dark .step{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.16)}.sec.dark .step .no{color:#B79BFF}.sec.dark .step p{color:rgba(255,255,255,.7)}
+
+/* lists */
+.lists{display:grid;grid-template-columns:repeat(var(--n,1),1fr);gap:28px}
+.lbox h3{margin-bottom:16px}
+.ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ul li{display:flex;gap:12px;align-items:flex-start;font-size:1.06rem;padding:14px 0;border-bottom:1px solid var(--line)}
+.sec.dark .ul li{border-color:rgba(255,255,255,.16)}
+.ul li::before{content:'';flex:none;width:9px;height:9px;border-radius:50%;background:var(--purple);margin-top:.55em}
+.sec.dark .ul li::before{background:#B79BFF}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:start}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 22px;padding-top:14px}
+.card{position:relative;border:1.5px solid var(--ink);border-radius:26px;padding:34px 26px 28px;background:#fff;transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 0 -6px var(--ink)}
+.card .pill{position:absolute;top:-15px;left:24px;padding:6px 16px;border-radius:999px;border:1.5px solid var(--ink);font:600 .82rem/1 var(--sans)}
+.card h3{font-size:1.55rem;margin-bottom:10px}.card p{margin:0;color:var(--grey);font-size:1rem}
+.sec.dark .card{background:#1b1b1f;border-color:rgba(255,255,255,.85)}.sec.dark .card p{color:rgba(255,255,255,.7)}
+.cards.c4{grid-template-columns:repeat(2,1fr)}
+
+/* statement */
+.state{margin-top:clamp(34px,5vw,60px);border-radius:30px;background:var(--purple);color:#fff;padding:clamp(30px,5vw,60px);font-family:var(--serif);font-size:clamp(1.7rem,3.6vw,3rem);line-height:1.08}
+
+/* pricing */
+.price{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 22px;padding-top:16px;align-items:stretch}
+.plan{position:relative;border:1.5px solid var(--ink);border-radius:30px;padding:46px 28px 30px;background:#fff;display:flex;flex-direction:column;text-align:center}
+.plan .pill{position:absolute;top:-16px;left:50%;transform:translateX(-50%);padding:7px 20px;border-radius:999px;border:1.5px solid var(--ink);font:600 .9rem/1 var(--sans);white-space:nowrap}
+.plan .amt{font-family:var(--serif);font-size:2.6rem;line-height:1;margin:6px 0 18px}
+.plan p{color:var(--grey);flex:1}
+.fine{margin-top:26px;color:var(--grey);font-size:.98rem}
+.fine p{margin:0 0 6px}
+
+/* faq */
+.faq{max-width:860px}
+.q{border-bottom:1.5px solid var(--line)}
+.q button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;cursor:pointer;font-family:var(--serif);font-size:clamp(1.3rem,2.2vw,1.8rem);line-height:1.15}
+.q button:focus-visible{outline:2px solid var(--purple);outline-offset:4px;border-radius:6px}
+.q .pm{flex:none;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--ink);position:relative;transition:transform .3s,background .3s}
+.q .pm::before,.q .pm::after{content:'';position:absolute;left:50%;top:50%;width:12px;height:1.5px;background:var(--ink);transform:translate(-50%,-50%)}
+.q .pm::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .3s}
+.q.open .pm{background:var(--lav);transform:rotate(180deg)}.q.open .pm::after{transform:translate(-50%,-50%) rotate(0)}
+.q .a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.q.open .a{grid-template-rows:1fr}
+.q .a>div{overflow:hidden}
+.q .a p{margin:0 0 26px;color:var(--grey);font-size:1.1rem;max-width:720px}
+
+/* close */
+.close{background:var(--ink);color:#fff;padding:clamp(80px,11vw,140px) 0}
+.close .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,6vw,90px);align-items:center}
+.close h2{margin-bottom:22px}.close p{color:rgba(255,255,255,.75);font-size:1.2rem}
+.form{background:#fff;color:var(--ink);border-radius:30px;padding:30px}
+.form h3{font-size:1.7rem;margin-bottom:6px}.form .s{color:var(--grey);font-size:.95rem;margin-bottom:20px}
+.f{display:block;margin-bottom:14px}.f span{display:block;font-size:.8rem;font-weight:600;margin-bottom:6px}
+.f input,.f select{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:14px;font:400 16px var(--sans);background:var(--cream);color:var(--ink)}
+.f input:focus,.f select:focus{outline:none;border-color:var(--purple)}
+.form .btn{width:100%;margin-top:6px}
+.thanks{display:none;text-align:center;padding:30px 6px}.thanks h3{margin-bottom:8px}
+.form.sent form{display:none}.form.sent .thanks{display:block}
+
+/* footer */
+.ft{background:var(--ink);color:#fff;text-align:center;padding:30px 20px 60px;border-top:1px solid rgba(255,255,255,.12)}
+.ft .brandbig{display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,28px);margin-bottom:30px}
+.ft .brandbig img{height:clamp(4rem,12vw,12rem);filter:invert(1)}
+.ft .brandbig b{font-family:var(--serif);font-weight:500;font-size:clamp(4rem,12vw,12rem);line-height:1;letter-spacing:-.02em;white-space:nowrap}
+.ft p{color:rgba(255,255,255,.6);max-width:620px;margin:0 auto 10px}
+.ft .soc{display:flex;gap:24px;justify-content:center;margin:34px 0 18px}
+.ft .soc a{color:rgba(255,255,255,.55);transition:color .2s,transform .2s;display:flex}.ft .soc a:hover{color:#fff;transform:translateY(-2px)}
+.ft .soc svg{width:22px;height:22px;fill:currentColor}
+.ft .leg{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;font-size:.92rem}.ft .leg a{color:rgba(255,255,255,.55);text-decoration:none}.ft .leg a:hover{color:#fff}
+.ft .cp{margin-top:16px;color:rgba(255,255,255,.35);font-size:.85rem}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.js .rv.in{opacity:1;transform:none}
+
+/* HUMAN word hover */
+.human-word{position:relative;display:inline-block;white-space:nowrap}
+.human-word::before,.human-word::after{content:attr(data-t);position:absolute;left:0;top:0;width:100%;height:100%;font:inherit;letter-spacing:inherit;line-height:inherit;font-style:inherit;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;pointer-events:none;opacity:0;transition:opacity .2s}
+.human-word::before{background-color:var(--hm-prev,transparent)}
+.human-word::after{background-color:var(--hm-cur,#ff9f1c);clip-path:circle(0% at 50% 100%)}
+.human-word.hm-on::before,.human-word.hm-on::after{opacity:1}
+.human-word.hm-on::after{animation:hmFill .7s cubic-bezier(.35,.55,.3,1) infinite}
+@keyframes hmFill{0%{clip-path:circle(0% at 50% 100%)}100%{clip-path:circle(115% at 50% 100%)}}
+
+/* responsive */
+@media(max-width:980px){
+  .hero .grid,.close .grid,.two{grid-template-columns:1fr}
+  .hero{padding-top:130px}
+  .blk{grid-template-columns:1fr}.blk:nth-child(even) .vis{order:0}
+  .steps{grid-template-columns:repeat(2,1fr)}.steps .step:last-child:nth-child(odd){grid-column:1/-1}
+  .cards,.price{grid-template-columns:1fr 1fr}
+  .band .cols{grid-template-columns:1fr}
+}
+@media(max-width:1000px){
+  .seg,.nl{display:none}
+  .burger{display:flex}
+}
+@media(max-width:520px){
+  .nav{padding:8px 8px 8px 14px;border-radius:18px;top:10px;width:calc(100% - 20px)}
+  .brand span{font-size:1.6rem}
+  .navr .btn{padding:11px 14px;font-size:.9rem;margin-left:0}
+  .burger{width:42px;height:42px;margin-left:6px}
+}
+@media(max-width:620px){
+  .wrap{width:calc(100% - 36px)}
+  .brand span{font-size:1.6rem}
+  .steps,.cards,.price,.cards.c4{grid-template-columns:1fr}
+  .btn{padding:14px 20px}.btns .btn{flex:1 1 100%}
+  .mock{padding:16px 14px 22px;min-height:540px;border-radius:28px}.mock .tg b:nth-child(n+3){display:none}
+  .blk .vis{min-height:260px;padding:22px}
+  .form{padding:22px}
+  .q button{padding:20px 0}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none}}
+</style></head><body>
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="index.html"><img src="HUTE.png" alt="HUTE"><span>HUMAN</span></a>
+  <div class="seg" role="group" aria-label="HUMAN for">
+    <a href="business.html" class="on">For Business</a>
+    <a href="education.html">For Education</a>
+  </div>
+  <div class="navr"><a class="nl" href="index.html">Home</a><a class="nl" href="#faq">FAQs</a>
+    <a class="btn sm" href="#contact"><span>Bring HUMAN to your company</span></a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="drop"><i></i><i></i><i></i></button></div>
+  <div class="drop" id="drop">
+    <a href="business.html" class="on">For Business</a>
+    <a href="education.html">For Education</a>
+    <a href="index.html">Home</a>
+    <a href="#faq">FAQs</a>
+  </div>
+</nav>
+<header class="hero"><div class="wrap grid">
+  <div class="rv"><span class="eyebrow">HUMAN for Business</span><h1>A company of thousands. <i>A community of people.</i></h1>
+  <div style="margin-top:26px"><p class="lead">Your workplace is filled with people you haven&#x27;t met. Future friends. Running partners. People who love the same music, speak the same language, share your interests, or simply want someone to grab coffee with.</p><p class="lead">HUMAN brings them together.</p><p class="lead">An AI-powered social network for your organisation. Find the right people, create meaningful connections, and make more of life together.</p></div>
+  <div class="btns"><a class="btn" href="#contact"><span>Bring HUMAN to your company</span></a><a class="btn ghost" href="#how"><span>See how it works</span></a></div>
+  <p class="tag">Private communities. Verified people. Real-world connections.</p></div>
+  <div class="mock rv" aria-hidden="true">
+    <div class="sb"><span>9:41</span><span><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 26 12"><rect x="0.5" y="0.5" width="22" height="11" rx="3" fill="none" stroke="#fff" opacity=".6"/><rect x="2" y="2" width="17" height="8" rx="2"/><rect x="24" y="4" width="2" height="4" rx="1"/></svg></span></div>
+    <div class="bar"><span class="t" id="typer"></span><span class="go" id="go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div>
+    <div class="stage"><div class="srch" id="srch"><i></i><span>Searching your community&hellip;</span></div><div class="cnt" id="cnt"></div><div id="res" style="display:flex;flex-direction:column;gap:10px"></div>
+    <div class="mplan" id="plan"><span class="ic">H</span><div><b id="plan-t"></b><span id="plan-s"></span></div><span class="ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div></div>
+    <span class="ill">Illustrative</span>
+  </div>
+</div></header>
+<div class="band"><div class="wrap cols"><div class="c rv"><i>01</i>Private communities.</div><div class="c rv"><i>02</i>Verified people.</div><div class="c rv"><i>03</i>Real-world connections.</div></div></div>
+<section class="sec"><div class="wrap"><div class="head rv"><h2>Great companies bring people together. <i>HUMAN helps them find each other.</i></h2></div><div class="story rv"><p>The person sitting two floors above you might become your closest friend. Someone in another office might share your greatest passion. Your next adventure might begin with someone you&#x27;ve never spoken to.</p>
+<p>But most of those connections never happen.</p>
+<p>Not because people aren&#x27;t interested. Because discovering one another is harder than it should be.</p>
+<p class="big">HUMAN changes that.</p>
+<p>Your entire organisation becomes a world of people you can actually connect with.</p></div></div></section>
+<section class="sec tint" id="how"><div class="wrap"><div class="head rv"><h2>Find your people. <i>Just ask.</i></h2><p class="lead">Forget endless directories, profile scrolling, awkward introductions, and hoping you&#x27;ll run into someone.</p><p class="lead">Simply tell HUMAN who you&#x27;d like to meet.</p></div><div class="bubbles"><span class="bub rv">&quot;Find someone who wants to play tennis after work.&quot;</span><span class="bub rv">&quot;I just moved to New York. Who wants to explore the city?&quot;</span><span class="bub rv">&quot;Find people who love photography and filmmaking.&quot;</span><span class="bub rv">&quot;Who wants to get coffee this afternoon?&quot;</span><span class="bub rv">&quot;Find someone who can teach me guitar.&quot;</span><span class="bub rv">&quot;Who else is going hiking this weekend?&quot;</span><span class="bub rv">&quot;Find other new joiners who want to make friends.&quot;</span><span class="bub rv">&quot;I&#x27;d like to meet someone new from another office.&quot;</span></div><div class="reply rv">HUMAN understands what you&#x27;re looking for, discovers interested people, and helps create an introduction when both sides agree.</div><div class="outro rv">From wanting to meet someone to <i>actually meeting them.</i></div></div></section>
+<section class="sec"><div class="wrap"><div class="head rv"><h2>Every kind of connection. <i>One place.</i></h2></div><div class="blk rv"><div class="vis" style="background:#FF6A00;color:#111111"><span class="n">01</span><span class="chip" style="--r:-3deg">Hobbies</span><span class="chip" style="--r:2deg">Interests</span><span class="chip" style="--r:-1.5deg">Humour</span><span class="chip" style="--r:3deg">Outlook on life</span></div><div><h3>Find your circle.</h3><p>Meet people who share your hobbies, interests, humour, and outlook on life. Build friendships beyond your immediate team.</p></div></div><div class="blk rv"><div class="vis" style="background:#39FF14;color:#111111"><span class="n">02</span><span class="chip" style="--r:-3deg">Gym partners</span><span class="chip" style="--r:2deg">Hiking groups</span><span class="chip" style="--r:-1.5deg">Runners</span><span class="chip" style="--r:3deg">Musicians</span><span class="chip" style="--r:-2deg">Gamers</span><span class="chip" style="--r:1.5deg">Food lovers</span></div><div><h3>Do something together.</h3><p>Find gym partners, hiking groups, runners, musicians, gamers, food lovers, and people who want to make plans.</p></div></div><div class="blk rv"><div class="vis" style="background:#1F4BFF;color:#FFFFFF"><span class="n">03</span><span class="chip" style="--r:-3deg">New city</span><span class="chip" style="--r:2deg">New office</span><span class="chip" style="--r:-1.5deg">People who know the place</span></div><div><h3>Make somewhere new feel like home.</h3><p>Moving cities or joining a new office? Find people who know the place, share your interests, or want to discover it alongside you.</p></div></div><div class="blk rv"><div class="vis" style="background:#FF2E93;color:#111111"><span class="n">04</span><span class="chip" style="--r:-3deg">Teach</span><span class="chip" style="--r:2deg">Share experiences</span><span class="chip" style="--r:-1.5deg">Exchange ideas</span></div><div><h3>Learn from each other.</h3><p>Find people willing to teach, share experiences, exchange ideas, and introduce you to something new.</p></div></div><div class="blk rv"><div class="vis" style="background:#FFE600;color:#111111"><span class="n">05</span><span class="chip" style="--r:-3deg">Other teams</span><span class="chip" style="--r:2deg">Other cities</span><span class="chip" style="--r:-1.5deg">Other time zones</span></div><div><h3>Meet beyond your department.</h3><p>An organisation can have thousands of people separated by buildings, teams, cities, and time zones. HUMAN makes voluntary connections across those boundaries possible.</p></div></div><div class="blk rv"><div class="vis" style="background:#00E5FF;color:#111111"><span class="n">06</span><span class="chip" style="--r:-3deg">Separate opt-in</span><span class="chip" style="--r:2deg">Private from employers</span><span class="chip" style="--r:-1.5deg">Where permitted</span></div><div><h3>Discover people open to dating.</h3><p>Where permitted by organisational policy, eligible adults can separately opt in to a private dating experience. Participation and romantic preferences remain private from employers, with safeguards for workplace power imbalances.</p></div></div><div class="outro rv">Different intentions. Different people. <i>One HUMAN.</i></div></div></section>
+<section class="sec dark"><div class="wrap"><div class="head rv"><h2>Not just another match. <i>An actual meeting.</i></h2><p class="lead">Finding the right person is only the beginning.</p><p class="lead">HUMAN is designed to help with everything that happens next.</p></div><div class="steps" style="--n:5"><div class="step rv" style="transition-delay:0ms"><span class="no">01</span><h3>Tell HUMAN what you want.</h3><p>A coffee, a friend, a tennis partner, a conversation, or a new experience.</p></div><div class="step rv" style="transition-delay:80ms"><span class="no">02</span><h3>Discover the right people.</h3><p>Personal AI understands interests, intentions, availability, and what someone has chosen to share.</p></div><div class="step rv" style="transition-delay:160ms"><span class="no">03</span><h3>Connect when it&#x27;s mutual.</h3><p>Introductions happen through voluntary requests and consent. Nobody is forced into a conversation.</p></div><div class="step rv" style="transition-delay:240ms"><span class="no">04</span><h3>Let HUMAN handle the details.</h3><p>Once people agree, HUMAN can help coordinate messages, suggest meeting times, and organise plans with permission.</p></div><div class="step rv" style="transition-delay:320ms"><span class="no">05</span><h3>Take the connection into real life.</h3><p>Meet for coffee. Go running. Join an activity. Have a conversation. Build something meaningful.</p></div></div><div class="outro rv">Less searching. Less awkwardness. <i>More life.</i></div></div></section>
+<section class="sec"><div class="wrap"><div class="two"><div class="rv"><div class="head" style="margin-bottom:24px"><h2>Your communities should feel <i>alive.</i></h2></div><div class="story"><p>Every great company already has communities waiting to happen.</p>
+<p>Runners. Musicians. New parents. Book lovers. Football fans. Travellers. Gamers. People new to the city.</p>
+<p>HUMAN gives people a way to find, join, and create their own circles.</p></div></div><div class="rv"><h3 style="margin-bottom:12px">Inside HUMAN communities:</h3><ul class="ul"><li>Discover groups built around shared interests.</li><li>Find people nearby who are interested in the same activities.</li><li>Organise spontaneous meetups and recurring gatherings.</li><li>Invite other members to join plans.</li><li>Let personal AI assist with introductions and scheduling.</li><li>Make friends beyond existing teams and social circles.</li></ul></div></div><div class="outro rv">A community isn't a channel with a thousand members. <i>It's people actually spending time together.</i></div></div></section>
+<section class="sec dark"><div class="wrap"><div class="head rv"><h2>Your company might span the world. <i>Connection shouldn't stop at the office.</i></h2></div><div class="story rv"><p>Employees travel. Relocate. Work from home. Join unfamiliar teams. Move across continents.</p>
+<p>HUMAN connects people across the organisation without requiring them to share a desk, floor, department, or city.</p>
+<p>Find people nearby when you&#x27;re travelling. Discover colleagues in a new location. Maintain friendships across offices. Make plans before you arrive.</p>
+<p class="big">Your community goes wherever its people go.</p></div></div></section>
+<section class="sec"><div class="wrap"><div class="two"><div class="rv"><div class="head" style="margin-bottom:24px"><h2>Everyone gets their <i>own HUMAN.</i></h2></div><div class="story"><p>HUMAN isn&#x27;t an enterprise directory with AI added to it.</p>
+<p>It&#x27;s a personal AI-powered human network that belongs to each individual.</p>
+<p>Your organisation provides access to its private community. Your personal HUMAN identity can continue with you beyond that community, subject to other people&#x27;s privacy and consent.</p></div></div><div class="rv"><h3 style="margin-bottom:12px">It can help you:</h3><ul class="ul"><li>Discover people you actually want to meet.</li><li>Manage messages, calls, and conversations.</li><li>Remember important relationships, shared moments, and commitments.</li><li>Grow your network through relevant, consented introductions.</li><li>Coordinate plans and complete authorised tasks.</li><li>Create a personal AI twin that can represent you within permissions you control.</li><li>Explore human connections through emerging wearable and spatial interfaces.</li></ul></div></div><div class="outro rv">The institution brings people together. <i>HUMAN stays with the individual.</i></div></div></section>
+<section class="sec tint"><div class="wrap"><div class="head rv"><h2>Built for people's lives. <i>Not employee surveillance.</i></h2><p class="lead">Personal relationships are personal.</p><p class="lead">Your employer should not see whom you&#x27;re romantically interested in, whom you&#x27;ve privately messaged, or what you ask your personal AI.</p><p class="lead">HUMAN for Business is designed around a clear separation between organisational administration and individual social life.</p></div><div class="cards"><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#FF6A00;color:#111111">For individuals</span><h3>Your choices</h3><p>Control your discoverability, intentions, communication preferences, AI permissions, introduction requests, and participation.</p></div><div class="card rv" style="transition-delay:80ms"><span class="pill" style="background:#39FF14;color:#111111">For organisations</span><h3>Your community</h3><p>Control eligibility, membership, community access, organisational settings, safety escalation procedures, and approved features.</p></div><div class="card rv" style="transition-delay:160ms"><span class="pill" style="background:#1F4BFF;color:#FFFFFF">For everyone</span><h3>Safe and private</h3><p>Private conversations remain private. Reporting and blocking tools help people feel safe. Organisational reporting focuses on aggregate adoption and community participation—not individual social behaviour.</p></div></div><div class="state rv">Your community belongs to your organisation. Your relationships belong to you.</div></div></section>
+<section class="sec"><div class="wrap"><div class="head rv"><h2>A better experience for every stage of the <i>employee journey.</i></h2></div><div class="cards"><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#39FF14;color:#111111">First day</span><h3>First day</h3><p>Help a new employee discover people who share their interests before their first office lunch.</p></div><div class="card rv" style="transition-delay:80ms"><span class="pill" style="background:#1F4BFF;color:#FFFFFF">First month</span><h3>First month</h3><p>Introduce new joiners to local activities, voluntary social groups, and people outside their immediate teams.</p></div><div class="card rv" style="transition-delay:160ms"><span class="pill" style="background:#FF2E93;color:#111111">New city</span><h3>New city</h3><p>Give relocating employees an easier way to meet people and build a new circle.</p></div><div class="card rv" style="transition-delay:0ms"><span class="pill" style="background:#FFE600;color:#111111">Everyday life</span><h3>Everyday life</h3><p>Make spontaneous coffee, lunch, exercise, and shared activities easier to organise.</p></div><div class="card rv" style="transition-delay:80ms"><span class="pill" style="background:#00E5FF;color:#111111">Across the world</span><h3>Across the world</h3><p>Bring together people across offices and geographies through common interests.</p></div><div class="card rv" style="transition-delay:160ms"><span class="pill" style="background:#5E17EB;color:#FFFFFF">Beyond the workplace</span><h3>Beyond the workplace</h3><p>Help people form genuine friendships that aren&#x27;t limited to business conversations.</p></div></div><div class="outro rv">People shouldn't have to wait years to feel part of a community.</div></div></section>
+<section class="sec dark"><div class="wrap"><div class="head rv"><h2>Simple for people. <i>Thoughtful for organisations.</i></h2></div><div class="steps" style="--n:4"><div class="step rv" style="transition-delay:0ms"><span class="no">01</span><h3>Create your private community.</h3><p>Choose who is eligible to join. Connect supported verification methods and configure your organisation&#x27;s community.</p></div><div class="step rv" style="transition-delay:80ms"><span class="no">02</span><h3>Invite your people.</h3><p>Members join HUMAN, verify their membership, and choose what they want their personal AI to know and share.</p></div><div class="step rv" style="transition-delay:160ms"><span class="no">03</span><h3>Let connections happen.</h3><p>People search, explore interests, form groups, exchange mutually accepted introductions, and meet.</p></div><div class="step rv" style="transition-delay:240ms"><span class="no">04</span><h3>Understand community participation.</h3><p>See privacy-preserving, aggregate signals showing how the experience is being adopted, without accessing individual relationships.</p></div></div><div class="outro rv">One organisation. <i>Thousands of personal experiences.</i></div></div></section>
+<section class="sec"><div class="wrap"><div class="head rv"><h2>Everything your organisation needs to <i>get started.</i></h2></div><div class="lists" style="--n:2"><div class="lbox rv"><h3>Organisation management</h3><ul class="ul"><li>Verified membership and access controls</li><li>Organisation-specific private communities</li><li>Configurable community settings</li><li>Member onboarding and invitations</li><li>Organisation-level branding options</li></ul></div><div class="lbox rv"><h3>Community management</h3><ul class="ul"><li>Interest groups and activities</li><li>Opt-in discovery and matching</li><li>Organised events and voluntary gatherings</li><li>Community guidelines and moderation</li><li>Blocking, reporting, and safety workflows</li></ul></div><div class="lbox rv"><h3>Enterprise requirements</h3><ul class="ul"><li>Planned SSO and supported identity integrations</li><li>Role-based administration</li><li>Access removal when membership ends</li><li>Data retention and deletion policies</li><li>Accessibility and procurement documentation</li><li>Aggregate usage and participation reporting</li><li>Security review and contractual support</li></ul></div><div class="lbox rv"><h3>Personal privacy</h3><ul class="ul"><li>Individual visibility controls</li><li>Consent-based introductions</li><li>Separate personal and institutional data</li><li>Permissioned AI activity</li><li>No employer access to private dating activity or personal messages</li></ul></div></div></div></section>
+<section class="sec tint"><div class="wrap"><div class="head c rv"><h2>One HUMAN. <i>Built for organisations of every size.</i></h2></div><div class="price"><div class="plan rv" style="transition-delay:0ms"><span class="pill" style="background:#FF6A00;color:#111111">Pilot</span><div class="amt">Tailored</div><p>Start with a single office, community, or employee cohort. Introduce HUMAN to a focused group and measure genuine participation.</p><a class="btn " href="#contact"><span>Request a pilot</span></a></div><div class="plan rv" style="transition-delay:90ms"><span class="pill" style="background:#1F4BFF;color:#FFFFFF">Business</span><div class="amt">Tailored</div><p>Bring HUMAN to multiple teams, offices, and interest communities with central membership administration and community settings.</p><a class="btn dark" href="#contact"><span>Talk to sales</span></a></div><div class="plan rv" style="transition-delay:180ms"><span class="pill" style="background:#FFE600;color:#111111">Enterprise</span><div class="amt">Tailored</div><p>Support large organisations, global offices, enterprise identity requirements, and custom institutional agreements.</p><a class="btn " href="#contact"><span>Contact our team</span></a></div></div><div class="fine rv"><p>Pricing is tailored to community size, deployment scope, and institutional requirements.</p></div></div></section>
+<section class="sec" id="faq"><div class="wrap"><div class="head rv"><h2>Frequently asked <i>questions.</i></h2></div><div class="faq"><div class="q rv"><button type="button" aria-expanded="false"><span>Is HUMAN another workplace communication tool?</span><span class="pm"></span></button><div class="a"><div><p>No. HUMAN for Business is primarily about helping people form relationships, make friends, discover shared interests, and enjoy life within a verified community. Personal AI communication and coordination support those connections.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Can employees use HUMAN for dating?</span><span class="pm"></span></button><div class="a"><div><p>An optional adults-only dating experience may be offered where appropriate and permitted by organisational policy. It requires separate opt-in, private preferences, reporting and blocking protections, and safeguards against inappropriate workplace power dynamics. The employer does not receive dating activity data.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Can our employees meet people outside the organisation?</span><span class="pm"></span></button><div class="a"><div><p>Yes. HUMAN&#x27;s wider consumer network is separate from the employer community. Individuals choose where they are discoverable and whom they interact with.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Can administrators read conversations?</span><span class="pm"></span></button><div class="a"><div><p>No. Administrative access should not include private conversations, romantic preferences, personal relationship histories, or individual AI queries. Limited access to reported material may be required for safety investigations, according to disclosed policies.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>What happens when someone leaves the company?</span><span class="pm"></span></button><div class="a"><div><p>They lose access to the verified company community. Their personal HUMAN account and permitted personal relationships can remain theirs, without retaining unauthorised organisational data.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Does every employee have to participate?</span><span class="pm"></span></button><div class="a"><div><p>No. The experience should be voluntary and built around individual choice.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Can we start with one department or location?</span><span class="pm"></span></button><div class="a"><div><p>Yes. HUMAN should support limited pilots before an organisation expands.</p></div></div></div><div class="q rv"><button type="button" aria-expanded="false"><span>Can HUMAN be branded for our organisation?</span><span class="pm"></span></button><div class="a"><div><p>Organisation-level community identity and branding can be made available without replacing the user&#x27;s personal HUMAN identity.</p></div></div></div></div></div></section>
+<section class="close" id="contact"><div class="wrap grid">
+  <div class="rv"><h2>A better-connected company begins with <i>people.</i></h2><p>Your organisation already has extraordinary people.</p><p>HUMAN helps them find each other.</p></div>
+  <div class="form rv"><form id="enquiry"><h3>Bring HUMAN to your company</h3><p class="s">Tell us a little about your organisation and we will be in touch.</p>
+    <label class="f"><span>Your name</span><input required name="name" autocomplete="name" placeholder="Full name"></label>
+    <label class="f"><span>Work email</span><input required type="email" name="email" autocomplete="email" placeholder="you@company.com"></label>
+    <label class="f"><span>Organisation</span><input required name="org" autocomplete="organization" placeholder="Your company"></label>
+    <label class="f"><span>Approximate size</span><select name="size"><option>Under 100</option><option>100 &ndash; 1,000</option><option>1,000 &ndash; 10,000</option><option>10,000+</option></select></label>
+    <button class="btn pur" type="submit"><span>Bring HUMAN to your company</span></button></form>
+    <div class="thanks"><h3>Thank you.</h3><p>We&rsquo;ve noted your interest and will be in touch.</p></div></div>
+</div></section>
+<footer class="ft"><div class="brandbig"><img src="HUTE.png" alt="HUTE logo"><b>HUTE, Inc.</b></div>
+<p>HUMAN for Business — by HUTE.</p><p><em>Made for a world that needs more human.</em></p>
+<div class="soc"><a href="https://x.com/huteinc" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><svg viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a>
+<a href="https://www.instagram.com/hute.inc" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+<a href="https://www.linkedin.com/company/hute.inc/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></div>
+<div class="leg"><a href="index.html">HUMAN</a><a href="business.html">For Business</a><a href="education.html">For Education</a><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a><a href="security.html">Security</a></div>
+<div class="cp">&copy; 2026 HUTE, Inc. All rights reserved.</div></footer>
+<script>window.DEMOS=[{"prompt": "Find someone who wants to play tennis after work.", "results": [["Priya N.", "Product Design · London", "Tennis · Level 3", "Free after 5:30"], ["Marcus L.", "Sales · London", "Tennis · Level 2", "Free Thu"], ["Aiko T.", "Engineering · London", "Tennis · Level 3", "Free after 6"]], "plan": ["Priya accepted", "Thu 6:30 pm · Court 3"]}, {"prompt": "I just moved to New York. Who wants to explore the city?", "results": [["Daniel R.", "Marketing · New York", "Local · 8 yrs", "Free Sat"], ["Sofia M.", "Legal · New York", "Loves walking", "Free Sat"], ["Jonah K.", "Engineering · Brooklyn", "Food · Museums", "Free Sun"]], "plan": ["Sofia accepted", "Sat 11:00 am · High Line"]}, {"prompt": "Find people who love photography and filmmaking.", "results": [["Leila A.", "Brand · Dubai", "Photography", "Open to meet"], ["Tom W.", "Operations · Sydney", "Filmmaking", "Open to meet"], ["Ines P.", "Design · Lisbon", "Photo · Film", "Open to meet"]], "plan": ["Group created", "Photo & Film circle · 3 members"]}, {"prompt": "Who wants to get coffee this afternoon?", "results": [["Owen B.", "Finance · 4th floor", "Coffee · Now", "Free 3 pm"], ["Hana S.", "People Ops · 6th floor", "Coffee · Now", "Free 3:30"], ["Raj P.", "Data · 2nd floor", "Coffee · Now", "Free 4 pm"]], "plan": ["Hana accepted", "3:30 pm · Café, level 1"]}];</script><script>
+(function(){
+  var nav=document.querySelector('.nav'),bg=nav.querySelector('.burger');
+  bg.addEventListener('click',function(){var o=nav.classList.toggle('open');bg.setAttribute('aria-expanded',o)});
+  nav.querySelectorAll('.drop a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open')})});
+  document.addEventListener('click',function(e){if(!nav.contains(e.target))nav.classList.remove('open')});
+
+  // reveal on scroll
+  var rv=[].slice.call(document.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.12});
+    rv.forEach(function(e){io.observe(e)});
+  } else rv.forEach(function(e){e.classList.add('in')});
+  // safety net: never leave content hidden if scroll-reveal fails
+  setTimeout(function(){rv.forEach(function(e){e.classList.add('in')})},2500);
+
+  // FAQ accordion
+  document.querySelectorAll('.q button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var q=b.parentNode,open=q.classList.toggle('open');b.setAttribute('aria-expanded',open);
+    });
+  });
+
+  // hero demo: type a prompt -> search -> matches -> introduction -> plan, then the next prompt
+  var t=document.getElementById('typer');
+  if(t&&window.DEMOS){
+    var D=window.DEMOS,di=0,res=document.getElementById('res'),srch=document.getElementById('srch'),cnt=document.getElementById('cnt'),plan=document.getElementById('plan'),go=document.getElementById('go');
+    var GR=['#FF6A00,#FF2E93','#1F4BFF,#00B7D4','#7B3CFF,#FF2E93','#00A86B,#39C46A','#E8A100,#FF6A00','#C2185B,#7B3CFF'];
+    var TICK='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#5E8BFF"/><polyline points="7 12.5 10.5 16 17 9" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function w(ms){return new Promise(function(r){setTimeout(r,ms)})}
+    function init(n){return n.split(' ').map(function(x){return x[0]}).join('').slice(0,2)}
+    function build(d){
+      res.innerHTML='';
+      d.results.forEach(function(r,i){
+        var c=document.createElement('div');c.className='card';
+        c.innerHTML='<div class="av" style="background:linear-gradient(135deg,'+GR[(di*3+i)%GR.length].replace(',',',')+')">'+init(r[0])+'</div>'+
+          '<div class="meta"><div class="nm">'+r[0]+TICK+'</div><div class="sub">'+r[1]+'</div><div class="tg"><b>'+r[2]+'</b><b class="g">'+r[3]+'</b></div></div>'+
+          '<button type="button" class="ask" tabindex="-1">Introduce</button>';
+        res.appendChild(c);
+      });
+    }
+    async function loop(){
+      for(;;){
+        var d=D[di%D.length];
+        // reset
+        res.innerHTML='';plan.classList.remove('on');cnt.classList.remove('on');srch.classList.remove('on');t.textContent='';
+        // type
+        for(var c=1;c<=d.prompt.length;c++){t.textContent=d.prompt.slice(0,c);await w(reduce?0:48)}
+        await w(450);go.classList.add('press');await w(180);go.classList.remove('press');
+        srch.classList.add('on');await w(1100);srch.classList.remove('on');
+        build(d);cnt.textContent=d.results.length+' people interested \u00b7 all verified members';cnt.classList.add('on');
+        var cards=[].slice.call(res.children);
+        for(var i=0;i<cards.length;i++){await w(180);cards[i].classList.add('on')}
+        await w(1300);
+        var b=cards[0].querySelector('.ask');b.classList.add('press');await w(180);b.classList.remove('press');b.textContent='Request sent';b.classList.add('sent');
+        await w(1300);
+        document.getElementById('plan-t').textContent=d.plan[0];document.getElementById('plan-s').textContent=d.plan[1];plan.classList.add('on');
+        await w(3600);
+        // erase
+        plan.classList.remove('on');cards.forEach(function(c){c.classList.remove('on')});cnt.classList.remove('on');await w(500);
+        for(var e=d.prompt.length;e>=0;e-=2){t.textContent=d.prompt.slice(0,e);await w(14)}
+        di++;await w(300);
+      }
+    }
+    loop();
+  }
+
+  // enquiry form (front-end only for now)
+  var f=document.getElementById('enquiry');
+  // Paste your form link between the quotes to start receiving enquiries:
+  window.FORM_ENDPOINT='';
+  if(f)f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ep=(window.FORM_ENDPOINT||'').trim(),btn=f.querySelector('button[type=submit]'),note=f.querySelector('.err');
+    if(!note){note=document.createElement('p');note.className='err';note.style.cssText='color:#c0392b;font-size:.92rem;margin:10px 0 0';f.appendChild(note)}
+    note.textContent='';
+    if(!ep){console.error('FORM_ENDPOINT is empty');note.textContent="This form isn't connected yet. Please try again soon.";return}
+    var fd=new FormData(f);fd.append('page',document.title);btn.disabled=true;
+    fetch(ep,{method:'POST',body:fd,headers:{Accept:'application/json'}}).then(function(r){if(!r.ok)throw new Error(r.status);f.parentNode.classList.add('sent')}).catch(function(){btn.disabled=false;note.textContent='Something went wrong. Please try again.'});
+  });
+
+  // HUMAN word: wrap + colour-fill hover
+  var skip={SCRIPT:1,STYLE:1,TEXTAREA:1,INPUT:1,OPTION:1,SELECT:1,TITLE:1};
+  var re=/\bHUMAN\b/;
+  function walk(n){
+    if(n.nodeType===1){if(skip[n.tagName]||n.classList.contains('human-word'))return;[].slice.call(n.childNodes).forEach(walk)}
+    else if(n.nodeType===3&&re.test(n.nodeValue)){
+      var fr=document.createDocumentFragment();
+      n.nodeValue.split(/(\bHUMAN\b)/).forEach(function(p){
+        if(p==='HUMAN'){var s=document.createElement('span');s.className='human-word';s.setAttribute('data-t','HUMAN');s.textContent='HUMAN';fr.appendChild(s)}
+        else if(p)fr.appendChild(document.createTextNode(p));
+      });
+      n.parentNode.replaceChild(fr,n);
+    }
+  }
+  walk(document.body);
+  var COLS=['#ff9f1c','#39ff14','#00e5ff','#1f4bff','#ff2e93','#ffe600','#b100ff','#ff3b30'],idx=new WeakMap();
+  function wd(x){return x&&x.closest?x.closest('.human-word'):null}
+  document.addEventListener('mouseover',function(e){var w=wd(e.target);if(!w||w.contains(e.relatedTarget))return;idx.set(w,0);w.style.setProperty('--hm-prev','transparent');w.style.setProperty('--hm-cur',COLS[0]);w.classList.add('hm-on')});
+  document.addEventListener('mouseout',function(e){var w=wd(e.target);if(!w||w.contains(e.relatedTarget))return;w.classList.remove('hm-on')});
+  document.addEventListener('animationiteration',function(e){
+    if(e.animationName!=='hmFill')return;var w=e.target;if(!w.classList||!w.classList.contains('human-word'))return;
+    var i=idx.get(w)||0,n=(i+1)%COLS.length;w.style.setProperty('--hm-prev',COLS[i]);w.style.setProperty('--hm-cur',COLS[n]);idx.set(w,n);
+  });
+  document.addEventListener('dragstart',function(e){e.preventDefault()},true);
+})();
+</script></body></html>

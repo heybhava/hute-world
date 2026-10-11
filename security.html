@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Security & Trust — HUMAN</title>
+    <link rel="icon" type="image/png" href="favicon.png?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #050505;
+            --orange: #FF6B00;
+            --offwhite: #FAFAF5;
+            --gray: #333333;
+            --text-muted: rgba(250, 250, 245, 0.7);
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            background-color: var(--black);
+            font-family: 'Inter', sans-serif;
+            color: var(--offwhite);
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 30px 60px; display: flex; justify-content: space-between; align-items: center;
+            box-sizing: border-box; z-index: 50;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .logo { height: 24px; object-fit: contain; }
+
+        .nav-btn {
+            width: 140px; height: 40px; display: flex; justify-content: center; align-items: center;
+            background: transparent; border: 1px solid rgba(255, 107, 0, 0.5);
+            color: var(--orange); font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em;
+            cursor: pointer; text-decoration: none; border-radius: 4px; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: var(--orange); color: var(--black); }
+
+        .hero {
+            padding: 180px 60px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--gray);
+        }
+        .hero h1 {
+            font-family: 'EB Garamond', serif;
+            font-size: 4rem;
+            font-weight: 400;
+            color: var(--orange);
+            margin: 0 0 1.5rem 0;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0;
+            font-weight: 300;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px;
+            gap: 80px;
+        }
+
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 120px;
+            height: max-content;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0; margin: 0;
+        }
+        .sidebar li {
+            margin-bottom: 12px;
+        }
+        .sidebar a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            display: block;
+            line-height: 1.3;
+        }
+        .sidebar a:hover {
+            color: var(--orange);
+        }
+
+        .content {
+            flex-grow: 1;
+            max-width: 740px;
+        }
+        .content section {
+            margin-bottom: 70px;
+            scroll-margin-top: 140px;
+        }
+        .content h2 {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--orange);
+            margin: 0 0 1.5rem 0;
+            font-weight: 500;
+            border-bottom: 1px solid var(--gray);
+            padding-bottom: 15px;
+        }
+        .content p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--offwhite);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        .content strong {
+            font-weight: 600;
+            color: var(--orange);
+        }
+        .content ul {
+            padding-left: 20px;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+        }
+        .content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        .content a {
+            color: var(--orange);
+            text-decoration: none;
+        }
+        .content a:hover {
+            text-decoration: underline;
+        }
+
+        .site-footer {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 60px;
+            border-top: 1px solid var(--gray);
+        }
+        .footer-left { display: flex; align-items: center; gap: 40px; }
+        .footer-logo { height: 20px; }
+        .footer-nav { display: flex; gap: 20px; }
+        .footer-nav a { color: var(--orange); text-decoration: none; font-size: 0.9rem; opacity: 0.8; }
+        .footer-nav a:hover { opacity: 1; }
+        .footer-right { color: var(--orange); font-size: 0.85rem; opacity: 0.6; }
+
+        @media (max-width: 900px) {
+            .container { flex-direction: column; gap: 40px; padding: 40px 20px; }
+            .sidebar { display: none; }
+            .hero { padding: 120px 20px 60px; }
+            .hero h1 { font-size: 3rem; }
+            header { padding: 20px; }
+            .site-footer { flex-direction: column; gap: 20px; padding: 40px 20px; text-align: center; }
+            .footer-left { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html"><img src="HUTE.png" alt="HUTE Logo" class="logo"></a>
+        <a href="index.html#join" class="nav-btn">Join Now</a>
+    </header>
+
+    <div class="hero">
+        <h1>Built for real life.<br>Protected by design.</h1>
+        <p>HUMAN connects people, manages personal information, and executes authorised actions. Protecting that trust requires robust, verifiable controls over identity, AI permissions, and physical safety.</p>
+    </div>
+
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="#account">Account & Authentication</a></li>
+                <li><a href="#data-privacy">Data Privacy & Encryption</a></li>
+                <li><a href="#ai-permissions">AI Permissions & Control</a></li>
+                <li><a href="#autonomous-execution">Autonomous Task Safeguards</a></li>
+                <li><a href="#sensitive-handling">Sensitive Info Handling</a></li>
+                <li><a href="#third-party">Connected Third-Party Services</a></li>
+                <li><a href="#ai-twins">AI Twin Identity Protection</a></li>
+                <li><a href="#messages-calls">Private Messages & Calls</a></li>
+                <li><a href="#location-safety">Location & Physical Safety</a></li>
+                <li><a href="#payments">Payment Security</a></li>
+                <li><a href="#fraud">Fraud & Abuse Prevention</a></li>
+                <li><a href="#access">Access Controls</a></li>
+                <li><a href="#infrastructure">Infrastructure Security</a></li>
+                <li><a href="#vulnerability">Responsible Vulnerability Reporting</a></li>
+                <li><a href="#incident">Incident Response</a></li>
+                <li><a href="#consent">User Consent & Transparency</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <section id="account">
+                <h2>Account Protection & Authentication</h2>
+                <p>Identity is the foundation of HUMAN. We implement layered defenses to ensure the person accessing your account is legitimately you.</p>
+                <ul>
+                    <li><strong>Phishing-Resistant Authentication:</strong> We support modern auth pathways including WebAuthn/Passkeys, ensuring credentials cannot be easily intercepted.</li>
+                    <li><strong>Session Integrity:</strong> Devices and active sessions are strictly monitored. Users can view and instantly revoke any active session from their security dashboard.</li>
+                    <li><strong>Rate Limiting:</strong> Brute-force and OTP replay prevention mechanisms are embedded at the network and application layers.</li>
+                </ul>
+            </section>
+
+            <section id="data-privacy">
+                <h2>Data Privacy, Confidentiality, & Encryption</h2>
+                <p>We architect our systems assuming the network is hostile. Your data is isolated at the lowest levels of our infrastructure.</p>
+                <ul>
+                    <li><strong>Tenant Isolation:</strong> Strict Row-Level Security (RLS) ensures one user's AI or API requests can never traverse the database to read another user's private memory graph.</li>
+                    <li><strong>Encryption:</strong> All data is encrypted in transit using modern TLS (Transport Layer Security) and at rest utilizing verified, industry-standard cryptographic algorithms.</li>
+                </ul>
+            </section>
+
+            <section id="ai-permissions">
+                <h2>AI Agent Permissions & User Control</h2>
+                <p>Our AI orchestration operates on a strict principle of least privilege. Your personal AI cannot take consequential actions without cryptographic proof of your intent.</p>
+                <ul>
+                    <li><strong>Scoped Capabilities:</strong> The AI only receives the specific internal API tools necessary for the immediate task.</li>
+                    <li><strong>Server-Side Policy Evaluation:</strong> Every AI-initiated action is independently verified by our backend systems against your predefined authorization thresholds.</li>
+                </ul>
+            </section>
+
+            <section id="autonomous-execution">
+                <h2>Autonomous Task Execution Safeguards</h2>
+                <p>We employ a <strong>Fail Closed</strong> architecture. If identity, recipient, authority, or outcome is uncertain, the AI is programmed to halt safely rather than guessing or executing broadly.</p>
+                <p>Broad instructions such as "handle my schedule" cannot silently grant unlimited financial, communication, or legal authority. High-impact operations require explicit human-in-the-loop sign-off.</p>
+            </section>
+
+            <section id="sensitive-handling">
+                <h2>Sensitive Information Handling</h2>
+                <p>Your AI context windows are stripped of raw credentials. Ordinary AI planning contexts never receive raw passwords, full credit card numbers, or unrestricted provider tokens. Information is supplied to models purely on a need-to-know basis.</p>
+            </section>
+
+            <section id="third-party">
+                <h2>Connected Third-Party Services</h2>
+                <p>When you connect calendars, emails, or third-party apps, HUMAN acts as a secure intermediary.</p>
+                <ul>
+                    <li><strong>Adversarial AI Defense:</strong> External emails and calendar invites are treated as untrusted data, not instructions. This prevents prompt injection attacks from hijacking your AI.</li>
+                    <li><strong>Token Security:</strong> OAuth tokens are scoped to the absolute minimum required access and are stored in secure, centralized vaults.</li>
+                </ul>
+            </section>
+
+            <section id="ai-twins">
+                <h2>AI Twin Identity Protection</h2>
+                <p>Your AI Twin is an extension of your identity and must be rigorously protected against impersonation.</p>
+                <ul>
+                    <li><strong>Verified Likeness:</strong> We mandate strict identity verification before allowing the creation of synthetic digital representations or voice models.</li>
+                    <li><strong>Bounded Agency:</strong> AI Twins cannot independently enter into binding financial contracts or deviate from approved conversational scopes.</li>
+                </ul>
+            </section>
+
+            <section id="messages-calls">
+                <h2>Private Messages & Call Security</h2>
+                <p>Communications traversing the HUMAN platform are strictly siloed. One user's AI cannot read or intercept another user's private information without valid, mutual authorization. Audio call transcripts are processed temporarily and subject to automated deletion lifecycles.</p>
+            </section>
+
+            <section id="location-safety">
+                <h2>Location Privacy & Physical-World Safety</h2>
+                <p>Live location data presents unique physical safety risks. We enforce deliberate boundaries for our map features.</p>
+                <ul>
+                    <li><strong>Explicit Consent:</strong> Location sharing requires deliberate activation and is separated into approximate discovery and precise tracking permissions.</li>
+                    <li><strong>Short-lived Sessions:</strong> Live navigation sessions used to coordinate meetings automatically expire.</li>
+                    <li><strong>Anti-Stalking Controls:</strong> Rate limits on map queries and strict block enforcement prevent proximity probing and triangulation.</li>
+                </ul>
+            </section>
+
+            <section id="payments">
+                <h2>Payment Security</h2>
+                <p>Transactions between humans require a high-assurance financial subsystem treated separately from conversational AI.</p>
+                <ul>
+                    <li><strong>Tokenized Flows:</strong> All transactions rely on tokenized flows handled by PCI-compliant third-party payment processors. The AI never handles raw card data.</li>
+                    <li><strong>Server-side Validation:</strong> Amounts, currencies, and recipient identities are cryptographically bound and validated server-side to prevent tampering.</li>
+                    <li><strong>Idempotency:</strong> We utilize idempotency keys to ensure duplicate or uncertain charges are never blindly retried.</li>
+                </ul>
+            </section>
+
+            <section id="fraud">
+                <h2>Fraud & Abuse Prevention</h2>
+                <p>We deploy continuous monitoring for account impersonation, scam behaviors, and repeat-offender investigations. Accounts demonstrating malicious behavior or utilizing the platform to facilitate sexual exploitation, trafficking, or harassment are subject to immediate suspension, evidence preservation, and escalation to relevant authorities.</p>
+            </section>
+
+            <section id="access">
+                <h2>Access Controls & Infrastructure Security</h2>
+                <p>Internally, HUTE engineers operate under strict Zero-Trust access controls. Production environments are segmented, and administrative activity is exhaustively audited. Secrets are actively rotated, and data minimization protocols ensure we hold only what is necessary.</p>
+            </section>
+
+            <section id="vulnerability">
+                <h2>Responsible Vulnerability Reporting</h2>
+                <p>We actively collaborate with the security research community. If you believe you have found a security vulnerability in HUMAN, please contact our security team at [Insert Security Email]. We commit to reviewing reports promptly and providing safe harbor for good-faith, coordinated disclosure that does not impact other users' data.</p>
+            </section>
+
+            <section id="incident">
+                <h2>Security Incident Response</h2>
+                <p>We maintain a rigorous internal incident response plan covering detection, containment, investigation, and recovery. We comply fully with the Australian Notifiable Data Breaches (NDB) scheme and relevant overseas obligations to notify users transparently if their data is compromised.</p>
+            </section>
+
+            <section id="consent">
+                <h2>User Consent, Transparency, & Control</h2>
+                <p>Control remains entirely in your hands. At any point, you can review and revoke the capabilities granted to your personal intelligence. Our default-deny architecture ensures that if a permission is revoked, our systems physically reject subsequent requests for that action.</p>
+            </section>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-left">
+            <img src="HUTE.png" alt="HUMAN Logo" class="footer-logo">
+            <nav class="footer-nav">
+                <a href="#">Updates</a>
+                <a href="security.html">Security</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+            </nav>
+        </div>
+        <div class="footer-right">
+            HUMAN is a product of HUTE, Inc. &copy; 2026 HUTE, Inc.<br>
+            <span style="opacity: 0.5; font-size: 0.75rem;">Last Updated: October 2026</span>
+        </div>
+    </footer>
+
+</body>
+</html>

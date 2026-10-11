@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Terms of Service — HUMAN</title>
+    <link rel="icon" type="image/png" href="favicon.png?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #050505;
+            --orange: #FF6B00;
+            --offwhite: #FAFAF5;
+            --gray: #333333;
+            --text-muted: rgba(250, 250, 245, 0.7);
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            background-color: var(--black);
+            font-family: 'Inter', sans-serif;
+            color: var(--offwhite);
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 30px 60px; display: flex; justify-content: space-between; align-items: center;
+            box-sizing: border-box; z-index: 50;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .logo { height: 24px; object-fit: contain; }
+
+        .nav-btn {
+            width: 140px; height: 40px; display: flex; justify-content: center; align-items: center;
+            background: transparent; border: 1px solid rgba(255, 107, 0, 0.5);
+            color: var(--orange); font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em;
+            cursor: pointer; text-decoration: none; border-radius: 4px; transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: var(--orange); color: var(--black); }
+
+        .hero {
+            padding: 180px 60px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--gray);
+        }
+        .hero h1 {
+            font-family: 'EB Garamond', serif;
+            font-size: 4rem;
+            font-weight: 400;
+            color: var(--orange);
+            margin: 0 0 1rem 0;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px;
+            gap: 80px;
+        }
+
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 120px;
+            height: max-content;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0; margin: 0;
+        }
+        .sidebar li {
+            margin-bottom: 15px;
+        }
+        .sidebar a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            display: block;
+            line-height: 1.4;
+        }
+        .sidebar a:hover {
+            color: var(--orange);
+        }
+
+        .content {
+            flex-grow: 1;
+            max-width: 740px;
+        }
+        .content section {
+            margin-bottom: 60px;
+            scroll-margin-top: 140px;
+        }
+        .content h2 {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--orange);
+            margin: 0 0 1.5rem 0;
+            font-weight: 500;
+            border-bottom: 1px solid var(--gray);
+            padding-bottom: 15px;
+        }
+        .content p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--offwhite);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        .content strong {
+            font-weight: 600;
+            color: var(--orange);
+        }
+        .content ul {
+            padding-left: 20px;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+        }
+        .content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        .content a {
+            color: var(--orange);
+            text-decoration: none;
+        }
+        .content a:hover {
+            text-decoration: underline;
+        }
+
+        .site-footer {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 60px;
+            border-top: 1px solid var(--gray);
+        }
+        .footer-left { display: flex; align-items: center; gap: 40px; }
+        .footer-logo { height: 20px; }
+        .footer-nav { display: flex; gap: 20px; }
+        .footer-nav a { color: var(--orange); text-decoration: none; font-size: 0.9rem; opacity: 0.8; }
+        .footer-nav a:hover { opacity: 1; }
+        .footer-right { color: var(--orange); font-size: 0.85rem; opacity: 0.6; }
+
+        @media (max-width: 900px) {
+            .container { flex-direction: column; gap: 40px; padding: 40px 20px; }
+            .sidebar { display: none; }
+            .hero { padding: 120px 20px 60px; }
+            .hero h1 { font-size: 3rem; }
+            header { padding: 20px; }
+            .site-footer { flex-direction: column; gap: 20px; padding: 40px 20px; text-align: center; }
+            .footer-left { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html"><img src="HUTE.png" alt="HUTE Logo" class="logo"></a>
+        <a href="index.html#join" class="nav-btn">Join Now</a>
+    </header>
+
+    <div class="hero">
+        <h1>Terms of Service</h1>
+        <p>Last Updated: October 2026</p>
+    </div>
+
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="#acceptance">1. Acceptance of Terms</a></li>
+                <li><a href="#eligibility">2. Eligibility</a></li>
+                <li><a href="#accounts">3. Accounts & Identity</a></li>
+                <li><a href="#ai-services">4. AI Services & Autonomous Actions</a></li>
+                <li><a href="#ai-twins">5. AI Twins & Digital Identity</a></li>
+                <li><a href="#real-world">6. Real-World Meetings & Safety</a></li>
+                <li><a href="#payments">7. Payments & Paid Bookings</a></li>
+                <li><a href="#prohibited">8. Prohibited Conduct</a></li>
+                <li><a href="#content">9. User Content & IP</a></li>
+                <li><a href="#privacy">10. Privacy</a></li>
+                <li><a href="#third-party">11. Third-Party Integrations</a></li>
+                <li><a href="#termination">12. Suspension & Termination</a></li>
+                <li><a href="#disclaimers">13. Disclaimers & Liability</a></li>
+                <li><a href="#indemnification">14. Indemnification</a></li>
+                <li><a href="#disputes">15. Governing Law & Disputes</a></li>
+                <li><a href="#contact">16. Contact Information</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <p>Welcome to HUMAN. These Terms of Service ("Terms") govern your access to and use of the HUMAN application, website, and associated artificial intelligence and connection services (collectively, the "Service"). The Service is operated by HUTE, Inc., an Australian proprietary company ([Insert ACN/ABN]) ("HUTE," "we," "us," or "our").</p>
+            <p>Please read these Terms carefully. By accessing or using the Service, you agree to be bound by these Terms and all applicable laws and regulations.</p>
+
+            <section id="acceptance">
+                <h2>1. Acceptance of Terms</h2>
+                <p>By creating an account, accessing, or using HUMAN, you represent that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, you must immediately cease using the Service. We reserve the right to update these Terms from time to time. Your continued use of the Service following any updates constitutes acceptance of those changes.</p>
+            </section>
+
+            <section id="eligibility">
+                <h2>2. Eligibility</h2>
+                <p>You must be at least 18 years of age to use HUMAN. By using the Service, you warrant that you are 18 or older, possess the legal capacity to enter into a binding contract, and are not prohibited from using the Service under the laws of Australia or any other applicable jurisdiction. HUTE reserves the right to request proof of age and identity at any time.</p>
+            </section>
+
+            <section id="accounts">
+                <h2>3. Accounts, Identity, and Verification</h2>
+                <p><strong>3.1 Account Creation:</strong> To use HUMAN, you must register for an account using accurate and current information. You are strictly responsible for maintaining the confidentiality of your login credentials.</p>
+                <p><strong>3.2 Identity Verification:</strong> HUMAN relies on authentic human connections. We may employ various verification methods, including phone verification and document checks. You agree not to misrepresent your identity, impersonate any person, or create synthetic profiles.</p>
+                <p><strong>3.3 Security:</strong> You are responsible for all activity occurring under your account. You must notify us immediately of any unauthorized access.</p>
+            </section>
+
+            <section id="ai-services">
+                <h2>4. AI-Powered Services and Autonomous Actions</h2>
+                <p><strong>4.1 AI Assistants:</strong> HUMAN provides personal AI agents designed to manage communications, contextualize relationships, and perform everyday tasks on your behalf.</p>
+                <p><strong>4.2 Autonomous Actions:</strong> You may grant your AI permission to execute actions automatically (e.g., booking meetings, replying to messages). <strong>You are solely responsible for all actions, communications, and commitments made by your AI operating within the scopes you have authorized.</strong></p>
+                <p><strong>4.3 Limitations:</strong> AI models are probabilistic. HUTE does not guarantee the accuracy, appropriateness, or perfection of AI-generated responses. You agree to monitor your AI's activity and utilize our provided controls to revoke permissions if necessary.</p>
+            </section>
+
+            <section id="ai-twins">
+                <h2>5. AI Twins and Digital Identity</h2>
+                <p><strong>5.1 Creation:</strong> You may create an "AI Twin" representing your digital likeness, voice, and conversational style to interact with others on the platform.</p>
+                <p><strong>5.2 Consent and Likeness:</strong> By creating an AI Twin, you grant HUTE a revocable, non-exclusive license to process your likeness and communication data solely to operate your AI Twin. You may not create an AI Twin of any other living or deceased person without explicit, verifiable legal authorization.</p>
+                <p><strong>5.3 Twin Authority:</strong> AI Twins cannot independently enter into binding financial contracts. However, they may coordinate schedules and facilitate introductions. You are responsible for the representations made by your AI Twin.</p>
+            </section>
+
+            <section id="real-world">
+                <h2>6. Real-World Meetings and Personal Safety</h2>
+                <p><strong>6.1 Platform Nature:</strong> HUMAN facilitates discovery and real-world connection between users. We are an "Uber for human connections," not a background-check agency.</p>
+                <p><strong>6.2 No Guarantees of Safety:</strong> <strong>HUTE DOES NOT ROUTINELY CONDUCT CRIMINAL BACKGROUND CHECKS OR VERIFY THE STATEMENTS OF ITS USERS.</strong> You agree to exercise extreme caution, use common sense, and prioritize your physical safety when sharing your live location or meeting someone in person.</p>
+                <p><strong>6.3 Release:</strong> To the maximum extent permitted by law, you release HUTE from any liability relating to your interactions with other users, whether online or in the physical world.</p>
+            </section>
+
+            <section id="payments">
+                <h2>7. Payments, Bookings, and Transactions</h2>
+                <p><strong>7.1 Peer-to-Peer Payments:</strong> HUMAN may allow you to make or receive payments for permitted experiences, bookings, or time. HUTE acts solely as a technology provider and does not hold user funds. Payments are processed by our compliant third-party payment providers.</p>
+                <p><strong>7.2 Fees:</strong> HUTE may charge service fees on transactions, which will be clearly displayed prior to confirmation.</p>
+                <p><strong>7.3 Cancellations and Refunds:</strong> Refund policies for peer-to-peer bookings are determined by the users involved, subject to our platform dispute resolution guidelines. HUTE is not strictly liable for unfulfilled promises between users, but will investigate fraudulent activity.</p>
+            </section>
+
+            <section id="prohibited">
+                <h2>8. Prohibited Conduct</h2>
+                <p>You agree not to use the Service to:</p>
+                <ul>
+                    <li>Engage in harassment, bullying, stalking, intimidation, or coercion.</li>
+                    <li>Facilitate sexual exploitation, human trafficking, or non-consensual sexual content.</li>
+                    <li>Commit fraud, money laundering, or operate scams.</li>
+                    <li>Utilize prompt injection or adversarial attacks against HUMAN's AI infrastructure.</li>
+                    <li>Scrape, reverse-engineer, or attempt to extract source code or AI model weights.</li>
+                    <li>Use the platform to distribute spam or unauthorized mass communications.</li>
+                </ul>
+            </section>
+
+            <section id="content">
+                <h2>9. User Content and Intellectual Property</h2>
+                <p>You retain ownership of the content you submit to HUMAN. You grant us a worldwide, royalty-free, license to use, display, and process your content strictly for the purpose of operating, securing, and improving the Service. HUTE retains all rights to the underlying software, AI architectures, and brand assets.</p>
+            </section>
+
+            <section id="privacy">
+                <h2>10. Privacy</h2>
+                <p>Your privacy is critical to our infrastructure. Our collection and processing of your personal information, communications, and location data is governed by our <a href="privacy.html">Privacy Policy</a>.</p>
+            </section>
+
+            <section id="third-party">
+                <h2>11. Third-Party Integrations</h2>
+                <p>If you connect third-party accounts (e.g., calendars, email providers) to HUMAN, you authorize us to access those services on your behalf. HUTE is not responsible for the availability, security, or practices of third-party platforms.</p>
+            </section>
+
+            <section id="termination">
+                <h2>12. Suspension and Termination</h2>
+                <p>HUTE reserves the right to suspend or terminate your account at any time, with or without notice, if we reasonably believe you have violated these Terms, pose a risk to the safety of other users, or create potential legal exposure for the company.</p>
+            </section>
+
+            <section id="disclaimers">
+                <h2>13. Disclaimers and Limitation of Liability</h2>
+                <p><strong>13.1 Non-Excludable Rights:</strong> Nothing in these Terms excludes, restricts, or modifies any consumer guarantee, right, or remedy conferred by the Australian Consumer Law (ACL) or other applicable laws that cannot be lawfully excluded.</p>
+                <p><strong>13.2 "As Is" Basis:</strong> Subject to the ACL, the Service is provided on an "AS IS" and "AS AVAILABLE" basis. HUTE disclaims all implied warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
+                <p><strong>13.3 Liability Cap:</strong> To the maximum extent permitted by law, HUTE's total liability arising out of or relating to these Terms or the Service will not exceed the greater of the amounts paid by you to HUTE in the twelve (12) months preceding the claim, or one hundred Australian dollars (AUD $100).</p>
+            </section>
+
+            <section id="indemnification">
+                <h2>14. Indemnification</h2>
+                <p>You agree to indemnify, defend, and hold harmless HUTE, its directors, officers, and employees from and against any third-party claims, liabilities, damages, and expenses (including reasonable legal fees) arising from your breach of these Terms, your interactions with other users, or your violation of any applicable law.</p>
+            </section>
+
+            <section id="disputes">
+                <h2>15. Governing Law and Dispute Resolution</h2>
+                <p>These Terms shall be governed by and construed in accordance with the laws of New South Wales, Australia. Any disputes arising out of these Terms shall be subject to the exclusive jurisdiction of the state and federal courts located in Sydney, New South Wales.</p>
+            </section>
+
+            <section id="contact">
+                <h2>16. Contact Information</h2>
+                <p>If you have any questions regarding these Terms, please contact our legal team at:<br>
+                <strong>Email:</strong> [Insert Legal Email Address]<br>
+                <strong>Address:</strong> [Insert Registered Office Address, Sydney, NSW, Australia]</p>
+            </section>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-left">
+            <img src="HUTE.png" alt="HUMAN Logo" class="footer-logo">
+            <nav class="footer-nav">
+                <a href="#">Updates</a>
+                <a href="security.html">Security</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+            </nav>
+        </div>
+        <div class="footer-right">
+            HUMAN is a product of HUTE, Inc. &copy; 2026 HUTE, Inc.
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,2868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Human</title>
+    <link rel="icon" type="image/png" href="favicon.png?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #FDFBF5;
+            --text-dark: #121212;
+            --text-grey: #6B6A66;
+            --accent-purple: #5E17EB;
+            --white: #FFFFFF;
+            --offwhite: #F4F4F4;
+            --border-light: #E0E0E0;
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: clip;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        
+        /* --- PROMPT BOX --- */
+        .hero-scroll-wrapper {
+            height: 125vh;
+            position: relative;
+        }
+        .hero-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg-cream); /* fallback */
+            background-image: url('11.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+        }
+        .prompt-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0 20px;
+            margin-top: -80px; /* Offset to center optically above ticker */
+        }
+        .prompt-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: 12px 20px 12px 24px;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .prompt-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15), 0 0 30px rgba(94, 23, 235, 0.15);
+        }
+        .prompt-icon {
+            color: var(--accent-purple);
+            display: flex;
+            align-items: center;
+            margin-right: 16px;
+        }
+        .prompt-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            display: inline-flex;
+            align-items: center;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid var(--accent-purple);
+            padding-right: 4px;
+            animation: blink 0.75s step-end infinite;
+            min-height: 1.5em; /* Prevent vertical collapse */
+        }
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        .prompt-btn {
+            background: var(--accent-purple);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            margin-left: auto;
+        }
+        .prompt-btn:hover {
+            background: #4a0eca;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(94, 23, 235, 0.5);
+        }
+        .prompt-subtext {
+            margin-top: 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-grey);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden;
+            background-image: url('11.png');
+            background-size: cover;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+        }
+
+        header {
+            position: absolute; top: 0; left: 0; width: 100%;
+            padding: 30px 40px; 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box; z-index: 30;
+        }
+
+        .header-pill {
+            background-color: var(--white);
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .header-pill:hover {
+            animation: purplePulse 1s infinite alternate ease-in-out;
+            color: var(--accent-purple);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo { 
+            height: 45px;
+            object-fit: contain; 
+            filter: brightness(0) invert(1);
+        }
+
+        .header-wordmark {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+
+        .hero-title {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(4rem, 9vw, 8.5rem);
+            line-height: 0.95;
+            color: var(--offwhite);
+            margin: 0 0 1.5rem 0;
+            font-weight: 400;
+            z-index: 10;
+        }
+        .hero-title i { font-style: italic; }
+
+        .hero-sub {
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 480px;
+            margin: 0 auto 2.5rem auto;
+            z-index: 10;
+        }
+
+        .hero-btn {
+            background-color: var(--accent-purple);
+            color: var(--white);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s;
+            z-index: 10;
+        }
+        
+        @keyframes purplePulse {
+            0% { box-shadow: 0 0 15px rgba(94, 23, 235, 0.4), 0 0 30px rgba(94, 23, 235, 0.2); }
+            100% { box-shadow: 0 0 30px rgba(94, 23, 235, 0.8), 0 0 60px rgba(94, 23, 235, 0.5); }
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-2px);
+            animation: purplePulse 1s infinite alternate ease-in-out;
+        }
+        
+        .hero-footer-text {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 1.5rem;
+            z-index: 10;
+        }
+
+        /* --- TICKER SECTION --- */
+        .ticker-section {
+            background-color: #000000;
+            padding: 60px 0;
+            position: relative;
+            z-index: 20;
+            overflow: hidden;
+        }
+        .ticker-heading {
+            text-align: center;
+            color: var(--text-grey);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+        .ticker-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .ticker-container::before, .ticker-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 150px;
+            height: 100%;
+            z-index: 2;
+        }
+        .ticker-container::before {
+            left: 0;
+            background: linear-gradient(to right, #000000 0%, transparent 100%);
+        }
+        .ticker-container::after {
+            right: 0;
+            background: linear-gradient(to left, #000000 0%, transparent 100%);
+        }
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            animation: scrollLTR 35s linear infinite;
+            align-items: center;
+        }
+        .ticker-item {
+            margin: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.85;
+            transition: opacity 0.3s;
+        }
+        .ticker-item:hover {
+            opacity: 1;
+        }
+        .ticker-item img {
+            height: 28px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            margin-right: 12px;
+        }
+        .ticker-item span {
+            font-size: 1.4rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+        @keyframes scrollLTR {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
+        }
+
+        /* --- CONTENT SECTION --- */
+        .content-section {
+            width: 100%;
+            padding: 40px 20px;
+            background-color: var(--accent-purple);
+            box-sizing: border-box;
+            overflow: hidden; /* Prevents waterfall elements from touching other pages */
+        }
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            perspective: 1200px; /* Gives a 3D depth for the waterfall */
+        }
+        .content-container h2, .content-container p {
+            transform-origin: center center;
+            will-change: transform, opacity;
+        }
+        .content-section p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--offwhite);
+            margin-bottom: 1.5rem;
+        }
+        .content-section strong { font-weight: 600; color: var(--white); }
+
+        
+        /* --- MESH BACKGROUND --- */
+        .mesh-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-color: var(--accent-purple);
+            overflow: hidden;
+        }
+        .mesh-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.8;
+            animation: floatMesh 20s infinite alternate ease-in-out;
+            mix-blend-mode: hard-light;
+        }
+        .mesh-blob-1 { width: 800px; height: 800px; background: #FF007F; top: -200px; left: -100px; animation-delay: 0s; }
+        .mesh-blob-2 { width: 700px; height: 700px; background: #4D00FF; bottom: -200px; right: -100px; animation-delay: -4s; }
+        .mesh-blob-3 { width: 900px; height: 900px; background: #FF7A00; top: 30%; left: 50%; animation-delay: -8s; }
+        .mesh-blob-4 { width: 600px; height: 600px; background: #00F0FF; bottom: 10%; left: 10%; animation-delay: -12s; }
+        .mesh-blob-5 { width: 800px; height: 800px; background: #FF00E5; top: 10%; right: 10%; animation-delay: -16s; }
+
+        @keyframes floatMesh {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(150px, -150px) scale(1.1); }
+            66% { transform: translate(-100px, 100px) scale(0.9); }
+            100% { transform: translate(50px, 50px) scale(1.05); }
+        }
+        
+
+        /* --- FEATURES SECTION --- */
+        .features-wrapper {
+            background-color: var(--bg-cream);
+            position: relative;
+        }
+        .features-intro, .features-outro {
+            position: relative;
+            z-index: 2;
+            padding: 160px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .features-intro h2, .features-outro h2 {
+            font-family: 'EB Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: var(--text-dark);
+            margin: 0 0 1rem 0;
+            line-height: 1.1;
+        }
+        .features-intro h3 {
+            font-family: 'EB Garamond', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--text-grey);
+            margin: 0 0 2rem 0;
+        }
+        .features-intro p, .features-outro p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+        .features-intro strong, .features-outro strong {
+            font-weight: 600;
+        }
+        .outro-highlight {
+            font-family: 'EB Garamond', serif;
+            font-size: 2rem !important;
+            color: var(--white) !important;
+            margin-top: 3rem;
+        }
+
+        
+        /* --- FAQ SECTION --- */
+        .faq-section {
+            padding: 120px 20px;
+            background-color: var(--bg-cream);
+            position: relative;
+            z-index: 2;
+        }
+        .faq-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+        }
+        .faq-kicker {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-grey);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .faq-title {
+            font-family: 'EB Garamond', serif;
+            font-size: 4rem;
+            font-weight: 500;
+            font-style: italic;
+            color: var(--text-dark);
+            margin: 0;
+            line-height: 1.1;
+        }
+        .faq-window {
+            display: flex;
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #EBE8E0;
+            border-radius: 32px;
+            overflow: hidden;
+            height: 640px; 
+            padding: 16px;
+            gap: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            border: none;
+        }
+        .faq-sidebar {
+            width: 50%;
+            background-color: var(--accent-purple);
+            border-radius: 24px;
+            color: var(--white);
+            padding: 35px 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        .faq-sidebar h3 {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin: 0 0 25px 0;
+            color: var(--white);
+        }
+        .faq-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+            text-align: left;
+            padding-right: 15px;
+        }
+        .faq-list::-webkit-scrollbar { width: 4px; }
+        .faq-list::-webkit-scrollbar-track { background: transparent; }
+        .faq-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        
+        .faq-q-item {
+            padding: 16px 20px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.7);
+            transition: all 0.2s ease;
+            font-weight: 400;
+        }
+        .faq-q-item:hover {
+            color: var(--white);
+        }
+        .faq-q-item.active {
+            background-color: rgba(255,255,255,0.1);
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .faq-content-area {
+            width: 50%;
+            padding: 35px 40px 35px 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background-color: transparent;
+        }
+        .faq-content-area::-webkit-scrollbar { width: 4px; }
+        .faq-content-area::-webkit-scrollbar-track { background: transparent; }
+        .faq-content-area::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+
+        .answer-label {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin: 0 0 30px 0;
+        }
+
+        
+        
+        .faq-answer-item {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .faq-answer-item.active {
+            display: flex;
+            flex-direction: column;
+        }
+        .answer-q {
+            font-family: -apple-system, 'SF Pro Text', 'Inter', sans-serif;
+            font-size: 1.02rem;
+            color: #fff;
+            background: linear-gradient(180deg, #2E9BFF 0%, #0A7BFF 100%);
+            padding: 10px 18px;
+            border-radius: 20px;
+            align-self: flex-end;
+            margin: 0 8px 14px auto;
+            max-width: 80%;
+            line-height: 1.4;
+            text-align: left;
+            position: relative;
+            animation: msgPop .35s cubic-bezier(.2,.9,.3,1.2) both;
+            transform-origin: bottom right;
+        }
+        .answer-q::before, .answer-q::after { content: ''; position: absolute; bottom: 0; height: 20px; }
+        .answer-q::before { right: -7px; width: 20px; background: #0A7BFF; border-bottom-left-radius: 16px 14px; }
+        .answer-q::after { right: -26px; width: 26px; background: #EBE8E0; border-bottom-left-radius: 10px; }
+        .answer-bubble {
+            background-color: #E4E4E9;
+            padding: 11px 18px;
+            border-radius: 20px;
+            align-self: flex-start;
+            margin: 0 0 0 8px;
+            max-width: 88%;
+            position: relative;
+            animation: msgPop .4s cubic-bezier(.2,.9,.3,1.2) .55s both;
+            transform-origin: bottom left;
+        }
+        .answer-bubble::before, .answer-bubble::after { content: ''; position: absolute; bottom: 0; height: 20px; }
+        .answer-bubble::before { left: -7px; width: 20px; background: #E4E4E9; border-bottom-right-radius: 16px 14px; }
+        .answer-bubble::after { left: -26px; width: 26px; background: #EBE8E0; border-bottom-right-radius: 10px; }
+        @keyframes msgPop { from { opacity: 0; transform: scale(.6) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .answer-bubble p {
+            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, 'SF Pro Text', 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.45;
+            color: #111;
+            margin: 0 0 10px 0;
+        }
+        .answer-bubble p:last-child {
+            margin-bottom: 0;
+        }
+@keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .faq-footer {
+            text-align: center;
+            margin-top: 100px;
+            padding-top: 60px;
+            border-top: 1px solid var(--border-light);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .faq-footer h1 {
+            font-family: 'EB Garamond', serif;
+            font-size: 3rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+        }
+        .faq-footer p {
+            font-size: 1.1rem;
+            color: var(--text-grey);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .faq-footer strong { color: var(--text-dark); }
+        
+        @media (max-width: 900px) {
+            .faq-window { flex-direction: column; height: auto; }
+            .faq-sidebar { width: 100%; height: 350px; }
+            .faq-content-area { width: 100%; height: 400px; padding: 30px; }
+        }
+
+        .features-sticky-container {
+            height: 700vh;
+            position: relative;
+            z-index: 2;
+        }
+        .features-sticky-inner {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr 380px;
+            gap: 60px;
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px;
+            align-items: center;
+        }
+        .feature-nav {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-left: 2px solid #EAEAEA;
+            padding-left: 30px;
+        }
+        .feature-nav-indicator {
+            position: absolute;
+            left: -2px;
+            top: 0;
+            width: 2px;
+            height: 40px;
+            background-color: var(--accent-purple);
+            transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .feature-nav-item {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: #A0A0A0;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .feature-nav-item.active {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        .feature-visual {
+            height: 600px;
+            background: #000;
+            border-radius: 24px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .visual-state {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: scale(0.95);
+            background: radial-gradient(circle at center, #290066 0%, #121212 100%);
+            color: var(--white);
+        }
+        .visual-state.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .visual-state svg {
+            width: 80px;
+            height: 80px;
+            stroke: var(--offwhite);
+            stroke-width: 1.5;
+            margin-bottom: 24px;
+        }
+        .feature-text {
+            position: relative;
+            height: 400px;
+        }
+        .feature-text-item {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .feature-text-item.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .feature-text-item h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-purple);
+            margin: 0 0 15px 0;
+            font-weight: 600;
+        }
+        .feature-text-item h5 {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: var(--text-dark);
+            margin: 0 0 20px 0;
+            line-height: 1.15;
+        }
+        .feature-text-item p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-grey);
+            margin: 0;
+        }
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .feature-nav { display: none; }
+            .feature-visual { height: 400px; }
+            .features-sticky-container { height: 700vh; }
+        }
+
+        /* --- JOIN FORM --- */
+        .join-section {
+            background-color: var(--bg-cream);
+            padding: 120px 20px 160px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .bottom-glow {
+            position: absolute;
+            bottom: -10vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150vw;
+            height: 60vh;
+            background: radial-gradient(ellipse at center bottom, #290066 0%, #5E17EB 45%, transparent 80%);
+            filter: blur(35px);
+            animation: intensePurplePulse 3s infinite alternate ease-in-out;
+            z-index: 1;
+            pointer-events: none;
+        }
+        @keyframes intensePurplePulse {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(0.9); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.4); }
+        }
+        .join-container {
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+        .join-container h1 {
+            font-family: 'EB Garamond', serif;
+            font-size: 3.5rem;
+            margin: 0 0 1rem 0;
+            font-weight: 400;
+            color: var(--text-dark);
+        }
+        .join-container .subhead {
+            color: var(--text-grey);
+            margin-bottom: 2rem;
+        }
+        .form-card {
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            text-align: left;
+            margin-top: 2.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dark);
+        }
+        input[type="text"], input[type="tel"], select {
+            width: 100%;
+            background: #FAFAFA;
+            border: 1px solid var(--border-light);
+            color: var(--text-dark);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            padding: 16px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        input:focus, select:focus { border-color: var(--text-dark); background: var(--white); }
+        .phone-input { display: flex; }
+        .phone-input select {
+            width: 120px;
+            border-right: none;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            background-color: #F0F0F0;
+        }
+        .phone-input input[type="tel"] {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin: 2rem 0;
+        }
+        .checkbox-group input { margin-top: 4px; accent-color: var(--text-dark); }
+        .checkbox-group label { font-size: 0.8rem; line-height: 1.5; color: var(--text-grey); font-weight: 400; text-transform: none; letter-spacing: normal;}
+        .submit-btn {
+            width: 100%;
+            background: var(--accent-purple);
+            color: var(--white);
+            border: none;
+            padding: 18px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            animation: purplePulse 1s infinite alternate ease-in-out;
+        }
+
+        /* --- MEGA FOOTER --- */
+        .mega-footer {
+            background-color: var(--bg-cream);
+            padding: 100px 40px 0 40px;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+        }
+        .footer-content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 40px;
+        }
+        .footer-icon-container {
+            width: 48px;
+            height: 48px;
+            background-color: #E6DCFA;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer-icon-container img {
+            height: 16px;
+            filter: brightness(0);
+        }
+        .footer-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #A0A0A0;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 20px;
+        }
+        .footer-products-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+        .footer-product-card {
+            background-color: #EAE8DF;
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        .footer-product-card:hover {
+            transform: translateY(-2px);
+        }
+        .product-card-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .product-card-info h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .product-card-info p {
+            margin: 0 0 16px 0;
+            font-size: 0.9rem;
+            color: var(--text-grey);
+            line-height: 1.5;
+        }
+        .product-card-info a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+        .product-card-info a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        .footer-link-col h4 {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #A0A0A0;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 0 0 20px 0;
+        }
+        .footer-link-col {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .footer-link-col a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .footer-link-col a:hover {
+            color: var(--accent-purple);
+        }
+
+        .footer-massive-text {
+            font-family: 'EB Garamond', serif;
+            font-size: 21vw;
+            font-weight: 500;
+            line-height: 0.75;
+            color: var(--text-dark);
+            text-align: center;
+            letter-spacing: -0.02em;
+            margin-top: 40px;
+            padding-bottom: 20px;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        @media (max-width: 900px) {
+            header { padding: 20px; }
+            .logo { height: 35px; }
+            .hero-title { font-size: 4rem; }
+            .footer-content-wrapper { grid-template-columns: 1fr; }
+            .footer-brand-col { display: none; }
+            .footer-products-grid { grid-template-columns: 1fr; }
+            .footer-links-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+    
+        /* --- OUTRO SECTION --- */
+        .outro-section {
+            background-color: var(--bg-cream);
+            padding: 150px 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .outro-content {
+            max-width: 800px;
+        }
+        .outro-content h2 {
+            font-family: 'EB Garamond', serif;
+            font-size: 4.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 40px;
+            line-height: 1.1;
+        }
+        .outro-content p {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--text-grey);
+            margin-bottom: 24px;
+        }
+        .outro-bold {
+            font-size: 1.8rem !important;
+            font-weight: 400 !important;
+            color: var(--text-dark) !important;
+            font-family: 'EB Garamond', serif !important;
+            font-style: italic;
+        }
+        .outro-highlight {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: var(--accent-purple);
+            margin-top: 60px;
+        }
+
+        /* --- WAITLIST SECTION --- */
+        .waitlist-section {
+            background-color: var(--text-dark);
+            padding: 120px 20px 80px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .waitlist-container {
+            width: 100%; max-width: 500px;
+            text-align: center;
+        }
+        .waitlist-title {
+            font-family: 'EB Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+        .waitlist-sub {
+            font-family: 'Inter', sans-serif;
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        .form-input, .form-select {
+            width: 100%;
+            padding: 16px 20px;
+            background-color: #1a1a1a !important;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: var(--white) !important;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+        .form-input:focus, .form-select:focus {
+            border-color: var(--accent-purple);
+            background: rgba(255,255,255,0.08);
+        }
+        .phone-input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .phone-input-group .form-select {
+            width: 120px;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+        .phone-input-group .form-input {
+            text-align: left;
+            margin-bottom: 0;
+        }
+        .form-select option {
+            background-color: var(--text-dark);
+            color: var(--white);
+        }
+
+        /* --- FINAL FOOTER --- */
+        .footer-bottom {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+        .social-links {
+            display: flex;
+            gap: 24px;
+        }
+        .social-links a {
+            color: rgba(255,255,255,0.5);
+            transition: color 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .social-links a:hover {
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+        .social-links svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+        .legal-links {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .legal-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .legal-links a:hover {
+            color: var(--white);
+        }
+        .copyright {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .final-footer {
+            background-color: var(--text-dark);
+            text-align: center;
+            padding: 40px 20px 120px 20px;
+        }
+        .footer-brand { display: flex; align-items: center; justify-content: center; gap: clamp(12px, 2vw, 32px); margin-bottom: 40px; }
+        .footer-brand img { height: clamp(5rem, 15vw, 15rem); width: auto; object-fit: contain; filter: invert(1); }
+        .footer-brand h1 { font-size: clamp(5rem, 15vw, 15rem) !important; line-height: 1 !important; margin: 0 !important; white-space: nowrap; }
+        .join-card {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            position: fixed; right: 24px; bottom: 90px; z-index: 900;
+            background: #ffffff; color: #121212; border: 1px solid rgba(0,0,0,0.08); text-decoration: none;
+            font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1.05rem;
+            padding: 14px 28px; border-radius: 999px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, background 0.2s ease;
+        }
+        .join-card:hover { transform: translateY(-3px); background: #f8f8f8; box-shadow: 0 14px 40px rgba(0,0,0,0.2); }
+        .join-card.hide {
+            opacity: 0; pointer-events: none;
+            transform: translateY(-120vh);
+        }
+        @media (max-width: 600px) {
+            .join-card { right: 14px; bottom: calc(80px + env(safe-area-inset-bottom)); padding: 12px 24px; font-size: 1rem; }
+        }
+        .final-footer h1 {
+            font-family: 'EB Garamond', serif;
+            font-size: 6rem;
+            font-weight: 500;
+            color: var(--white);
+            margin: 0 0 20px 0;
+            letter-spacing: -0.02em;
+        }
+        .final-footer p {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.6;
+            margin-bottom: 10px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .final-footer strong { color: var(--white); font-weight: 500; }
+
+    
+        .framer-btn, .header-pill {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+        }
+        .btn-icon {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+    
+
+    
+        
+        /* --- TEAM MODAL V2 --- */
+        .team-modal {
+            position: fixed; inset: 0;
+            background: #F9F7F3;
+            z-index: 99999;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.5s ease;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            color: #121212;
+        }
+        .team-modal.active { opacity: 1; pointer-events: auto; }
+
+        /* Purple glow at top */
+        .team-purple-glow {
+            position: absolute; top: -120px; left: 50%;
+            transform: translateX(-50%);
+            width: 900px; height: 400px;
+            background: radial-gradient(circle, rgba(94,23,235,0.35) 0%, transparent 70%);
+            filter: blur(60px);
+            animation: teamGlowPulse 4s infinite alternate;
+            pointer-events: none; z-index: 1;
+        }
+        @keyframes teamGlowPulse {
+            0%  { opacity: 0.6; transform: translateX(-50%) scale(1); }
+            100%{ opacity: 1;   transform: translateX(-50%) scale(1.15); }
+        }
+
+        /* Close button */
+        .team-modal-close {
+            position: absolute; top: 32px; right: 36px;
+            background: rgba(0,0,0,0.06); border: none;
+            width: 44px; height: 44px; border-radius: 50%;
+            cursor: pointer; color: #121212; z-index: 100000;
+            transition: all 0.25s ease;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .team-modal-close:hover { transform: rotate(90deg); background: rgba(0,0,0,0.12); }
+
+        /* Back button */
+        .team-back-btn { display: none !important;
+            position: absolute; top: 32px; left: 36px;
+            background: rgba(0,0,0,0.06); border: none;
+            border-radius: 50px; padding: 10px 22px;
+            cursor: pointer; color: #121212;
+            display: flex; align-items: center; gap: 8px;
+            z-index: 100000; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s; font-family: 'Inter', sans-serif; font-weight: 500;
+        }
+        .team-modal.viewing-profile .team-back-btn { display: none !important; opacity: 1; pointer-events: auto; }
+        .team-back-btn:hover { background: rgba(0,0,0,0.12); }
+
+        /* Title block */
+        .team-modal-content {
+            position: absolute; top: 7vh; width: 100%;
+            text-align: center; z-index: 10;
+            display: flex; flex-direction: column; align-items: center;
+            transition: opacity 0.3s;
+        }
+        .team-modal.viewing-profile .team-modal-content { opacity: 0; pointer-events: none; }
+        .team-title {
+            font-family: 'EB Garamond', serif; font-size: 3.8rem; color: #121212;
+            font-weight: 400; line-height: 1.05; margin: 0 auto 8px auto;
+        }
+        .team-subtitle { color: #6B6A66; font-size: 1rem; }
+
+        /* ── Face container ─────────────────────────────────── */
+        .team-faces-container {
+            position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 85%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Each member sits at bottom with absolute left/right */
+        .team-member {
+            position: absolute; bottom: 0;
+            cursor: pointer; pointer-events: auto;
+            transition: transform 0.7s cubic-bezier(0.16,1,0.3,1),
+                        opacity  0.5s ease,
+                        filter   0.5s ease;
+        }
+        /* Bhava — left quarter */
+        .team-member:nth-child(1) { right: calc(45% + 1vw); left: auto; }
+        /* Vinnu — right quarter */
+        .team-member:nth-child(2) { left: calc(55% + 1vw); right: auto; }
+
+        .team-face {
+            width: 43vw; max-width: 580px; min-width: 320px;
+            height: auto; object-fit: contain;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.12));
+            transition: all 0.7s cubic-bezier(0.16,1,0.3,1);
+            display: block;
+        }
+
+        /* Hover lift */
+        .team-member:hover .team-face {
+            transform: scale(1.04) translateY(-12px);
+            filter: drop-shadow(0 28px 40px rgba(94,23,235,0.2));
+        }
+
+        /* ── Annotations: label + twirly arrow pointing at each head ── */
+        .team-annot {
+            position: absolute; top: 1%;
+            z-index: 20; pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        .annot-label {
+            display: inline-block;
+            font-family: 'EB Garamond', serif; font-style: italic;
+            font-size: clamp(1.4rem, 2.6vw, 2.2rem); color: #121212;
+            background: rgba(255,255,255,0.75); border: 1px solid rgba(94,23,235,0.25);
+            padding: 2px 16px 4px; border-radius: 999px; white-space: nowrap;
+            box-shadow: 0 8px 24px rgba(94,23,235,0.12);
+        }
+        .annot-arrow { display: block; width: clamp(80px, 11vw, 150px); height: auto; margin-top: 2px; overflow: visible; }
+        .annot-arrow path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+        .team-modal.active .annot-arrow path { animation: drawArrow 1.1s cubic-bezier(.6,0,.2,1) .6s forwards; }
+        .team-modal.active .annot-arrow path.ah { animation-delay: 1.5s; animation-duration: .35s; }
+        @keyframes drawArrow { to { stroke-dashoffset: 0; } }
+        .annot-left  { left: 2%; }
+        .annot-right { left: 2%; }
+
+        .team-modal.viewing-profile .team-annot { opacity: 0; }
+
+        /* ── Clicked / profile states ──────────────────────── */
+        /* Clicked: scale up for a beat, then slide left */
+        .team-member.active-profile {
+            left: 2vw !important;
+            right: auto !important;
+            transform: none !important;
+            z-index: 40;
+        }
+        .team-member.active-profile .team-face { width: min(36vw, 500px); min-width: 0; }
+        .team-member.hidden-profile {
+            opacity: 0; pointer-events: none;
+            transform: scale(0.85) translateY(40px) !important;
+            filter: blur(8px) !important;
+        }
+
+        /* ── Profile pane (right side) ──────────────────────── */
+        .team-profile-pane {
+            position: absolute; top: 0; right: 0;
+            width: 58%; height: 100%;
+            display: flex; align-items: center; justify-content: flex-end;
+            padding: 40px 3vw 40px 0; box-sizing: border-box;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.6s ease 0.2s;
+            z-index: 50;
+        }
+        .team-modal.viewing-profile .team-profile-pane { opacity: 1; pointer-events: auto; }
+
+        .profile-card {
+            position: relative;
+            background: linear-gradient(160deg, rgba(255,255,255,0.92), rgba(247,243,255,0.8));
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(94,23,235,0.14);
+            border-radius: 32px; padding: 52px 52px 44px;
+            width: 100%; max-width: 620px; box-sizing: border-box;
+            text-align: left; display: none;
+            box-shadow: 0 50px 100px rgba(94,23,235,0.14), 0 10px 30px rgba(0,0,0,0.06), inset 0 1px 2px rgba(255,255,255,0.9);
+            overflow-y: auto; max-height: 86vh;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .profile-card::before {
+            content: ''; position: absolute; left: 52px; top: 0; width: 64px; height: 4px;
+            border-radius: 0 0 6px 6px; background: linear-gradient(90deg, #5E17EB, #A98BFF);
+        }
+        .profile-card::-webkit-scrollbar { display: none; }
+        .profile-card.active {
+            display: block;
+            animation: slideUpFade 0.55s cubic-bezier(0.16,1,0.3,1) forwards;
+        }
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .profile-card h2 { font-family: 'EB Garamond', serif; font-size: clamp(2.3rem, 4vw, 3.4rem); margin: 0 0 4px 0; font-weight: 400; color: #121212; }
+        .profile-card h3 { display: inline-block; font-size: 0.75rem; color: #5E17EB; background: rgba(94,23,235,0.09); padding: 6px 14px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 24px 0; font-weight: 600; }
+        .profile-card p  { font-size: 0.95rem; line-height: 1.6; color: #555; margin-bottom: 20px; }
+        .profile-card p:last-of-type { margin-bottom: 36px; }
+        .profile-socials { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .profile-socials a {
+            flex: 1 1 0px; text-align: center; min-width: 110px; box-sizing: border-box;
+            color: #6B6A66; text-decoration: none; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500;
+            transition: all 0.2s; padding: 10px 18px;
+            background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 50px;
+        }
+        .profile-socials a:hover { color: #fff; background: #5E17EB; border-color: #5E17EB; transform: translateY(-2px); }
+
+
+        /* ── Team modal: mobile ── */
+        @media (max-width: 700px) {
+            .team-modal-close { top: 16px; right: 16px; }
+            .team-modal-content { top: 9vh; padding: 0 20px; box-sizing: border-box; }
+            .team-title { font-size: 2.2rem; }
+            .team-faces-container { height: 72%; }
+            .team-face { width: 70vw; min-width: 0; }
+            .team-member:nth-child(1) { right: auto; left: -12vw; }
+            .team-member:nth-child(2) { left: auto; right: -12vw; }
+            .annot-label { font-size: 1.15rem; padding: 1px 12px 3px; }
+            .annot-arrow { width: 22vw; }
+            .annot-left, .annot-right { left: 22%; }
+            .team-member.active-profile { left: 50% !important; transform: translateX(-50%) !important; bottom: auto; top: -9vh; }
+            .team-member.active-profile .team-face { width: 56vw; }
+            .team-profile-pane { width: 100%; padding: 0 14px 18px; align-items: flex-end; justify-content: center; }
+            .profile-card { padding: 34px 24px 26px; max-height: 52vh; border-radius: 26px; }
+            .profile-card::before { left: 24px; }
+            .profile-card p { font-size: 0.9rem; margin-bottom: 14px; }
+            .profile-card p:last-of-type { margin-bottom: 22px; }
+            .team-purple-glow { width: 120vw; }
+        }
+
+        /* ── Site-wide mobile tuning ── */
+        html { -webkit-text-size-adjust: 100%; }
+        a, button { -webkit-tap-highlight-color: transparent; }
+        @media (max-width: 700px) {
+            header { padding: 16px 16px !important; gap: 8px; }
+            .header-brand { gap: 8px; min-width: 0; }
+            .logo { height: 26px !important; }
+            .header-wordmark { font-size: 1.45rem; }
+            .header-actions { gap: 8px !important; }
+            .header-actions .header-pill { padding: 8px 14px !important; font-size: 0.85rem; }
+            .header-actions .btn-icon { display: none !important; }
+            .hero-title { font-size: clamp(3rem, 14vw, 4rem) !important; }
+            .hero-sub { font-size: 0.98rem; padding: 0 20px; }
+            .prompt-container { padding: 0 16px; margin-top: -40px; }
+            .prompt-box { padding: 8px 8px 8px 16px; }
+            .prompt-icon { margin-right: 10px; }
+            .prompt-text { font-size: 0.95rem; min-width: 0; flex: 1; text-overflow: clip; }
+            .prompt-btn { width: 42px; height: 42px; flex-shrink: 0; }
+            .prompt-subtext { font-size: 0.75rem; }
+            .seq-text { font-size: clamp(1.7rem, 8vw, 2.6rem) !important; width: 86% !important; }
+
+            .features-grid { padding: 20px 20px !important; gap: 22px !important; }
+            .feature-visual { height: 38vh !important; min-height: 240px; border-radius: 20px; }
+            .visual-state svg { width: 60px; height: 60px; }
+            .feature-text { height: auto !important; min-height: 280px; }
+            .feature-text-item { top: 0 !important; transform: none !important; }
+            .feature-text-item h5 { font-size: 1.7rem; margin-bottom: 12px; }
+            .feature-text-item p { font-size: 0.98rem; line-height: 1.55; }
+
+            .faq-section { padding: 70px 16px !important; }
+            .faq-title { font-size: 2.6rem !important; }
+            .faq-window, .faq-sidebar, .faq-content-area { box-sizing: border-box; }
+            .faq-window { padding: 10px; gap: 12px; border-radius: 24px; }
+            .faq-sidebar { height: auto !important; padding: 24px 14px; border-radius: 18px; }
+            .faq-list { max-height: 280px; }
+            .faq-q-item { padding: 12px 14px; font-size: 0.92rem; }
+            .faq-content-area { height: auto !important; min-height: 280px; padding: 20px 12px !important; }
+
+            .waitlist-section { padding: 80px 16px 60px; }
+            .waitlist-title { font-size: 2.6rem; }
+            .waitlist-sub { font-size: 1rem; }
+            .phone-input-group .form-select { width: 96px; }
+            .form-input, .form-select { font-size: 16px; }
+
+            .final-footer { padding: 30px 16px calc(110px + env(safe-area-inset-bottom)) !important; }
+            .final-footer p { font-size: 1rem; }
+            .footer-brand { gap: 8px; }
+            .footer-brand img { height: 14.5vw; }
+            .footer-brand h1 { font-size: 14.5vw !important; }
+            .legal-links { flex-wrap: wrap; justify-content: center; gap: 12px 20px; }
+            .team-modal-close { width: 40px; height: 40px; }
+        }
+        @media (max-width: 380px) {
+            .header-wordmark { display: none; }
+        }
+
+        .profile-socials a, .social-links a {
+            position: relative !important;
+            z-index: 1000 !important;
+            pointer-events: auto !important;
+        }
+
+        /* ── FAQ as iMessage ── */
+        .faq-content-area {
+            background: #fff !important; border-radius: 24px; padding: 0 !important;
+            position: relative; overflow-y: auto; overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Inter', sans-serif;
+        }
+        .faq-content-area .answer-label {
+            position: sticky; top: 0; z-index: 5; margin: 0;
+            display: flex; flex-direction: column; align-items: center; gap: 2px;
+            padding: 12px 0 8px; background: rgba(249,249,249,0.94);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 0.5px solid rgba(60,60,67,0.18);
+            font: 600 11px/1.2 -apple-system, 'SF Pro Text', 'Inter', sans-serif; color: #000;
+        }
+        .imsg-avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: linear-gradient(180deg, #A5ABB8, #858A97);
+            color: #fff; font: 600 20px/40px -apple-system, 'Inter', sans-serif; text-align: center;
+        }
+        .answer-label .imsg-name { display: flex; align-items: center; gap: 3px; font-weight: 400; font-size: 11px; }
+        .answer-label .imsg-name::after { content: '›'; color: #C4C4C7; font-size: 13px; }
+        .faq-content-area { -webkit-overflow-scrolling: touch; touch-action: pan-y; scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.25) transparent; }
+        .faq-answer-pane { padding: 10px 14px 24px; }
+        .faq-answer-item.active { display: flex; flex-direction: column; animation: none; }
+        .imsg-time { align-self: center; font: 400 11px/1.3 -apple-system, 'Inter', sans-serif; color: #8E8E93; margin: 6px 0 10px; text-align: center; }
+        .imsg-time b { font-weight: 600; }
+        .imsg {
+            position: relative; max-width: 74%; padding: 7px 14px 8px; border-radius: 18px;
+            font: 400 17px/22px -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Inter', sans-serif;
+            letter-spacing: -0.022em; word-wrap: break-word; margin: 0 0 2px 0;
+            opacity: 0; transform: scale(.6); transition: opacity .2s ease, transform .35s cubic-bezier(.2,.9,.3,1.25);
+        }
+        .imsg.show { opacity: 1; transform: scale(1); }
+        .imsg.sent { align-self: flex-end; background: #007AFF; color: #fff; transform-origin: bottom right; margin-right: 6px; }
+        .imsg.recv { align-self: flex-start; background: #E9E9EB; color: #000; transform-origin: bottom left; margin-left: 6px; }
+        .imsg p { margin: 0; font: inherit; color: inherit; line-height: inherit; }
+        .imsg.tail::before, .imsg.tail::after { content: ''; position: absolute; bottom: 0; height: 18px; }
+        .imsg.sent.tail::before { right: -7px; width: 20px; background: #007AFF; border-bottom-left-radius: 16px 14px; }
+        .imsg.sent.tail::after { right: -26px; width: 26px; background: #fff; border-bottom-left-radius: 10px; }
+        .imsg.recv.tail::before { left: -7px; width: 20px; background: #E9E9EB; border-bottom-right-radius: 16px 14px; }
+        .imsg.recv.tail::after { left: -26px; width: 26px; background: #fff; border-bottom-right-radius: 10px; }
+        .imsg-delivered { align-self: flex-end; margin: 2px 8px 6px 0; font: 600 11px/1.2 -apple-system, 'Inter', sans-serif; color: #8E8E93; opacity: 0; transition: opacity .3s; }
+        .imsg-delivered.show { opacity: 1; }
+        .imsg-typing { align-self: flex-start; margin-left: 6px; padding: 12px 15px; display: none; gap: 4px; }
+        .imsg-typing.on { display: inline-flex; opacity: 1; transform: scale(1); }
+        .imsg-typing i { width: 8px; height: 8px; border-radius: 50%; background: #9A9AA0; animation: imsgDot 1.2s infinite; }
+        .imsg-typing i:nth-child(2) { animation-delay: .18s; }
+        .imsg-typing i:nth-child(3) { animation-delay: .36s; }
+        @keyframes imsgDot { 0%, 60%, 100% { opacity: .35; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+        @media (max-width: 700px) { .imsg { font-size: 16px; line-height: 21px; max-width: 82%; } .faq-content-area { min-height: 320px; } }
+
+        /* ── HUMAN word: on hover one bright colour at a time fills the letters from bottom-centre to the top, then the next colour, continuously ── */
+        .human-word { position: relative; display: inline-block; white-space: nowrap; cursor: default; }
+        .human-word::before, .human-word::after {
+            content: attr(data-t);
+            position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+            font: inherit; letter-spacing: inherit; text-transform: inherit; line-height: inherit;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            pointer-events: none; opacity: 0; transition: opacity .2s;
+        }
+        .human-word::before { background-color: var(--hm-prev, transparent); }
+        .human-word::after { background-color: var(--hm-cur, #ff9f1c); clip-path: circle(0% at 50% 100%); }
+        .human-word.hm-on::before, .human-word.hm-on::after { opacity: 1; }
+        .human-word.hm-on::after { animation: hmFill .7s cubic-bezier(.35,.55,.3,1) infinite; }
+        @keyframes hmFill { 0% { clip-path: circle(0% at 50% 100%); } 100% { clip-path: circle(115% at 50% 100%); } }
+
+        /* No drag ghosts: stop images (e.g. the hidden team photos) following the cursor while dragging */
+        img, svg { -webkit-user-drag: none; user-drag: none; -webkit-user-select: none; user-select: none; }
+        .team-modal:not(.active) { visibility: hidden; }
+        .team-modal { transition: opacity 0.5s ease, visibility 0s linear 0.5s; }
+        .team-modal.active { visibility: visible; transition: opacity 0.5s ease, visibility 0s; }
+
+        /* ── Nav bar (cream floating bar with segmented For Business / For Education switch) ── */
+        header { justify-content: center !important; padding: 16px 20px !important; }
+        .hb { position: relative; width: 100%; max-width: 1180px; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 12px 10px 20px; background: rgba(253,251,245,0.96); border: 2px solid rgba(18,18,18,0.12); border-radius: 22px; color: #121212; box-shadow: 0 10px 40px rgba(0,0,0,0.25); font-family: 'Inter', sans-serif; }
+        .hb-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #121212; flex-shrink: 0; }
+        .hb-logo { height: 28px; width: auto; filter: brightness(0); }
+        .hb-brand span { font-family: 'EB Garamond', serif; font-size: 2rem; line-height: 1; letter-spacing: -0.02em; }
+        .hb-seg { display: flex; padding: 4px; background: #E7E4D6; border: 2px solid #DDD9C8; border-radius: 999px; margin-right: auto; margin-left: 18px; }
+        .hb-seg a { text-decoration: none; color: #121212; font-weight: 500; font-size: 0.97rem; padding: 10px 22px; border-radius: 999px; transition: background .2s; white-space: nowrap; }
+        .hb-seg a:hover { background: rgba(255,255,255,0.6); }
+        .hb-seg a.on { background: #fff; box-shadow: inset 0 0 0 2px #E1DED0; }
+        .hb-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+        .hb-link { all: unset; box-sizing: border-box; cursor: pointer; color: #5C5B57; font: 500 0.97rem 'Inter', sans-serif; padding: 10px 14px; border-radius: 12px; transition: color .2s, background .2s; }
+        .hb-link:hover { color: #121212; background: rgba(18,18,18,0.06); }
+        .hb-cta { display: inline-flex; align-items: center; gap: 10px; margin-left: 8px; background: #E6DBFF; color: #121212; text-decoration: none; font: 600 1rem 'Inter', sans-serif; padding: 14px 22px; border: 2px solid #121212; border-radius: 14px; transition: transform .2s, box-shadow .2s; white-space: nowrap; }
+        .hb-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 0 -1px #121212; }
+        .nav-burger { display: none; width: 46px; height: 46px; margin-left: 8px; border-radius: 12px; border: 2px solid #121212; background: transparent; cursor: pointer; padding: 0; flex-direction: column; align-items: center; justify-content: center; gap: 4px; flex-shrink: 0; }
+        .nav-burger i { display: block; width: 18px; height: 2px; background: #121212; transition: transform .25s, opacity .25s; }
+        .nav-burger[aria-expanded="true"] i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .nav-burger[aria-expanded="true"] i:nth-child(2) { opacity: 0; }
+        .nav-burger[aria-expanded="true"] i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+        .nav-drop { display: none; position: absolute; top: calc(100% + 10px); left: 0; right: 0; padding: 8px; background: #FDFBF5; border: 2px solid rgba(18,18,18,0.12); border-radius: 20px; box-shadow: 0 24px 50px rgba(0,0,0,0.3); z-index: 60; flex-direction: column; }
+        .nav-drop.open { display: flex; }
+        .nav-drop a, .nav-drop button { all: unset; box-sizing: border-box; cursor: pointer; color: #121212; font: 500 1.05rem 'Inter', sans-serif; padding: 14px 16px; border-radius: 12px; }
+        .nav-drop a:hover, .nav-drop button:hover { background: rgba(18,18,18,0.06); }
+        @media (max-width: 1000px) {
+            .hb-seg, .hb-link { display: none; }
+            .nav-burger { display: flex; }
+        }
+        @media (max-width: 520px) {
+            header { padding: 12px 12px !important; }
+            .hb { padding: 8px 8px 8px 14px; border-radius: 18px; }
+            .hb-brand span { font-size: 1.6rem; }
+            .hb-cta { padding: 11px 14px; font-size: .92rem; margin-left: 0; }
+            .hb-cta svg { display: none; }
+            .nav-burger { width: 42px; height: 42px; margin-left: 6px; }
+        }
+
+        /* ═══ Team profile cards: editorial dark cards ═══ */
+        .team-profile-pane .profile-card {
+            --ac: #FF6A00; --ac2: #FF2E93;
+            position: relative; width: 100%; max-width: 660px; box-sizing: border-box;
+            padding: 34px 40px 36px; border-radius: 34px;
+            color: var(--fg); text-align: left; font-family: 'Figtree', 'Figtree', 'Inter', sans-serif;
+            background: var(--bg);
+            border: 0;
+            box-shadow: 0 50px 100px -24px rgba(18,10,40,.45), 0 16px 32px rgba(0,0,0,.14);
+            backdrop-filter: none; overflow-x: hidden; overflow-y: auto; max-height: 88vh;
+        }
+        .team-profile-pane .profile-card::before { content: ''; position: absolute; left: 40px; right: 40px; top: 0; width: auto; height: 2px; border-radius: 0 0 4px 4px; background: var(--ac); opacity: 1; }
+        .profile-card .pc-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; font: 500 .72rem/1 'Figtree', 'Inter', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: color-mix(in srgb, var(--fg) 62%, transparent); }
+        .profile-card .pc-no { font-family: 'EB Garamond', serif; font-size: 1.15rem; letter-spacing: 0; color: var(--ac); }
+        .profile-card .pc-role { display: inline-flex; align-items: center; gap: 9px; padding: 8px 14px; border-radius: 999px; background: color-mix(in srgb, var(--fg) 12%, transparent); border: 1px solid color-mix(in srgb, var(--fg) 28%, transparent); color: var(--fg); letter-spacing: .12em; }
+        .profile-card .pc-role i { width: 7px; height: 7px; border-radius: 50%; background: var(--ac); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ac) 30%, transparent); animation: pcPulse 2.2s ease-in-out infinite; }
+        @keyframes pcPulse { 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--ac) 12%, transparent); } }
+        .profile-card .pc-co { margin-left: auto; }
+        .team-profile-pane .profile-card .pc-name { font-family: 'EB Garamond', serif; font-weight: 400; font-size: clamp(3.4rem, 7vw, 5.6rem); line-height: .92; letter-spacing: -.035em; margin: 34px 0 22px; color: var(--fg); background: none; padding: 0; display: block; text-transform: none; }
+        .team-profile-pane .profile-card .pc-lead { font-family: 'EB Garamond', serif; font-style: italic; font-size: clamp(1.35rem, 2.3vw, 1.85rem); line-height: 1.22; letter-spacing: -.01em; color: var(--fg); margin: 0 0 26px; padding-left: 20px; border-left: 3px solid var(--ac); }
+        .profile-card .pc-rows { display: grid; gap: 0; border-top: 1px solid color-mix(in srgb, var(--fg) 30%, transparent); }
+        .profile-card .pc-row { display: grid; grid-template-columns: 104px 1fr; gap: 18px; padding: 18px 0; border-bottom: 1px solid color-mix(in srgb, var(--fg) 22%, transparent); }
+        .profile-card .pc-k { font: 600 .7rem/1.3 'Figtree', 'Inter', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--ac); display: flex; flex-direction: column; gap: 6px; padding-top: 3px; }
+        .profile-card .pc-k b { font-family: 'EB Garamond', serif; font-weight: 400; font-size: 1.05rem; letter-spacing: 0; color: color-mix(in srgb, var(--fg) 50%, transparent); }
+        .team-profile-pane .profile-card .pc-row p { margin: 0; font: 400 .97rem/1.62 'Figtree', 'Inter', sans-serif; color: color-mix(in srgb, var(--fg) 86%, transparent); }
+        .profile-card .pc-soc { display: flex; align-items: center; gap: 10px; margin-top: 26px; position: relative; z-index: 2; }
+        .profile-card .pc-find { margin-right: auto; font: 500 .72rem/1 'Figtree', 'Inter', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: color-mix(in srgb, var(--fg) 62%, transparent); }
+        .profile-card .pc-soc a { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; color: var(--fg); background: color-mix(in srgb, var(--fg) 12%, transparent); border: 1px solid color-mix(in srgb, var(--fg) 30%, transparent); transition: transform .25s cubic-bezier(.2,.8,.2,1), background .25s, color .25s, border-color .25s; }
+        .profile-card .pc-soc a:hover { transform: translateY(-4px) rotate(-6deg); background: var(--fg); color: var(--bg); border-color: var(--fg); }
+        .profile-card .pc-soc svg { width: 19px; height: 19px; fill: currentColor; }
+        .profile-card .pc-soc svg.st { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .profile-card .pc-ghost { position: absolute; right: -.04em; bottom: -.28em; font: italic 400 11rem/1 'EB Garamond', serif; letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--fg) 18%, transparent); pointer-events: none; user-select: none; white-space: nowrap; }
+        .profile-card.active > * { animation: pcIn .7s cubic-bezier(.2,.8,.2,1) both; }
+        .profile-card.active > :nth-child(2) { animation-delay: .06s; } .profile-card.active > :nth-child(3) { animation-delay: .12s; }
+        .profile-card.active > :nth-child(4) { animation-delay: .2s; } .profile-card.active > :nth-child(5) { animation-delay: .28s; }
+        .profile-card.active > :nth-child(6) { animation-delay: .36s; }
+        .profile-card.active > .pc-ghost { animation: pcGhost 1.1s .3s ease both; }
+        @keyframes pcIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+        @keyframes pcGhost { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+        @media (max-width: 700px) {
+            .team-profile-pane .profile-card { padding: 24px 22px 26px; border-radius: 26px; max-height: 56vh; }
+            .team-profile-pane .profile-card::before { left: 22px; right: 22px; }
+            .profile-card .pc-co { display: none; }
+            .profile-card .pc-top { justify-content: flex-start; gap: 10px; }
+            .profile-card .pc-role { margin-left: auto; font-size: .64rem; padding: 7px 11px; }
+            .team-profile-pane .profile-card .pc-name { font-size: 3rem; margin: 22px 0 14px; }
+            .team-profile-pane .profile-card .pc-lead { font-size: 1.2rem; margin-bottom: 18px; padding-left: 14px; }
+            .profile-card .pc-row { grid-template-columns: 1fr; gap: 8px; padding: 14px 0; }
+            .profile-card .pc-k { flex-direction: row; align-items: baseline; gap: 10px; }
+            .team-profile-pane .profile-card .pc-row p { font-size: .9rem; }
+            .profile-card .pc-soc a { width: 42px; height: 42px; }
+            .profile-card .pc-ghost { font-size: 6.5rem; }
+        }
+
+        /* ── Team modal: solid purple page ── */
+        .team-modal { background: #5E17EB; color: #F7F4EE; }
+        .team-purple-glow { display: none; }
+        .team-modal .team-title { color: #F7F4EE; }
+        .team-modal .team-subtitle { color: rgba(247,244,238,.8); }
+        .team-modal .team-modal-close { background: rgba(255,255,255,.16); color: #fff; }
+        .team-modal .team-modal-close:hover { background: rgba(255,255,255,.3); }
+        .team-modal .annot-arrow { stroke: #FFE600; }
+        .team-modal .annot-label { background: #fff; border-color: #fff; color: #121212; box-shadow: 0 10px 28px rgba(0,0,0,.25); }
+        .team-modal .team-face { filter: drop-shadow(0 24px 34px rgba(20,0,60,.45)); }
+        .team-modal .team-member:hover .team-face { filter: drop-shadow(0 30px 44px rgba(20,0,60,.6)); }
+
+        /* ── Country picker (flags + every country) ── */
+        .phone-input-group { align-items: stretch; }
+        .cc { position: relative; flex: none; }
+        .cc-btn { all: unset; box-sizing: border-box; height: 100%; min-height: 56px; display: flex; align-items: center; gap: 9px; padding: 0 14px; border-radius: 12px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); color: #fff; font: 500 1rem 'Inter', sans-serif; cursor: pointer; transition: border-color .2s; }
+        .cc-btn:hover, .cc-btn[aria-expanded="true"] { border-color: var(--accent-purple); }
+        .cc-btn:focus-visible { outline: 2px solid var(--accent-purple); outline-offset: 2px; }
+        .cc-btn img { width: 24px; height: 18px; border-radius: 3px; object-fit: cover; box-shadow: 0 0 0 1px rgba(255,255,255,0.15); background: #333; }
+        .cc-panel { position: absolute; top: calc(100% + 8px); left: 0; width: min(360px, calc(100vw - 40px)); z-index: 50; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; box-shadow: 0 24px 60px rgba(0,0,0,.6); overflow: hidden; text-align: left; }
+        .cc-panel[hidden] { display: none; }
+        .cc-panel input { width: 100%; box-sizing: border-box; padding: 14px 16px; background: #121212; border: 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: #fff; font: 400 16px 'Inter', sans-serif; outline: none; }
+        .cc-panel ul { list-style: none; margin: 0; padding: 6px; max-height: 280px; overflow-y: auto; overscroll-behavior: contain; }
+        .cc-panel li { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: #fff; font: 400 .95rem 'Inter', sans-serif; }
+        .cc-panel li:hover, .cc-panel li.hl { background: rgba(255,255,255,0.1); }
+        .cc-panel li[aria-selected="true"] { background: rgba(94,23,235,.45); }
+        .cc-panel li img { width: 24px; height: 18px; border-radius: 3px; object-fit: cover; flex: none; background: #333; }
+        .cc-panel li .n { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .cc-panel li .d { color: rgba(255,255,255,.55); flex: none; }
+        .cc-panel .none { padding: 16px; color: rgba(255,255,255,.6); font-size: .95rem; }
+        @media (max-width: 520px) { .cc-panel { position: fixed; left: 12px; right: 12px; top: auto; bottom: 12px; width: auto; } .cc-panel ul { max-height: 50vh; } }
+
+        /* ── Prompt box: text never touches the edges ── */
+        .prompt-box { padding: 12px 12px 12px 22px; gap: 4px; }
+        .prompt-box .prompt-field { flex: 1; min-width: 0; display: flex; justify-content: flex-end; overflow: hidden; padding: 0 14px 0 4px; }
+        .prompt-box .prompt-text { flex: none; margin-right: auto; display: inline-block; max-width: none; text-overflow: clip; overflow: visible; animation: blink .75s step-end infinite; }
+        .prompt-box .prompt-icon { flex: none; }
+        .prompt-box .prompt-btn { flex: none; margin-left: 4px; }
+        @media (max-width: 700px) { .prompt-box { padding: 8px 8px 8px 16px; } .prompt-box .prompt-text { font-size: .95rem; } .prompt-box .prompt-field { padding: 0 10px 0 2px; } }
+
+        /* ── Thermal-camera heat map text ── */
+        @property --sh { syntax: '<length>'; initial-value: 0px; inherits: false; }
+        .seq-text .th {
+            background-image: linear-gradient(90deg, #ff2bd6, #ff1744, #ff6d00, #ffd600, #fffde7, #ffd600, #ff6d00, #ff1744, #ff2bd6);
+            background-repeat: repeat-x;
+            background-size: var(--W, 600px) 100%;
+            background-position: calc(var(--ox, 0px) + var(--sh, 0px)) 0;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent !important;
+            animation: thShift 3.4s linear infinite;
+            filter: drop-shadow(0 0 10px rgba(255,120,0,.45));
+        }
+        @keyframes thShift { to { --sh: var(--W, 600px); } }
+        .seq-text .ln { display: block; }
+        @media (min-width: 700px) { .seq-text .ln-nowrap { white-space: nowrap; } }
+
+        /* ── Light emitted from the centre of every colour screen ── */
+        .seq-glow { position: absolute; inset: 0; pointer-events: none; z-index: 1;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.42) 0%, rgba(255,255,255,.2) 16%, rgba(255,255,255,.07) 34%, rgba(255,255,255,0) 58%);
+            animation: seqBreathe 4.8s ease-in-out infinite; }
+        .seq-ring { position: absolute; left: 50%; top: 50%; width: 52vmin; height: 52vmin; margin: -26vmin 0 0 -26vmin; border-radius: 50%; pointer-events: none; z-index: 1;
+            border: 2px solid rgba(255,255,255,.4); box-shadow: 0 0 40px rgba(255,255,255,.35), inset 0 0 40px rgba(255,255,255,.2); opacity: 0; animation: seqRing 6s ease-out infinite; }
+        .seq-ring.r2 { animation-delay: 3s; }
+        @keyframes seqBreathe { 0%, 100% { opacity: .8; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
+        @keyframes seqRing { 0% { transform: scale(.25); opacity: .7; } 100% { transform: scale(2.8); opacity: 0; } }
+
+        /* remove the accent line along the top edge of the profile cards */
+        .team-profile-pane .profile-card::before, .profile-card::before { content: none !important; display: none !important; }
+</style>
+</head>
+<body>
+    
+    
+    <!-- SCROLL REVEAL WRAPPER -->
+    <div class="hero-scroll-wrapper">
+        <div class="hero-sticky">
+            <div class="hero-section">
+                <header>
+                    <nav class="hb" aria-label="Main">
+                        <a class="hb-brand" href="index.html"><img src="HUTE.png" alt="HUTE" class="hb-logo"><span>HUMAN</span></a>
+                        <div class="hb-seg" role="group" aria-label="HUMAN for">
+                            <a href="business.html">For Business</a>
+                            <a href="education.html">For Education</a>
+                        </div>
+                        <div class="hb-right">
+                            <button type="button" id="open-team-modal" class="hb-link">Team</button>
+                            <a href="#faq" class="hb-link">FAQs</a>
+                            <a href="#join" class="hb-cta"><span>Get started</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                            <button type="button" class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false" aria-controls="nav-drop"><i></i><i></i><i></i></button>
+                        </div>
+                        <div class="nav-drop" id="nav-drop">
+                            <a href="business.html">For Business</a>
+                            <a href="education.html">For Education</a>
+                            <button type="button" id="nav-drop-team">Team</button>
+                            <a href="#faq">FAQs</a>
+                        </div>
+                    </nav>
+                </header>
+
+                
+                <div class="hero-text-content" style="text-align: center; margin-bottom: 2rem;">
+                    <h1 class="hero-title" style="margin-top: 10vh;">
+                        Don't wait,<br>
+                        <i>just connect.</i>
+                    </h1>
+                    <p class="hero-sub" style="max-width: 720px; margin: 1.5rem auto; line-height: 1.6; font-size: 0.95rem;">
+                        We built Uber for human connections and relationships—AI that makes finding, connecting, communicating, managing relationships, and getting things done with the right people, for anything, anywhere in the world, as effortless as getting a ride.</p>
+                </div>
+
+                <div class="prompt-container" style="margin-top: 0; margin-bottom: 3rem;">
+                    <div class="prompt-box">
+                        <span class="prompt-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </span>
+                        <span class="prompt-field"><span class="prompt-text" id="typewriter"></span></span>
+                        <button class="prompt-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+
+                
+                <div class="hero-footer-text">Available worldwide. Invitations rolling out globally.</div>
+
+            </div>
+
+            <!-- SECTION 1.5: TICKER -->
+            <div class="ticker-section" style="position: absolute; bottom: 0; width: 100%; border-bottom: none;">
+                <div class="ticker-heading">USED BY PEOPLE FROM</div>
+                <div class="ticker-container">
+                    <div class="ticker-track">
+                          <!-- SET 1 -->
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/openai.svg" alt="OpenAI"><span>OpenAI</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anthropic.svg" alt="Anthropic"><span>Anthropic</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/nvidia.svg" alt="Nvidia"><span>NVIDIA</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/apple.svg" alt="Apple"><span>Apple</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/amazon.svg" alt="Amazon"><span>Amazon</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/google.svg" alt="Google"><span>Google</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/meta.svg" alt="Meta"><span>Meta</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoft.svg" alt="Microsoft"><span>Microsoft</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/tesla.svg" alt="Tesla"><span>Tesla</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/uber.svg" alt="Uber"><span>Uber</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/stripe.svg" alt="Stripe"><span>Stripe</span></div>
+                          
+                          <div class="ticker-item"><img src="harvard.svg" alt="Harvard"><span>Harvard</span></div>
+                          <div class="ticker-item"><img src="stanford.svg" alt="Stanford"><span>Stanford</span></div>
+                          <div class="ticker-item"><img src="mit.svg" alt="MIT"><span>MIT</span></div>
+                          <div class="ticker-item"><span style="margin-right:0;">University of Melbourne</span></div>
+                          <div class="ticker-item"><img src="monash.svg" alt="Monash"><span>Monash</span></div>
+                          <div class="ticker-item"><img src="rmit.svg" alt="RMIT"></div>
+
+                          <!-- SET 2 -->
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/openai.svg" alt="OpenAI"><span>OpenAI</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anthropic.svg" alt="Anthropic"><span>Anthropic</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/nvidia.svg" alt="Nvidia"><span>NVIDIA</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/apple.svg" alt="Apple"><span>Apple</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/amazon.svg" alt="Amazon"><span>Amazon</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/google.svg" alt="Google"><span>Google</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/meta.svg" alt="Meta"><span>Meta</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoft.svg" alt="Microsoft"><span>Microsoft</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/tesla.svg" alt="Tesla"><span>Tesla</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/uber.svg" alt="Uber"><span>Uber</span></div>
+                          <div class="ticker-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/stripe.svg" alt="Stripe"><span>Stripe</span></div>
+                          
+                          <div class="ticker-item"><img src="harvard.svg" alt="Harvard"><span>Harvard</span></div>
+                          <div class="ticker-item"><img src="stanford.svg" alt="Stanford"><span>Stanford</span></div>
+                          <div class="ticker-item"><img src="mit.svg" alt="MIT"><span>MIT</span></div>
+                          <div class="ticker-item"><span style="margin-right:0;">University of Melbourne</span></div>
+                          <div class="ticker-item"><img src="monash.svg" alt="Monash"><span>Monash</span></div>
+                          <div class="ticker-item"><img src="rmit.svg" alt="RMIT"></div>
+
+                      </div>
+                  </div>
+                  </div>
+              </div>
+
+            <!-- Purple Reveal Element -->
+            <div id="purple-reveal" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 100vw; height: 100vw; background-color: var(--accent-purple); border-radius: 50%; z-index: 50; pointer-events: none;"></div>
+        </div>
+
+
+    <!-- SECTION 2: CONTENT (Purple Sequence) -->
+    <div class="content-section" id="purple-sequence-section" style="width: 100vw; max-width: 100vw; margin: -100vh 0 0 0; position: relative; z-index: 3; height: 2600vh; padding: 0; background-color: transparent; overflow: visible;">
+        <div style="position: sticky; top: 0; height: 100vh; width: 100vw; overflow: hidden; background-color: #5E17EB;">
+            <h2 class="seq-text" data-lines="Dear Human, we built|Uber for Human Connections &amp; Relationships." data-nowrap="1" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 3rem; font-family: 'EB Garamond', serif; color: #ffffff; z-index: 100; opacity: 1; width: 80%; max-width: 900px; font-weight: 400; line-height: 1.2; margin: 0;">Dear Human, we built Uber for Human Connections &amp; Relationships.</h2>
+            <h2 class="seq-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 3rem; font-family: 'EB Garamond', serif; color: #ffffff; z-index: 100; opacity: 0; width: 80%; max-width: 900px; font-weight: 400; line-height: 1.2; margin: 0;">Now imagine,</h2>
+            <h2 class="seq-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 3rem; font-family: 'EB Garamond', serif; color: #ffffff; z-index: 100; opacity: 0; width: 80%; max-width: 900px; font-weight: 400; line-height: 1.2; margin: 0;">Your AI Handles Every Message, Email, Call &amp; Meeting.</h2>
+            <h2 class="seq-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 3rem; font-family: 'EB Garamond', serif; color: #ffffff; z-index: 100; opacity: 0; width: 80%; max-width: 900px; font-weight: 400; line-height: 1.2; margin: 0;">Your AI Builds, Manages &amp; Maintains Every Relationship.</h2>
+            <h2 class="seq-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 3rem; font-family: 'EB Garamond', serif; color: #ffffff; z-index: 100; opacity: 0; width: 80%; max-width: 900px; font-weight: 400; line-height: 1.2; margin: 0;">Your AI Finds People, Makes Introductions &amp; Grows Your Network Automatically.</h2>
+            <h2 class="seq-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 3rem; font-family: 'EB Garamond', serif; color: #ffffff; z-index: 100; opacity: 0; width: 80%; max-width: 900px; font-weight: 400; line-height: 1.2; margin: 0;">Your AI Gets Things Done in Real Time—During Calls, Meetings, and the Moment Emails or Messages Arrive.</h2>
+            <h2 class="seq-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 3rem; font-family: 'EB Garamond', serif; color: #ffffff; z-index: 100; opacity: 0; width: 80%; max-width: 900px; font-weight: 400; line-height: 1.2; margin: 0;">Your AI Twin Talks, Calls, Meets &amp; Acts Just Like You.</h2>
+            <h2 class="seq-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 3rem; font-family: 'EB Garamond', serif; color: #ffffff; z-index: 100; opacity: 0; width: 80%; max-width: 900px; font-weight: 400; line-height: 1.2; margin: 0;">Computers Are Moving From Your Pocket to Your Face. HUMAN Is Bringing Human Connection With Them.</h2>
+        </div>
+    </div>
+
+    <!-- SECTION 2.6: FAQ -->
+    <div class="faq-section" id="faq">
+        <div class="faq-header">
+            <span class="faq-kicker">FAQS</span>
+            <h2 class="faq-title">Good <i>questions.</i></h2>
+        </div>
+        
+        <div class="faq-window">
+            <div class="faq-sidebar">
+                <h3>Questions</h3>
+                <ul class="faq-list">
+                        <li class="faq-q-item active" data-target="faq-1">01. What is HUMAN?</li>
+                        <li class="faq-q-item" data-target="faq-2">02. What is HUTE, and how is it related to HUMAN?</li>
+                        <li class="faq-q-item" data-target="faq-3">03. What does "Uber for people" actually mean?</li>
+                        <li class="faq-q-item" data-target="faq-4">04. Why does the world need HUMAN?</li>
+                        <li class="faq-q-item" data-target="faq-5">05. Is HUMAN a social network?</li>
+                        <li class="faq-q-item" data-target="faq-6">06. Is HUMAN a dating app?</li>
+                        <li class="faq-q-item" data-target="faq-7">07. How does HUMAN find the right people for me?</li>
+                        <li class="faq-q-item" data-target="faq-8">08. Can I meet people near me?</li>
+                        <li class="faq-q-item" data-target="faq-9">09. Can I meet someone right now?</li>
+                        <li class="faq-q-item" data-target="faq-10">10. Can I connect with people anywhere in the world?</li>
+                        <li class="faq-q-item" data-target="faq-11">11. Do both people have to agree before connecting?</li>
+                        <li class="faq-q-item" data-target="faq-12">12. Can HUMAN arrange meetings for me?</li>
+                        <li class="faq-q-item" data-target="faq-13">13. Can I book or pay someone through HUMAN?</li>
+                        <li class="faq-q-item" data-target="faq-14">14. What makes HUMAN different from Instagram, Tinder, or LinkedIn?</li>
+                        <li class="faq-q-item" data-target="faq-15">15. Does HUMAN use AI?</li>
+                        <li class="faq-q-item" data-target="faq-16">16. What is my personal AI twin?</li>
+                        <li class="faq-q-item" data-target="faq-17">17. Can my AI twin talk to someone else's AI twin?</li>
+                        <li class="faq-q-item" data-target="faq-18">18. Can HUMAN handle my messages, emails, and calls?</li>
+                        <li class="faq-q-item" data-target="faq-19">19. Can HUMAN actually complete tasks for me?</li>
+                        <li class="faq-q-item" data-target="faq-20">20. Will HUMAN manage my relationships automatically?</li>
+                        <li class="faq-q-item" data-target="faq-21">21. Can HUMAN introduce me to people I didn't know I needed?</li>
+                        <li class="faq-q-item" data-target="faq-22">22. Will HUMAN work with ChatGPT, X, and Meta?</li>
+                        <li class="faq-q-item" data-target="faq-23">23. Will HUMAN work with smart glasses?</li>
+                        <li class="faq-q-item" data-target="faq-24">24. What about virtual reality?</li>
+                        <li class="faq-q-item" data-target="faq-25">25. Do I need smart glasses or a VR headset to use HUMAN?</li>
+                        <li class="faq-q-item" data-target="faq-26">26. Can people see my exact location?</li>
+                        <li class="faq-q-item" data-target="faq-27">27. Is my personal information safe?</li>
+                        <li class="faq-q-item" data-target="faq-28">28. Can HUMAN do things without constantly asking me?</li>
+                        <li class="faq-q-item" data-target="faq-29">29. Will HUMAN replace real human interaction?</li>
+                        <li class="faq-q-item" data-target="faq-30">30. Will HUMAN be free?</li>
+                        <li class="faq-q-item" data-target="faq-31">31. What is HUMAN ultimately trying to build?</li>
+
+                </ul>
+            </div>
+            
+            <div class="faq-content-area">
+                <h3 class="answer-label"><span class="imsg-avatar">H</span><span class="imsg-name">HUMAN</span></h3>
+                <div class="faq-answer-pane">
+                        <div class="faq-answer-item active" id="faq-1">
+                            <div class="answer-q">01. What is HUMAN?</div>
+                            <div class="answer-bubble">
+                                <p>HUMAN is Uber for human connections and relationships. An AI-powered network making it effortless to find, meet, and connect with the right people, anywhere in the world.</p>
+                                <p>But HUMAN goes beyond connecting people. It's also your personal AI, designed to take care of your communications, relationships, and everyday life—from answering messages and handling calls to completing tasks and making things happen on your behalf.</p>
+                                <p>HUMAN is a product of HUTE, the company building the intelligence and technology behind this new way of living and connecting.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-2">
+                            <div class="answer-q">02. What is HUTE, and how is it related to HUMAN?</div>
+                            <div class="answer-bubble">
+                                <p>HUTE is the company. HUMAN is the product.</p>
+                                <p>HUTE is the technology company building HUMAN, with a mission to make artificial intelligence a natural part of everyday human life.</p>
+                                <p>HUTE develops the underlying AI systems, intelligent agents, relationship technology, and infrastructure that power HUMAN.</p>
+                                <p>HUMAN is how people experience that technology: one connected experience for finding people, building relationships, communicating, and getting things done.</p>
+                                <p>Put simply, HUTE builds the intelligence. HUMAN brings it into your life.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-3">
+                            <div class="answer-q">03. What does "Uber for people" actually mean?</div>
+                            <div class="answer-bubble">
+                                <p>Think about how easy it is to get a ride. You open Uber, tell it where you want to go, and a driver comes to you.</p>
+                                <p>HUMAN brings that simplicity to meeting people.</p>
+                                <p>Whether you're looking for a friend, a date, someone to share an experience with, or someone who can help, HUMAN is being built to connect you with the right willing person.</p>
+                                <p>The ambition is simple: finding the right human should be as effortless as finding a ride.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-4">
+                            <div class="answer-q">04. Why does the world need HUMAN?</div>
+                            <div class="answer-bubble">
+                                <p>We can reach billions of people online, yet finding the right person at the right moment is still unnecessarily difficult.</p>
+                                <p>At the same time, we spend enormous amounts of our lives managing messages, emails, calls, schedules, applications, and everyday responsibilities.</p>
+                                <p>HUMAN exists to change both.</p>
+                                <p>We believe meaningful human connection should be one of the easiest things in the world, and technology should give us more time to experience life rather than consume it.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-5">
+                            <div class="answer-q">05. Is HUMAN a social network?</div>
+                            <div class="answer-bubble">
+                                <p>Not in the traditional sense.</p>
+                                <p>Social networks are built around feeds, followers, and content. HUMAN is built around people, connections, and real experiences.</p>
+                                <p>The goal isn't to keep you scrolling. It's to bring the right people into your life.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-6">
+                            <div class="answer-q">06. Is HUMAN a dating app?</div>
+                            <div class="answer-bubble">
+                                <p>It can help you find someone to date, but dating is only one small part of HUMAN.</p>
+                                <p>Make friends, discover people nearby, find activity partners, meet collaborators, book experiences, or simply have a meaningful conversation.</p>
+                                <p>HUMAN is for every kind of human connection.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-7">
+                            <div class="answer-q">07. How does HUMAN find the right people for me?</div>
+                            <div class="answer-bubble">
+                                <p>Just tell HUMAN what you're looking for, in your own words.</p>
+                                <p>Its AI is designed to understand your interests, intentions, preferences, location, and availability to find compatible people who are open to connecting.</p>
+                                <p>Instead of searching through endless profiles, you describe the human connection you're looking for.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-8">
+                            <div class="answer-q">08. Can I meet people near me?</div>
+                            <div class="answer-bubble">
+                                <p>Absolutely—that's central to the vision.</p>
+                                <p>HUMAN is being designed around real-world discovery, including a live map that helps you find people nearby who have chosen to be discoverable.</p>
+                                <p>Coffee, conversations, activities, and spontaneous connections could be just around the corner.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-9">
+                            <div class="answer-q">09. Can I meet someone right now?</div>
+                            <div class="answer-bubble">
+                                <p>That's the idea behind on-demand human connection.</p>
+                                <p>HUMAN aims to help you find people who are available and interested in connecting now.</p>
+                                <p>A successful match still depends on the right person being available and both people wanting to connect.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-10">
+                            <div class="answer-q">10. Can I connect with people anywhere in the world?</div>
+                            <div class="answer-bubble">
+                                <p>That's what we're building toward.</p>
+                                <p>Your next meaningful connection shouldn't be limited by where you live.</p>
+                                <p>HUMAN aims to make discovering and meeting people across cities, countries, and continents feel effortless.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-11">
+                            <div class="answer-q">11. Do both people have to agree before connecting?</div>
+                            <div class="answer-bubble">
+                                <p>Yes.</p>
+                                <p>Every meaningful connection begins with mutual choice.</p>
+                                <p>HUMAN can discover, recommend, and propose introductions, but nobody should be forced into a conversation, meeting, or relationship.</p>
+                                <p>You remain in control of whom you connect with.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-12">
+                            <div class="answer-q">12. Can HUMAN arrange meetings for me?</div>
+                            <div class="answer-bubble">
+                                <p>That's part of the vision.</p>
+                                <p>Instead of endless messages trying to find a time and place, HUMAN will be able to help coordinate availability, suggest meeting places, handle scheduling, and guide you to your agreed destination.</p>
+                                <p>From finding someone to actually meeting them, the experience is designed to feel seamless.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-13">
+                            <div class="answer-q">13. Can I book or pay someone through HUMAN?</div>
+                            <div class="answer-bubble">
+                                <p>HUMAN is building toward a world where you can discover, connect with, and book people offering services, expertise, or experiences.</p>
+                                <p>The vision includes secure payments and a seamless experience from discovery to completion.</p>
+                                <p>Whether you're arranging an experience or booking someone's time, HUMAN aims to make the process effortless and transparent.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-14">
+                            <div class="answer-q">14. What makes HUMAN different from Instagram, Tinder, or LinkedIn?</div>
+                            <div class="answer-bubble">
+                                <p>Those platforms help you discover profiles, content, or specific kinds of connections.</p>
+                                <p>HUMAN wants to help you find the right person for almost any human need—and make the connection actually happen.</p>
+                                <p>But HUMAN also goes beyond discovery.</p>
+                                <p>Its personal AI is designed to handle communication, maintain relationships, and complete everyday tasks across the services you use.</p>
+                                <p>Less browsing. Less managing. More living.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-15">
+                            <div class="answer-q">15. Does HUMAN use AI?</div>
+                            <div class="answer-bubble">
+                                <p>AI is at the heart of HUMAN.</p>
+                                <p>It understands what you need, helps find the right people, coordinates introductions, manages relationships, and can complete everyday tasks on your behalf.</p>
+                                <p>HUTE is building the underlying AI technology to make these experiences possible.</p>
+                                <p>The intelligence works in the background. The experience stays human.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-16">
+                            <div class="answer-q">16. What is my personal AI twin?</div>
+                            <div class="answer-bubble">
+                                <p>Imagine an AI version of you that understands your personality, interests, goals, and preferences.</p>
+                                <p>Your HUMAN twin can represent you in authorised interactions, communicate on your behalf, and help you stay connected—even when you're busy living your life.</p>
+                                <p>It's not meant to replace you. It's meant to extend what you can do.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-17">
+                            <div class="answer-q">17. Can my AI twin talk to someone else's AI twin?</div>
+                            <div class="answer-bubble">
+                                <p>That's one of HUMAN's most ambitious ideas.</p>
+                                <p>Your AI twin could communicate with another person's AI twin to explore compatibility, coordinate availability, and propose an introduction.</p>
+                                <p>Imagine two personal AIs handling the awkward logistics of getting to know someone, so the humans can focus on the actual connection.</p>
+                                <p>The decision to connect always belongs to the people involved.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-18">
+                            <div class="answer-q">18. Can HUMAN handle my messages, emails, and calls?</div>
+                            <div class="answer-bubble">
+                                <p>That's a core part of what we're building.</p>
+                                <p>HUMAN is designed to work across your authorised communication channels, helping you respond, coordinate, follow up, and take action without constantly switching between applications.</p>
+                                <p>The long-term goal is much bigger than an AI that drafts messages.</p>
+                                <p>Imagine incoming emails being handled, conversations being followed up, appointments being arranged, and requests being completed—all within permissions you control.</p>
+                                <p>Your digital life should run without requiring your constant attention.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-19">
+                            <div class="answer-q">19. Can HUMAN actually complete tasks for me?</div>
+                            <div class="answer-bubble">
+                                <p>Yes—that's one of HUMAN's defining ambitions.</p>
+                                <p>Not just answering questions or setting reminders, but actually getting things done.</p>
+                                <p>HUMAN is being designed to understand requests from messages, calls, emails, notifications, and everyday interactions, then complete authorised tasks across your connected services.</p>
+                                <p>Someone asks you to arrange dinner? HUMAN could find a suitable restaurant, coordinate everyone's availability, and arrange the reservation.</p>
+                                <p>An email requires action? HUMAN could understand the request and handle the necessary steps.</p>
+                                <p>The goal is a world where your AI doesn't simply tell you what needs to happen.</p>
+                                <p>It makes things happen.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-20">
+                            <div class="answer-q">20. Will HUMAN manage my relationships automatically?</div>
+                            <div class="answer-bubble">
+                                <p>That's the vision.</p>
+                                <p>HUMAN will help remember important details, maintain contact, follow up on conversations, and recognise when someone matters to you.</p>
+                                <p>Imagine never forgetting an important promise, losing touch with someone meaningful, or overlooking a relationship because life got busy.</p>
+                                <p>Relationships deserve attention. Managing them shouldn't feel like another job.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-21">
+                            <div class="answer-q">21. Can HUMAN introduce me to people I didn't know I needed?</div>
+                            <div class="answer-bubble">
+                                <p>That's one of the most exciting possibilities.</p>
+                                <p>The right person can change your life before you even realise you need to meet them.</p>
+                                <p>HUMAN aims to discover meaningful connections proactively, based on your goals, interests, preferences, and openness to meeting new people.</p>
+                                <p>Rather than requiring you to search for every connection, HUMAN could help the right connections find you.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-22">
+                            <div class="answer-q">22. Will HUMAN work with ChatGPT, X, and Meta?</div>
+                            <div class="answer-bubble">
+                                <p>We envision HUMAN extending beyond its own experience and connecting with AI assistants, social platforms, and communication services wherever supported integrations and permissions allow.</p>
+                                <p>Imagine asking an AI assistant to find someone—and HUMAN helping turn that request into a real connection.</p>
+                                <p>HUTE's ambition is to make HUMAN's network accessible across the digital experiences people already use.</p>
+                                <p>These integrations are part of our vision, not a claim of existing partnerships with OpenAI, X, Meta, or their respective products.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-23">
+                            <div class="answer-q">23. Will HUMAN work with smart glasses?</div>
+                            <div class="answer-bubble">
+                                <p>That's where we see human connection heading.</p>
+                                <p>As computers move from pockets to faces, HUMAN aims to make discovering people, receiving introductions, and navigating real-world meetings possible through compatible AI and AR glasses.</p>
+                                <p>Imagine moving through the world with a personal AI that can help you discover opportunities to connect with people around you, with appropriate privacy protections and consent.</p>
+                                <p>The technology should fit into your life, not interrupt it.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-24">
+                            <div class="answer-q">24. What about virtual reality?</div>
+                            <div class="answer-bubble">
+                                <p>Sometimes the right person lives thousands of kilometres away.</p>
+                                <p>HUMAN envisions shared virtual spaces where people can meet, talk, and spend time together regardless of distance.</p>
+                                <p>Whether through a phone, smart glasses, or a virtual environment, the ambition remains the same.</p>
+                                <p>Real connections don't always have to begin in the same physical room.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-25">
+                            <div class="answer-q">25. Do I need smart glasses or a VR headset to use HUMAN?</div>
+                            <div class="answer-bubble">
+                                <p>No.</p>
+                                <p>HUMAN is designed to begin with the devices you already use.</p>
+                                <p>Smart glasses, AR, and VR are future extensions of the experience—not requirements for human connection.</p>
+                                <p>You shouldn't need to buy new hardware to find the right people or benefit from personal AI.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-26">
+                            <div class="answer-q">26. Can people see my exact location?</div>
+                            <div class="answer-bubble">
+                                <p>HUMAN is designed to give you control over your visibility.</p>
+                                <p>Nearby discovery can use approximate location, while more precise location sharing should happen only with appropriate permission.</p>
+                                <p>Being discoverable should never mean surrendering your privacy.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-27">
+                            <div class="answer-q">27. Is my personal information safe?</div>
+                            <div class="answer-bubble">
+                                <p>Privacy and control are fundamental to the product we're building.</p>
+                                <p>HUTE's goal is to develop HUMAN with clear choices about what your AI knows, what it shares, who can discover you, and which actions it can take.</p>
+                                <p>Sensitive information should never be exposed simply to make a match.</p>
+                                <p>Our aim is to make meaningful connections possible without compromising personal boundaries.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-28">
+                            <div class="answer-q">28. Can HUMAN do things without constantly asking me?</div>
+                            <div class="answer-bubble">
+                                <p>That's exactly the kind of experience we're designing.</p>
+                                <p>HUMAN is being built to handle routine activities automatically within permissions you define, while requesting approval for sensitive, consequential, or irreversible actions.</p>
+                                <p>Imagine your AI taking care of routine messages, coordination, follow-ups, and everyday responsibilities without making you supervise every step.</p>
+                                <p>You define the boundaries. HUMAN handles what falls within them.</p>
+                                <p>The goal is less micromanagement without giving up control.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-29">
+                            <div class="answer-q">29. Will HUMAN replace real human interaction?</div>
+                            <div class="answer-bubble">
+                                <p>Quite the opposite.</p>
+                                <p>HUMAN exists because we believe real human interaction matters more than ever.</p>
+                                <p>AI should handle the friction of finding, organising, and maintaining connections—not replace the people you connect with.</p>
+                                <p>We want technology to become less of a destination and more of an invisible force that helps you live.</p>
+                                <p>More people. More experiences. More life.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-30">
+                            <div class="answer-q">30. Will HUMAN be free?</div>
+                            <div class="answer-bubble">
+                                <p>We want meaningful human connection to be accessible to everyone.</p>
+                                <p>The intended model includes accessible core connections alongside optional premium AI capabilities and paid services or experiences.</p>
+                                <p>Specific pricing will be announced as the product develops.</p>
+                            </div>
+                        </div>
+                        <div class="faq-answer-item" id="faq-31">
+                            <div class="answer-q">31. What is HUMAN ultimately trying to build?</div>
+                            <div class="answer-bubble">
+                                <p>A world where finding the right human is as effortless as getting an Uber.</p>
+                                <p>Where your personal AI understands your life, handles your communications, maintains your relationships, and completes your everyday tasks.</p>
+                                <p>Where connecting with someone across the street or across the planet feels natural.</p>
+                                <p>Where technology brings people closer together instead of keeping them apart.</p>
+                                <p>This is the future HUTE is building through HUMAN.</p>
+                                <p>Not another place to spend your time.</p>
+                                <p>A way to get more of your life back.</p>
+                                <p>The internet connected our devices. AI connected us to intelligence. HUMAN is here to connect us to each other.</p>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+
+
+    
+
+        </div> <!-- Closes faq-window -->
+    </div> <!-- Closes faq-section -->
+
+    <!-- SECTION 4: WAITLIST -->
+    <div class="waitlist-section" id="join">
+        <div class="waitlist-container">
+            <h2 class="waitlist-title">Join the network.</h2>
+            <p class="waitlist-sub">Be the first to experience HUMAN. Invitations are rolling out globally.</p>
+            
+            <div id="form-content">
+                <form id="waitlist-form" onsubmit="submitWaitlist(event)">
+                    <input type="text" id="waitlist-name" placeholder="Full name" required class="form-input">
+                    <div class="phone-input-group">
+                        <div class="cc" id="cc">
+                            <button type="button" class="cc-btn" id="cc-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Country code">
+                                <img id="cc-flag" alt="" width="24" height="18"><span id="cc-dial">+1</span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div class="cc-panel" id="cc-panel" hidden>
+                                <input type="search" id="cc-search" placeholder="Search country or code" autocomplete="off" aria-label="Search countries">
+                                <ul id="cc-list" role="listbox" aria-label="Countries"></ul>
+                            </div>
+                            <input type="hidden" id="country-code" value="+1">
+                            <input type="hidden" id="country-iso" value="US">
+                        </div>
+                        <input type="tel" id="waitlist-phone" placeholder="Phone number" required class="form-input" inputmode="tel" autocomplete="tel-national">
+                    </div>
+                    <p id="wl-msg" role="status" style="display:none;margin:10px 0 0;font-size:.95rem;color:#ff8f8f;"></p>
+                    
+                    <button type="submit" class="framer-btn large-btn submit-btn" style="width: 100%; padding: 8px 8px 8px 30px; margin-top: 10px; box-sizing: border-box;">
+                        <span class="btn-text" style="font-size: 1.15rem; text-align: left; text-align: left; font-weight: 500;">Join Waitlist</span>
+                        <span class="btn-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <a href="#join" class="join-card" id="join-card">
+        <span class="btn-text">Get started</span>
+        <span class="btn-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </span>
+    </a>
+
+    <!-- SECTION 5: FOOTER -->
+    <footer class="final-footer">
+        <div class="footer-brand">
+            <img src="HUTE.png" alt="HUTE Logo">
+            <h1>HUTE, Inc.</h1>
+        </div>
+        <p>HUTE is building the intelligence behind a more connected human world. HUMAN is where that vision comes to life.</p>
+        <p><em>Made for a world that needs more human.</em></p>
+
+        <div class="footer-bottom">
+            <div class="social-links">
+                <a href="https://x.com/huteinc" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                    <svg viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/hute.inc" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/hute.inc/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+            </div>
+            <div class="legal-links">
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="security.html">Security</a>
+            </div>
+            <div class="copyright">
+                &copy; 2026 HUTE, Inc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        
+        // --- Typewriter Effect ---
+        const phrases = [
+            "Find a tennis partner for this weekend...",
+            "Looking for a technical co-founder...",
+            "Who wants to grab coffee in Soho right now?",
+            "Need a local guide in Tokyo tomorrow...",
+            "Find an expert to fix my laptop today..."
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterEl = document.getElementById('typewriter');
+        
+        function type() {
+            if(!typewriterEl) return;
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                typewriterEl.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterEl.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            
+            let typeSpeed = isDeleting ? 30 : 80;
+            
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2500; // Pause at end of phrase
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 600; // Pause before typing next phrase
+            }
+            
+            setTimeout(type, typeSpeed);
+        }
+        
+        if (typewriterEl) {
+            setTimeout(type, 1000);
+        }
+
+        // --- Scroll Reveal Effect ---
+        const heroScrollWrapper = document.querySelector('.hero-scroll-wrapper');
+        const purpleReveal = document.getElementById('purple-reveal');
+        
+        if (heroScrollWrapper && purpleReveal) {
+            window.addEventListener('scroll', () => {
+                const rect = heroScrollWrapper.getBoundingClientRect();
+                // We want the reveal to finish very quickly over 25vh of scrolling
+                let progress = -rect.top / (window.innerHeight * 0.25);
+                if (progress < 0) progress = 0;
+                if (progress > 1) progress = 1;
+                
+                // Scale from 0 to about 2.5 (enough to cover the screen)
+                purpleReveal.style.transform = `translate(-50%, -50%) scale(${progress * 2.8})`;
+            }, { passive: true });
+        }
+
+        // Feature sticky scroll: step through options
+        (function() {
+            var wrap = document.querySelector('.features-sticky-container');
+            if (!wrap) return;
+            var navs = wrap.querySelectorAll('.feature-nav-item');
+            var visuals = wrap.querySelectorAll('.visual-state');
+            var texts = wrap.querySelectorAll('.feature-text-item');
+            var ind = wrap.querySelector('.feature-nav-indicator');
+            var n = texts.length, cur = -1;
+            function set(i) {
+                if (i === cur) return; cur = i;
+                for (var k = 0; k < n; k++) {
+                    var on = k === i;
+                    if (navs[k]) navs[k].classList.toggle('active', on);
+                    if (visuals[k]) visuals[k].classList.toggle('active', on);
+                    texts[k].classList.toggle('active', on);
+                }
+                if (ind) ind.style.transform = 'translateY(' + (i * 40) + 'px)';
+            }
+            function update() {
+                var r = wrap.getBoundingClientRect();
+                var dist = wrap.offsetHeight - window.innerHeight;
+                var p = Math.min(Math.max(-r.top / dist, 0), 0.9999);
+                set(Math.floor(p * n));
+            }
+            navs.forEach(function(el, i) {
+                el.addEventListener('click', function() {
+                    var dist = wrap.offsetHeight - window.innerHeight;
+                    var top = wrap.getBoundingClientRect().top + window.scrollY;
+                    window.scrollTo({ top: top + dist * (i + 0.5) / n, behavior: 'smooth' });
+                });
+            });
+            window.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update);
+            update();
+        })();
+
+        // FAQ: iMessage-style chat
+        (function() {
+            var items = document.querySelectorAll('.faq-q-item');
+            var answers = document.querySelectorAll('.faq-answer-item');
+            var area = document.querySelector('.faq-content-area');
+            if (!items.length || !answers.length) return;
+            var timers = [];
+            // Rebuild each answer as separate message bubbles
+            answers.forEach(function(a) {
+                var q = a.querySelector('.answer-q'), b = a.querySelector('.answer-bubble');
+                var qText = q ? q.textContent.replace(/^\s*\d+\.\s*/, '') : '';
+                var paras = b ? [].map.call(b.querySelectorAll('p'), function(p) { return p.innerHTML; }) : [];
+                a.innerHTML = '';
+                var time = document.createElement('div'); time.className = 'imsg-time'; time.innerHTML = '<b>iMessage</b><br>Today 9:41 AM'; a.appendChild(time);
+                var sent = document.createElement('div'); sent.className = 'imsg sent tail'; sent.textContent = qText; a.appendChild(sent);
+                var del = document.createElement('div'); del.className = 'imsg-delivered'; del.textContent = 'Delivered'; a.appendChild(del);
+                var typing = document.createElement('div'); typing.className = 'imsg recv tail imsg-typing'; typing.innerHTML = '<i></i><i></i><i></i>'; a.appendChild(typing);
+                paras.forEach(function(html) { var m = document.createElement('div'); m.className = 'imsg recv'; m.innerHTML = html; a.appendChild(m); });
+            });
+            function play(a) {
+                timers.forEach(clearTimeout); timers = [];
+                var sent = a.querySelector('.imsg.sent'), del = a.querySelector('.imsg-delivered'), typing = a.querySelector('.imsg-typing');
+                var msgs = a.querySelectorAll('.imsg.recv:not(.imsg-typing)');
+                [].forEach.call(a.querySelectorAll('.imsg'), function(m) { m.classList.remove('show'); if (m.classList.contains('recv') && !m.classList.contains('imsg-typing')) m.classList.remove('tail'); });
+                del.classList.remove('show'); typing.classList.remove('on');
+                if (msgs.length) msgs[msgs.length - 1].classList.add('tail');
+                function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+                at(60, function() { sent.classList.add('show'); });
+                at(500, function() { del.classList.add('show'); });
+                at(800, function() { typing.classList.add('on'); });
+                msgs.forEach(function(m, i) {
+                    at(1700 + i * 650, function() { if (i === 0) typing.classList.remove('on'); m.classList.add('show'); if (area) area.scrollTo({ top: area.scrollHeight, behavior: 'smooth' }); });
+                });
+            }
+            function select(i) {
+                items.forEach(function(it, k) { it.classList.toggle('active', k === i); });
+                answers.forEach(function(a) { a.classList.remove('active'); });
+                var a = document.getElementById(items[i].getAttribute('data-target'));
+                if (!a) return;
+                a.classList.add('active');
+                if (area) area.scrollTop = 0;
+                play(a);
+            }
+            items.forEach(function(it, i) { it.addEventListener('click', function() { select(i); }); });
+            select(0);
+        })();
+
+        // Floating join card: hides on first screen and waitlist, slides down when scrolling past hero
+        (function() {
+            var card = document.getElementById('join-card');
+            var waitlist = document.getElementById('join');
+            if (!card) return;
+            
+            function updateCardState() {
+                var pastHero = window.scrollY > window.innerHeight * 0.7;
+                if (pastHero) {
+                    card.classList.remove('hide');
+                } else {
+                    card.classList.add('hide');
+                }
+            }
+            
+            window.addEventListener('scroll', function() { requestAnimationFrame(updateCardState); }, { passive: true });
+            updateCardState();
+        })();
+
+</script>
+
+    <!-- TEAM MODAL V2 -->
+    <div id="team-modal" class="team-modal">
+        <div class="team-purple-glow"></div>
+
+        <button id="close-team-modal" class="team-modal-close">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <button id="back-to-team" class="team-back-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back
+        </button>
+
+        <div class="team-modal-content">
+            <h2 class="team-title">The faces behind the work.</h2>
+            <p class="team-subtitle">Tap a face to say hi.</p>
+        </div>
+
+        <div class="team-faces-container">
+
+            <!-- ── Bhava (CEO) ── -->
+            <div class="team-member" id="member-bhava" data-profile="card-bhava">
+                <div class="team-annot annot-left"><span class="annot-label">I'm CEO</span><svg class="annot-arrow" viewBox="0 0 170 110" fill="none" stroke="#FFE600" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M6 6 C 70 -6, 120 14, 96 46 C 78 70, 44 56, 62 36 C 76 22, 112 44, 150 82"/><path pathLength="1" class="ah" d="M126 80 L152 86 L146 60"/></svg></div>
+                
+                <img src="bhavanobg.png" alt="Bhava" class="team-face">
+            </div>
+
+            <!-- ── Vinuthna (CTO) ── -->
+            <div class="team-member" id="member-vinnu" data-profile="card-vinnu">
+                <div class="team-annot annot-right"><span class="annot-label">I'm CTO</span><svg class="annot-arrow" viewBox="0 0 170 110" fill="none" stroke="#FFE600" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M6 6 C 70 -6, 120 14, 96 46 C 78 70, 44 56, 62 36 C 76 22, 112 44, 150 82"/><path pathLength="1" class="ah" d="M126 80 L152 86 L146 60"/></svg></div>
+                
+                <img src="vinnunobg.png" alt="Vinuthna" class="team-face">
+            </div>
+
+            <!-- Profile Pane -->
+            <div class="team-profile-pane">
+                <!-- Bhava -->
+                <div class="profile-card" id="card-bhava" style="--bg:#39FF14;--fg:#0D0D0D;--ac:#0D0D0D">
+                    <div class="pc-top"><span class="pc-no">01</span><span class="pc-role"><i></i>Founder &amp; CEO</span><span class="pc-co">HUTE &middot; GYRATE</span></div>
+                    <h2 class="pc-name">Bhava</h2>
+                    <p class="pc-lead">Bhava is an engineer and entrepreneur who believes the world is still at the very beginning of what technology can make possible.</p>
+                    <div class="pc-rows"><div class="pc-row"><span class="pc-k"><b>01</b>Background</span><p>His background spans electrical engineering, defence systems, energy, and advanced machines, but his ambitions have never belonged to a single industry.</p></div><div class="pc-row"><span class="pc-k"><b>02</b>HUTE</span><p>He is interested in a much larger question: what would the world look like if the limits we accept today simply didn't exist? Through HUTE, he wants to fundamentally reinvent the relationship between humans and intelligence, making it possible for anyone to access people, opportunities, knowledge, and capabilities without the friction of today's digital world.</p></div><div class="pc-row"><span class="pc-k"><b>03</b>GYRATE</span><p>Through GYRATE, he wants to reinvent how the physical world is engineered and built, making the creation of complex machines as accessible and scalable as software. For Bhava, both companies are expressions of the same idea: human ambition should no longer be limited by the systems, tools, or infrastructure available to us.</p></div></div>
+                    <div class="pc-soc"><span class="pc-find">Find Bhava</span><a href="https://www.instagram.com/viswagnya_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a><a href="https://x.com/viswagnya__" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter" title="X / Twitter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a><a href="https://www.linkedin.com/in/viswagnya" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a><a href="mailto:hey.bhava@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true" class="st"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><polyline points="3.5 7 12 13 20.5 7"/></svg></a></div>
+                    <span class="pc-ghost" aria-hidden="true">Bhava</span>
+                </div>
+                <div class="profile-card" id="card-vinnu" style="--bg:#FFE600;--fg:#0D0D0D;--ac:#0D0D0D">
+                    <div class="pc-top"><span class="pc-no">02</span><span class="pc-role"><i></i>Co-Founder &amp; CTO</span><span class="pc-co">HUTE &middot; GYRATE</span></div>
+                    <h2 class="pc-name">Vinuthna</h2>
+                    <p class="pc-lead">Vinuthna is an entrepreneur and technologist interested in a future where intelligence becomes a natural part of everything around us.</p>
+                    <div class="pc-rows"><div class="pc-row"><span class="pc-k"><b>01</b>Work</span><p>Her work spans artificial intelligence, software, and intelligent systems, with a focus on turning powerful technologies into capabilities people can actually use.</p></div><div class="pc-row"><span class="pc-k"><b>02</b>HUTE</span><p>Through HUTE, she wants to help create a world where technology understands individuals, acts on their intentions, builds connections, and removes the complexity of everyday life—until interacting with intelligence feels as natural as interacting with another person.</p></div><div class="pc-row"><span class="pc-k"><b>03</b>GYRATE</span><p>Through GYRATE, her ambition extends into the physical world, where artificial intelligence can transform how machines are imagined, designed, engineered, manufactured, and operated. She believes the most important technologies of the future will not simply help people do existing things faster. They will make entirely new ways of living, creating, and building possible.</p></div></div>
+                    <div class="pc-soc"><span class="pc-find">Find Vinuthna</span><a href="https://www.instagram.com/vinuthnaravioli/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a><a href="https://www.linkedin.com/in/vinuthnaravilala" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a><a href="mailto:vinuthna.mail@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true" class="st"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><polyline points="3.5 7 12 13 20.5 7"/></svg></a></div>
+                    <span class="pc-ghost" aria-hidden="true">Vinuthna</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SVG Definitions for Arrows -->
+    <svg width="0" height="0" style="position:absolute;">
+        <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-dark)" />
+            </marker>
+        </defs>
+    </svg>
+
+    <script>
+    (function() {
+        var modal      = document.getElementById('team-modal');
+        var openBtn    = document.getElementById('open-team-modal');
+        var closeBtn   = document.getElementById('close-team-modal');
+        var backBtn    = document.getElementById('back-to-team');
+        var members    = modal.querySelectorAll('.team-member');
+        var cards      = modal.querySelectorAll('.profile-card');
+
+        function openModal(e) { e.preventDefault(); modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function resetModal() {
+            modal.classList.remove('viewing-profile');
+            members.forEach(function(m){ m.classList.remove('active-profile','hidden-profile'); });
+            cards.forEach(function(c){ c.classList.remove('active'); });
+        }
+        function closeModal(e) { e.preventDefault(); modal.classList.remove('active'); resetModal(); document.body.style.overflow = ''; }
+
+        if (openBtn)  openBtn.addEventListener('click', openModal);
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (modal.classList.contains('viewing-profile')) {
+                    resetModal();
+                } else {
+                    closeModal(e);
+                }
+            });
+        }
+        if (backBtn)  backBtn.addEventListener('click', function(e){ e.preventDefault(); resetModal(); });
+
+        members.forEach(function(member) {
+            member.addEventListener('click', function() {
+                modal.classList.add('viewing-profile');
+                members.forEach(function(m) {
+                    if (m === member) { m.classList.add('active-profile'); m.classList.remove('hidden-profile'); }
+                    else              { m.classList.add('hidden-profile');  m.classList.remove('active-profile'); }
+                });
+                cards.forEach(function(c){ c.classList.remove('active'); });
+                var cardId = member.getAttribute('data-profile');
+                document.getElementById(cardId).classList.add('active');
+            });
+        });
+    })();
+    </script>
+
+    <script>
+        // Wrap every "HUMAN" in the page so it can light up on hover
+        (function() {
+            var skip = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, INPUT: 1, OPTION: 1, SELECT: 1, TITLE: 1, NOSCRIPT: 1 };
+            var re = /\bHUMAN\b/;
+            function walk(node) {
+                if (node.nodeType === 1) {
+                    if (skip[node.tagName] || node.classList.contains('human-word') || node.classList.contains('seq-text')) return;
+                    [].slice.call(node.childNodes).forEach(walk);
+                } else if (node.nodeType === 3 && re.test(node.nodeValue)) {
+                    var frag = document.createDocumentFragment();
+                    node.nodeValue.split(/(\bHUMAN\b)/).forEach(function(part) {
+                        if (part === 'HUMAN') {
+                            var sp = document.createElement('span');
+                            sp.className = 'human-word'; sp.setAttribute('data-t', 'HUMAN'); sp.textContent = 'HUMAN';
+                            frag.appendChild(sp);
+                        } else if (part) frag.appendChild(document.createTextNode(part));
+                    });
+                    node.parentNode.replaceChild(frag, node);
+                }
+            }
+            walk(document.body);
+        })();
+    </script>
+
+    <script>
+        // Never start a drag (no ghost image of the photos)
+        document.addEventListener('dragstart', function(e) { e.preventDefault(); }, true);
+    </script>
+
+    <script>
+        // HUMAN hover: cycle one bright colour at a time
+        (function() {
+            var COLS = ['#ff9f1c', '#39ff14', '#00e5ff', '#1f4bff', '#ff2e93', '#ffe600', '#b100ff', '#ff3b30'];
+            var idx = new WeakMap();
+            function word(t) { return t && t.closest ? t.closest('.human-word') : null; }
+            document.addEventListener('mouseover', function(e) {
+                var w = word(e.target); if (!w || w.contains(e.relatedTarget)) return;
+                idx.set(w, 0);
+                w.style.setProperty('--hm-prev', 'transparent');
+                w.style.setProperty('--hm-cur', COLS[0]);
+                w.classList.add('hm-on');
+            });
+            document.addEventListener('mouseout', function(e) {
+                var w = word(e.target); if (!w || w.contains(e.relatedTarget)) return;
+                w.classList.remove('hm-on');
+            });
+            document.addEventListener('animationiteration', function(e) {
+                if (e.animationName !== 'hmFill') return;
+                var w = e.target; if (!w.classList || !w.classList.contains('human-word')) return;
+                var i = idx.get(w) || 0, n = (i + 1) % COLS.length;
+                w.style.setProperty('--hm-prev', COLS[i]);
+                w.style.setProperty('--hm-cur', COLS[n]);
+                idx.set(w, n);
+            });
+        })();
+    </script>
+
+    <script>
+        // Nav dropdown (mobile / narrow screens)
+        (function() {
+            var b = document.getElementById('nav-burger'), d = document.getElementById('nav-drop'), t = document.getElementById('nav-drop-team');
+            if (!b || !d) return;
+            function set(o) { d.classList.toggle('open', o); b.setAttribute('aria-expanded', o); }
+            b.addEventListener('click', function(e) { e.stopPropagation(); set(!d.classList.contains('open')); });
+            document.addEventListener('click', function(e) { if (!d.contains(e.target)) set(false); });
+            if (t) t.addEventListener('click', function() { set(false); var tb = document.getElementById('open-team-modal'); if (tb) tb.click(); });
+        })();
+    </script>
+
+    <script>
+        // ═══ Waitlist form ═══
+        // Paste your form link (the URL your form service gives you) between the quotes:
+        window.WAITLIST_ENDPOINT = '';
+
+        (function() {
+            var RAW = "AF|Afghanistan|93;AX|Åland Islands|358;AL|Albania|355;DZ|Algeria|213;AS|American Samoa|1684;AD|Andorra|376;AO|Angola|244;AI|Anguilla|1264;AG|Antigua and Barbuda|1268;AR|Argentina|54;AM|Armenia|374;AW|Aruba|297;AU|Australia|61;AT|Austria|43;AZ|Azerbaijan|994;BS|Bahamas|1242;BH|Bahrain|973;BD|Bangladesh|880;BB|Barbados|1246;BY|Belarus|375;BE|Belgium|32;BZ|Belize|501;BJ|Benin|229;BM|Bermuda|1441;BT|Bhutan|975;BO|Bolivia|591;BQ|Caribbean Netherlands|599;BA|Bosnia and Herzegovina|387;BW|Botswana|267;BR|Brazil|55;IO|British Indian Ocean Territory|246;VG|British Virgin Islands|1284;BN|Brunei|673;BG|Bulgaria|359;BF|Burkina Faso|226;BI|Burundi|257;KH|Cambodia|855;CM|Cameroon|237;CA|Canada|1;CV|Cape Verde|238;KY|Cayman Islands|1345;CF|Central African Republic|236;TD|Chad|235;CL|Chile|56;CN|China|86;CX|Christmas Island|61;CC|Cocos (Keeling) Islands|61;CO|Colombia|57;KM|Comoros|269;CG|Congo|242;CD|Congo (DRC)|243;CK|Cook Islands|682;CR|Costa Rica|506;CI|Côte d'Ivoire|225;HR|Croatia|385;CU|Cuba|53;CW|Curaçao|599;CY|Cyprus|357;CZ|Czechia|420;DK|Denmark|45;DJ|Djibouti|253;DM|Dominica|1767;DO|Dominican Republic|1809;EC|Ecuador|593;EG|Egypt|20;SV|El Salvador|503;GQ|Equatorial Guinea|240;ER|Eritrea|291;EE|Estonia|372;SZ|Eswatini|268;ET|Ethiopia|251;FK|Falkland Islands|500;FO|Faroe Islands|298;FJ|Fiji|679;FI|Finland|358;FR|France|33;GF|French Guiana|594;PF|French Polynesia|689;GA|Gabon|241;GM|Gambia|220;GE|Georgia|995;DE|Germany|49;GH|Ghana|233;GI|Gibraltar|350;GR|Greece|30;GL|Greenland|299;GD|Grenada|1473;GP|Guadeloupe|590;GU|Guam|1671;GT|Guatemala|502;GG|Guernsey|44;GN|Guinea|224;GW|Guinea-Bissau|245;GY|Guyana|592;HT|Haiti|509;HN|Honduras|504;HK|Hong Kong|852;HU|Hungary|36;IS|Iceland|354;IN|India|91;ID|Indonesia|62;IR|Iran|98;IQ|Iraq|964;IE|Ireland|353;IM|Isle of Man|44;IL|Israel|972;IT|Italy|39;JM|Jamaica|1876;JP|Japan|81;JE|Jersey|44;JO|Jordan|962;KZ|Kazakhstan|7;KE|Kenya|254;KI|Kiribati|686;XK|Kosovo|383;KW|Kuwait|965;KG|Kyrgyzstan|996;LA|Laos|856;LV|Latvia|371;LB|Lebanon|961;LS|Lesotho|266;LR|Liberia|231;LY|Libya|218;LI|Liechtenstein|423;LT|Lithuania|370;LU|Luxembourg|352;MO|Macau|853;MG|Madagascar|261;MW|Malawi|265;MY|Malaysia|60;MV|Maldives|960;ML|Mali|223;MT|Malta|356;MH|Marshall Islands|692;MQ|Martinique|596;MR|Mauritania|222;MU|Mauritius|230;YT|Mayotte|262;MX|Mexico|52;FM|Micronesia|691;MD|Moldova|373;MC|Monaco|377;MN|Mongolia|976;ME|Montenegro|382;MS|Montserrat|1664;MA|Morocco|212;MZ|Mozambique|258;MM|Myanmar|95;NA|Namibia|264;NR|Nauru|674;NP|Nepal|977;NL|Netherlands|31;NC|New Caledonia|687;NZ|New Zealand|64;NI|Nicaragua|505;NE|Niger|227;NG|Nigeria|234;NU|Niue|683;NF|Norfolk Island|672;KP|North Korea|850;MK|North Macedonia|389;MP|Northern Mariana Islands|1670;NO|Norway|47;OM|Oman|968;PK|Pakistan|92;PW|Palau|680;PS|Palestine|970;PA|Panama|507;PG|Papua New Guinea|675;PY|Paraguay|595;PE|Peru|51;PH|Philippines|63;PL|Poland|48;PT|Portugal|351;PR|Puerto Rico|1787;QA|Qatar|974;RE|Réunion|262;RO|Romania|40;RU|Russia|7;RW|Rwanda|250;BL|Saint Barthélemy|590;SH|Saint Helena|290;KN|Saint Kitts and Nevis|1869;LC|Saint Lucia|1758;MF|Saint Martin|590;PM|Saint Pierre and Miquelon|508;VC|Saint Vincent and the Grenadines|1784;WS|Samoa|685;SM|San Marino|378;ST|São Tomé and Príncipe|239;SA|Saudi Arabia|966;SN|Senegal|221;RS|Serbia|381;SC|Seychelles|248;SL|Sierra Leone|232;SG|Singapore|65;SX|Sint Maarten|1721;SK|Slovakia|421;SI|Slovenia|386;SB|Solomon Islands|677;SO|Somalia|252;ZA|South Africa|27;KR|South Korea|82;SS|South Sudan|211;ES|Spain|34;LK|Sri Lanka|94;SD|Sudan|249;SR|Suriname|597;SE|Sweden|46;CH|Switzerland|41;SY|Syria|963;TW|Taiwan|886;TJ|Tajikistan|992;TZ|Tanzania|255;TH|Thailand|66;TL|Timor-Leste|670;TG|Togo|228;TK|Tokelau|690;TO|Tonga|676;TT|Trinidad and Tobago|1868;TN|Tunisia|216;TR|Türkiye|90;TM|Turkmenistan|993;TC|Turks and Caicos Islands|1649;TV|Tuvalu|688;UG|Uganda|256;UA|Ukraine|380;AE|United Arab Emirates|971;GB|United Kingdom|44;US|United States|1;UY|Uruguay|598;VI|US Virgin Islands|1340;UZ|Uzbekistan|998;VU|Vanuatu|678;VA|Vatican City|39;VE|Venezuela|58;VN|Vietnam|84;WF|Wallis and Futuna|681;EH|Western Sahara|212;YE|Yemen|967;ZM|Zambia|260;ZW|Zimbabwe|263";
+            var LIST = RAW.split(';').map(function(r) { var a = r.split('|'); return { iso: a[0], name: a[1], dial: '+' + a[2] }; });
+            LIST.sort(function(a, b) { return a.name.localeCompare(b.name); });
+            var btn = document.getElementById('cc-btn'), panel = document.getElementById('cc-panel'), search = document.getElementById('cc-search'),
+                ul = document.getElementById('cc-list'), flag = document.getElementById('cc-flag'), dial = document.getElementById('cc-dial'),
+                code = document.getElementById('country-code'), isoEl = document.getElementById('country-iso');
+            if (!btn) return;
+            function flagUrl(iso, w) { return 'https://flagcdn.com/w' + w + '/' + iso.toLowerCase() + '.png'; }
+            function setFlag(img, iso) { img.src = flagUrl(iso, 40); img.srcset = flagUrl(iso, 40) + ' 1x, ' + flagUrl(iso, 80) + ' 2x'; img.alt = ''; img.onerror = function() { img.style.visibility = 'hidden'; }; img.style.visibility = ''; }
+            var current = null, hl = -1, shown = [];
+            function select(c) {
+                current = c; setFlag(flag, c.iso); dial.textContent = c.dial; code.value = c.dial; isoEl.value = c.iso;
+                btn.setAttribute('aria-label', 'Country code: ' + c.name + ' ' + c.dial);
+            }
+            function render(q) {
+                q = (q || '').trim().toLowerCase().replace(/^\+/, '');
+                shown = LIST.filter(function(c) { return !q || c.name.toLowerCase().indexOf(q) > -1 || c.iso.toLowerCase() === q || c.dial.replace('+', '').indexOf(q) === 0; });
+                ul.innerHTML = '';
+                if (!shown.length) { var n = document.createElement('li'); n.className = 'none'; n.textContent = 'No country found'; n.style.cursor = 'default'; ul.appendChild(n); return; }
+                var frag = document.createDocumentFragment();
+                shown.forEach(function(c, i) {
+                    var li = document.createElement('li'); li.setAttribute('role', 'option'); li.dataset.i = i;
+                    if (current && c.iso === current.iso) li.setAttribute('aria-selected', 'true');
+                    var im = document.createElement('img'); im.loading = 'lazy'; im.width = 24; im.height = 18; setFlag(im, c.iso);
+                    var nm = document.createElement('span'); nm.className = 'n'; nm.textContent = c.name;
+                    var d = document.createElement('span'); d.className = 'd'; d.textContent = c.dial;
+                    li.appendChild(im); li.appendChild(nm); li.appendChild(d); frag.appendChild(li);
+                });
+                ul.appendChild(frag); hl = -1;
+            }
+            function open() { panel.hidden = false; btn.setAttribute('aria-expanded', 'true'); search.value = ''; render(''); var sel = ul.querySelector('[aria-selected="true"]'); if (sel) ul.scrollTop = sel.offsetTop - 80; setTimeout(function() { search.focus(); }, 0); }
+            function close() { panel.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
+            function pick(i) { if (shown[i]) { select(shown[i]); close(); btn.focus(); } }
+            function move(d) { var items = ul.querySelectorAll('li[role="option"]'); if (!items.length) return; if (items[hl]) items[hl].classList.remove('hl'); hl = (hl + d + items.length) % items.length; items[hl].classList.add('hl'); items[hl].scrollIntoView({ block: 'nearest' }); }
+            btn.addEventListener('click', function(e) { e.stopPropagation(); panel.hidden ? open() : close(); });
+            search.addEventListener('input', function() { render(search.value); });
+            search.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowDown') { e.preventDefault(); move(1); } else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+                else if (e.key === 'Enter') { e.preventDefault(); pick(hl > -1 ? hl : 0); } else if (e.key === 'Escape') { close(); btn.focus(); }
+            });
+            ul.addEventListener('click', function(e) { var li = e.target.closest('li[role="option"]'); if (li) pick(+li.dataset.i); });
+            document.addEventListener('click', function(e) { if (!panel.hidden && !panel.contains(e.target) && e.target !== btn) close(); });
+            // default country from the browser's region, else United States
+            var reg = ((navigator.language || '').match(/[-_]([A-Za-z]{2})\b/) || [])[1];
+            var def = LIST.filter(function(c) { return reg && c.iso === reg.toUpperCase(); })[0] || LIST.filter(function(c) { return c.iso === 'US'; })[0];
+            select(def);
+        })();
+
+        function submitWaitlist(e) {
+            e.preventDefault();
+            var form = document.getElementById('waitlist-form'), msg = document.getElementById('wl-msg'), btn = form.querySelector('button[type="submit"]');
+            var name = document.getElementById('waitlist-name').value.trim();
+            var dial = document.getElementById('country-code').value, iso = document.getElementById('country-iso').value;
+            var digits = document.getElementById('waitlist-phone').value.replace(/[^0-9]/g, '');
+            function fail(t) { msg.textContent = t; msg.style.display = 'block'; }
+            msg.style.display = 'none';
+            if (digits.length < 6 || digits.length > 14) { fail('Please enter a valid phone number.'); return false; }
+            var endpoint = (window.WAITLIST_ENDPOINT || '').trim();
+            if (!endpoint) { console.error('WAITLIST_ENDPOINT is empty: paste your form link into index.html'); fail("The waitlist isn't connected yet. Please try again soon."); return false; }
+            var fd = new FormData();
+            fd.append('name', name); fd.append('phone', dial + digits); fd.append('country_code', dial); fd.append('country', iso); fd.append('source', 'HUMAN waitlist');
+            var label = btn.querySelector('.btn-text'), old = label ? label.textContent : '';
+            btn.disabled = true; if (label) label.textContent = 'Joining\u2026';
+            fetch(endpoint, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+                .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); })
+                .then(function() {
+                    document.getElementById('form-content').innerHTML = '<div style="padding:30px 0;text-align:center"><h3 style="font-family:\'EB Garamond\',serif;font-weight:500;font-size:2.4rem;margin:0 0 10px;color:#fff">You\u2019re on the list.</h3><p style="color:rgba(255,255,255,.7);margin:0">We\u2019ll message you when your invitation is ready.</p></div>';
+                })
+                .catch(function(err) { console.error(err); btn.disabled = false; if (label) label.textContent = old; fail('Something went wrong. Please try again.'); });
+            return false;
+        }
+    </script>
+
+    <script>
+    try {
+        // Sequence: fully scroll-driven. Letters appear in step with your scroll (left to right), each sentence on its own colour screen.
+        (function() {
+            var section = document.getElementById('purple-sequence-section');
+            var texts = document.querySelectorAll('#purple-sequence-section .seq-text');
+            if (!section || !texts.length) return;
+            // The colour stage lives on <body> (not inside the very tall section) so the browser never has to paint a giant layer
+            var stage = section.firstElementChild;
+            document.body.appendChild(stage);
+            ['seq-glow', 'seq-ring', 'seq-ring r2'].forEach(function(c) { var d = document.createElement('div'); d.className = c; stage.insertBefore(d, stage.firstChild); });
+            section.style.minHeight = '1px';
+            var heroFade = [].slice.call(document.querySelectorAll('.hero-sticky .hero-section, .hero-sticky .ticker-section'));
+            var PAL = [
+                ['#5E17EB', '#F7F4EE'],  // 1 purple      Dear Human, we built Uber...
+                ['#FF6A00', '#111111'],  // 2 orange      Now imagine,
+                ['#2D6BFF', '#FFFFFF'],  // 3 blue        Your AI handles every message...
+                ['#39FF14', '#111111'],  // 4 neon green  ...builds, manages & maintains relationships
+                ['#FF2E93', '#111111'],  // 5 pink        ...finds people, makes introductions
+                ['#FFE600', '#111111'],  // 6 yellow      ...gets things done in real time
+                ['#00E5FF', '#111111'],  // 7 cyan        Your AI twin
+                ['#FF3D5A', '#FFFFFF']   // 8 rose red    Computers are moving from your pocket to your face
+            ];
+            function rgb(h) { return [parseInt(h.substr(1,2),16), parseInt(h.substr(3,2),16), parseInt(h.substr(5,2),16)]; }
+            function mix(a, b, t) { var x = rgb(a), y = rgb(b); return 'rgb(' + x.map(function(v, i) { return Math.round(v + (y[i] - v) * t); }).join(',') + ')'; }
+            var chars = [], base = [], thf = [], thLines = [];
+            texts.forEach(function(h, idx) {
+                base[idx] = rgb(PAL[idx % PAL.length][1]).join(',');
+                var lines = (h.getAttribute('data-lines') || h.textContent).split('|');
+                var thIdx = h.hasAttribute('data-nowrap') ? +h.getAttribute('data-nowrap') : -1;
+                var list = [], flags = [];
+                h.textContent = '';
+                h.style.color = PAL[idx % PAL.length][1];
+                h.style.opacity = 1;
+                if (lines.length > 1) { h.style.maxWidth = 'none'; h.style.width = '94%'; }
+                lines.forEach(function(raw, li) {
+                    var ln = document.createElement('span');
+                    ln.className = 'ln' + (li === thIdx ? ' ln-nowrap' : '');
+                    raw.split(' ').forEach(function(word, wi, arr) {
+                        var w = document.createElement('span');
+                        w.style.display = 'inline-block';
+                        for (var c = 0; c < word.length; c++) {
+                            var sp = document.createElement('span');
+                            sp.textContent = word[c];
+                            sp.style.display = 'inline-block';
+                            sp.style.color = 'rgba(' + base[idx] + ',0)'; flags.push(0);
+                            w.appendChild(sp); list.push(sp);
+                        }
+                        ln.appendChild(w);
+                        if (wi < arr.length - 1) ln.appendChild(document.createTextNode(' '));
+                    });
+                    h.appendChild(ln);
+                    if (li === thIdx) thLines.push({ h: h, ln: ln });
+                });
+                chars.push(list); thf.push(flags);
+            });
+            // keep the thermal line on ONE line (desktop) and give each letter its slice of one continuous heat gradient
+            function layoutThermal() {
+                thLines.forEach(function(o) {
+                    var h = o.h, ln = o.ln;
+                    if (!h.getAttribute('data-fs')) h.setAttribute('data-fs', h.style.fontSize || '3rem');
+                    h.style.fontSize = h.getAttribute('data-fs');
+                    if (window.innerWidth >= 700) {
+                        ln.style.display = 'inline-block'; var w = ln.getBoundingClientRect().width; ln.style.display = ''; var avail = window.innerWidth * 0.9, fs = parseFloat(getComputedStyle(h).fontSize);
+                        if (w > avail) h.style.fontSize = Math.max(18, fs * avail / w) + 'px';
+                    }
+                    var ths = ln.querySelectorAll('.th');
+                    if (!ths.length) return;
+                    var left = ths[0].getBoundingClientRect().left, right = ths[ths.length - 1].getBoundingClientRect().right, W = Math.max(200, right - left);
+                    // line wraps on small screens: measure from the line's own left edge
+                    ths.forEach(function(sp) {
+                        var r = sp.getBoundingClientRect();
+                        sp.style.setProperty('--W', W + 'px');
+                        sp.style.setProperty('--ox', (-(r.left - left)) + 'px');
+                    });
+                });
+            }
+            layoutThermal();
+            window.addEventListener('resize', layoutThermal);
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutThermal);
+            var SOFT = 5;
+            function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+            function update() {
+                var rect = section.getBoundingClientRect();
+                var vh = window.innerHeight;
+                var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+                var dist = section.offsetHeight - vh;
+                var S = vh * 0.015, secTop = rect.top + y, endY = secTop + dist;
+                var p = clamp((y - S) / (endY - S));
+                var n = texts.length, f = p * n, i = Math.min(Math.floor(f), n - 1), t = f - i;
+                if (y <= S) { i = -1; }
+                // first sentence reveals over a very short scroll; the others over a short one
+                // scroll-distance based windows (in screens): quick reveal, LONG hold, short dissolve
+                var L = (endY - S) / n;
+                var REV = ((i === 0 ? 0.10 : 0.18) * vh) / L, HOLD = 1 - (0.60 * vh) / L, OUT = 1 - (0.25 * vh) / L;
+                var bg = i >= 0 ? PAL[i % PAL.length][0] : 'transparent';
+                if (i >= 0 && i < n - 1 && t > OUT) bg = mix(PAL[i % PAL.length][0], PAL[(i + 1) % PAL.length][0], (t - OUT) / (1 - OUT));
+                if (rect.top > 1) bg = 'transparent';
+                stage.style.backgroundColor = bg;
+                section.style.backgroundColor = 'transparent';
+                var st = stage.style;
+                st.position = 'fixed'; st.left = '0'; st.top = '0'; st.width = '100vw'; st.height = '100vh'; st.zIndex = '120'; st.pointerEvents = 'none';
+                st.visibility = (y <= S || rect.bottom <= 0) ? 'hidden' : 'visible';
+                // after the last screen, slide the stage up and away with the page
+                st.transform = rect.bottom < vh ? 'translateY(' + Math.round(rect.bottom - vh) + 'px)' : 'none';
+                // the hero copy melts away as the purple grows so the first sentence has a clean screen
+                var hf = clamp(1 - y / (vh * 0.07));
+                heroFade.forEach(function(e) { e.style.opacity = hf; });
+                for (var k = 0; k < n; k++) {
+                    var list = chars[k], N = list.length;
+                    for (var j = 0; j < N; j++) {
+                        var o = 0;
+                        if (k === i) {
+                            var last = (i === n - 1);
+                            if (t < REV) o = clamp(((t / REV) * (N + SOFT) - j) / SOFT);
+                            else if (t < HOLD || last) o = 1;
+                            else if (t < OUT) o = 1 - clamp((((t - HOLD) / (OUT - HOLD)) * (N + SOFT) - j) / SOFT);
+                        }
+                        if (thf[k][j]) list[j].style.opacity = o < 0.01 ? 0 : o > 0.99 ? 1 : o.toFixed(3);
+                        else list[j].style.color = 'rgba(' + base[k] + ',' + (o < 0.01 ? 0 : o > 0.99 ? 1 : o.toFixed(3)) + ')';
+                    }
+                }
+            }
+            window.addEventListener('scroll', update, { passive: true });
+            window.addEventListener('resize', update);
+            update();
+        })();
+    } catch (err) { console.error("sequence failed", err); }
+    </script>
+</body>
+</html>
