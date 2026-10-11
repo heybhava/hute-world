@@ -395,7 +395,7 @@ p{margin:0 0 1em}
   // enquiry form (front-end only for now)
   var f=document.getElementById('enquiry');
   // Paste your form link between the quotes to start receiving enquiries:
-  window.FORM_ENDPOINT='';
+  window.FORM_ENDPOINT='https://formspree.io/f/mzedgkjn';
   if(f)f.addEventListener('submit',function(e){
     e.preventDefault();
     var ep=(window.FORM_ENDPOINT||'').trim(),btn=f.querySelector('button[type=submit]'),note=f.querySelector('.err');
