@@ -1769,6 +1769,41 @@
         .fx-funnel { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; }
         .m-only { display: none; }
         @media (max-width: 699px) { .m-only { display: inline; } .d-only { display: none; } }
+
+        /* ── Orbit showcase: request cards circling HUMAN ── */
+        .orbit-sec { position: relative; background: var(--bg-cream); padding: 110px 20px 90px; text-align: center; overflow: hidden; z-index: 2; }
+        .orbit-kicker { display: inline-block; font: 600 .74rem/1 'Inter', sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-purple); margin-bottom: 18px; }
+        .orbit-head h2 { font-family: 'EB Garamond', serif; font-weight: 400; font-size: clamp(2.4rem, 5.5vw, 4.4rem); line-height: 1.02; letter-spacing: -.02em; margin: 0 auto 14px; max-width: 900px; color: var(--text-dark); }
+        .orbit-head h2 i { font-style: italic; }
+        .orbit-head p { color: var(--text-grey); font-size: 1.05rem; margin: 0 0 10px; }
+        .orbit { position: relative; height: clamp(430px, 62vw, 640px); max-width: 1200px; margin: 10px auto 0; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
+        .orbit.drag { cursor: grabbing; }
+        .orbit-core { position: absolute; left: 50%; top: 50%; width: clamp(150px, 20vw, 230px); aspect-ratio: 1; transform: translate(-50%, -54%); border-radius: 50%; display: grid; place-items: center; pointer-events: none;
+            background: radial-gradient(circle at 50% 40%, #7a3dff 0%, #5E17EB 55%, #3b0fa0 100%); box-shadow: 0 30px 80px rgba(94,23,235,.45), inset 0 0 60px rgba(255,255,255,.18); }
+        .orbit-core::before, .orbit-core::after { content: ''; position: absolute; inset: -14%; border-radius: 50%; border: 1.5px solid rgba(94,23,235,.28); animation: orbPing 4.5s ease-out infinite; }
+        .orbit-core::after { animation-delay: 2.25s; }
+        @keyframes orbPing { 0% { transform: scale(.78); opacity: .9; } 100% { transform: scale(1.55); opacity: 0; } }
+        .orbit-core span { font-family: 'EB Garamond', serif; font-size: clamp(1.6rem, 3.2vw, 2.4rem); color: #fff; letter-spacing: -.01em; }
+        .orb-card { all: unset; box-sizing: border-box; position: absolute; left: 50%; top: 50%; display: flex; align-items: center; gap: 12px; padding: 12px 20px 12px 12px; border-radius: 22px; background: #fff; color: var(--text-dark);
+            border: 1.5px solid rgba(18,18,18,.1); box-shadow: 0 18px 40px rgba(18,18,18,.12); white-space: nowrap; cursor: pointer; will-change: transform, opacity; text-align: left; font-family: 'Inter', sans-serif; transition: box-shadow .25s, border-color .25s; }
+        .orb-card:hover, .orb-card.on { border-color: var(--c); box-shadow: 0 26px 60px color-mix(in srgb, var(--c) 40%, transparent); }
+        .orb-card:focus-visible { outline: 2px solid var(--accent-purple); outline-offset: 3px; }
+        .orb-av { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--c); color: #fff; font-weight: 700; font-size: 1rem; flex: none; }
+        .orb-t b { display: block; font-size: .98rem; font-weight: 600; line-height: 1.2; }
+        .orb-t small { display: block; font-size: .78rem; color: var(--text-grey); margin-top: 3px; }
+        @media (max-width: 700px) { .orbit-sec { padding: 80px 12px 60px; } .orb-card { padding: 9px 14px 9px 9px; gap: 9px; border-radius: 18px; } .orb-av { width: 34px; height: 34px; font-size: .85rem; } .orb-t b { font-size: .85rem; } .orb-t small { font-size: .7rem; } }
+
+        /* ── Circular type: rotating rings of text behind the waitlist ── */
+        .waitlist-section { position: relative; overflow: hidden; }
+        .waitlist-container { position: relative; z-index: 2; }
+        .ctype { position: absolute; left: 50%; top: 50%; width: min(1180px, 150vw); aspect-ratio: 1; transform: translate(-50%, -50%); z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.4s ease; }
+        .ctype.in { opacity: 1; }
+        .ctype svg { width: 100%; height: 100%; overflow: visible; }
+        .ctype text { font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: .02em; fill: rgba(255,255,255,.16); transition: fill .5s ease; text-transform: uppercase; }
+        .ctype .ring.hot text { fill: rgba(190,150,255,.85); }
+        .ctype .ring.dim text { fill: rgba(255,255,255,.06); }
+        .ctype .guide { fill: none; stroke: rgba(255,255,255,.1); stroke-width: 1; stroke-dasharray: 3 9; transition: stroke .5s; }
+        .ctype .ring.hot + .guide, .ctype .guide.hot { stroke: rgba(190,150,255,.5); }
 </style>
 </head>
 <body>
@@ -1904,6 +1939,19 @@
     </div>
 
     <!-- SECTION 2.6: FAQ -->
+    <!-- ORBIT: what people ask HUMAN for -->
+    <section class="orbit-sec" id="orbit" aria-label="What people ask HUMAN for">
+        <div class="orbit-head">
+            <span class="orbit-kicker">Ask for anything</span>
+            <h2>What will you ask <i>HUMAN</i> for?</h2>
+            <p>Scroll, drag or hover. Every card is a real kind of request.</p>
+        </div>
+        <div class="orbit" id="orbit-ring">
+            <div class="orbit-core"><span>HUMAN</span></div>
+            <button type="button" class="orb-card" style="--c:#FF6A00"><span class="orb-av">A</span><span class="orb-t"><b>A tennis partner this weekend</b><small>Sport</small></span></button><button type="button" class="orb-card" style="--c:#5E17EB"><span class="orb-av">A</span><span class="orb-t"><b>A technical co-founder</b><small>Startups</small></span></button><button type="button" class="orb-card" style="--c:#FF2E93"><span class="orb-av">C</span><span class="orb-t"><b>Coffee in Soho right now</b><small>Right now</small></span></button><button type="button" class="orb-card" style="--c:#00A8C6"><span class="orb-av">A</span><span class="orb-t"><b>A local guide in Tokyo</b><small>Travel</small></span></button><button type="button" class="orb-card" style="--c:#2D6BFF"><span class="orb-av">S</span><span class="orb-t"><b>Someone to fix my laptop</b><small>Help today</small></span></button><button type="button" class="orb-card" style="--c:#1FAA59"><span class="orb-av">A</span><span class="orb-t"><b>A study partner tonight</b><small>Study</small></span></button><button type="button" class="orb-card" style="--c:#C98A00"><span class="orb-av">A</span><span class="orb-t"><b>A guitar teacher</b><small>Learn</small></span></button><button type="button" class="orb-card" style="--c:#B2007A"><span class="orb-av">N</span><span class="orb-t"><b>New friends in a new city</b><small>Friends</small></span></button>
+        </div>
+    </section>
+
     <div class="faq-section" id="faq">
         <div class="faq-header">
             <span class="faq-kicker">FAQS</span>
@@ -2989,6 +3037,108 @@
         // layout shifts (fonts, header) move the prompt box: re-aim a couple of times after load
         setTimeout(target, 600); setTimeout(target, 1800); window.addEventListener('load', function() { size(); });
     })(); } catch (e) { console.error('funnel failed', e); }
+    </script>
+
+    <script>
+    // ═══ Orbit showcase + circular type (own implementations; keyboard / touch / reduced-motion aware) ═══
+    try { (function() {
+        var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // ── Orbit: cards circle the HUMAN core; scroll, drag and hover all steer it ──
+        var orbit = document.getElementById('orbit-ring');
+        if (orbit) {
+            var cards = [].slice.call(orbit.querySelectorAll('.orb-card')), N = cards.length;
+            var rot = 0, vel = 0, auto = reduce ? 0 : 7, hover = false, dragging = false, lastX = 0, lastY = window.scrollY, visible = false, selected = -1;
+            function layout() {
+                var w = orbit.clientWidth, h = orbit.clientHeight, rx = Math.min(w * (w < 700 ? .38 : .36), 470), ry = h * (w < 700 ? .3 : .27);
+                for (var i = 0; i < N; i++) {
+                    var a = (rot + i * 360 / N) * Math.PI / 180, z = Math.cos(a), x = Math.sin(a) * rx, y = z * ry * .55 - 6;
+                    var depth = (z + 1) / 2, sc = .6 + .4 * depth + (i === selected ? .08 : 0);
+                    cards[i].style.transform = 'translate(-50%,-50%) translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + sc.toFixed(3) + ')';
+                    cards[i].style.opacity = (.28 + .72 * depth).toFixed(3);
+                    cards[i].style.zIndex = Math.round(depth * 100);
+                    cards[i].style.filter = depth < .35 ? 'blur(' + ((.35 - depth) * 4).toFixed(1) + 'px)' : 'none';
+                }
+            }
+            var prev = 0;
+            function tick(ts) {
+                if (!visible) { prev = 0; return; }
+                var dt = prev ? Math.min(.05, (ts - prev) / 1000) : 0; prev = ts;
+                if (!dragging) {
+                    var target = hover ? 0 : auto;
+                    vel += (target - vel) * Math.min(1, dt * 3);       // glide back to the lazy auto-rotation
+                    rot += vel * dt;
+                }
+                layout(); requestAnimationFrame(tick);
+            }
+            // scroll adds spin
+            window.addEventListener('scroll', function() {
+                var y = window.scrollY, d = y - lastY; lastY = y;
+                if (visible && !reduce) vel += Math.max(-90, Math.min(90, d * .45));
+            }, { passive: true });
+            // drag to spin
+            orbit.addEventListener('pointerdown', function(e) { dragging = true; lastX = e.clientX; orbit.classList.add('drag'); try { orbit.setPointerCapture(e.pointerId); } catch (x) {} });
+            orbit.addEventListener('pointermove', function(e) { if (!dragging) return; var dx = e.clientX - lastX; lastX = e.clientX; rot += dx * .35; vel = dx * 14; });
+            function up() { dragging = false; orbit.classList.remove('drag'); }
+            orbit.addEventListener('pointerup', up); orbit.addEventListener('pointercancel', up);
+            // hover pauses; click / Enter brings a card to the front
+            orbit.addEventListener('mouseenter', function() { hover = true; }); orbit.addEventListener('mouseleave', function() { hover = false; });
+            cards.forEach(function(c, i) {
+                c.addEventListener('click', function() {
+                    selected = i; cards.forEach(function(k, j) { k.classList.toggle('on', j === i); });
+                    var cur = ((rot + i * 360 / N) % 360 + 360) % 360, d = cur > 180 ? 360 - cur : -cur;   // spin so this card faces front
+                    var start = rot, t0 = performance.now();
+                    (function glide(now) { var k = Math.min(1, (now - t0) / 700), e = 1 - Math.pow(1 - k, 3); rot = start + d * e; layout(); if (k < 1) requestAnimationFrame(glide); })(t0);
+                });
+            });
+            if ('IntersectionObserver' in window) new IntersectionObserver(function(es) { var v = es[0].isIntersecting; if (v && !visible) { visible = true; requestAnimationFrame(tick); } else if (!v) visible = false; }, { rootMargin: '120px' }).observe(orbit);
+            else { visible = true; requestAnimationFrame(tick); }
+            window.addEventListener('resize', layout);
+            layout();
+        }
+
+        // ── Circular type: three rings of text, alternating direction, hover focuses a ring ──
+        var sec = document.querySelector('.waitlist-section');
+        if (sec) {
+            var wrap = document.createElement('div'); wrap.className = 'ctype'; wrap.setAttribute('aria-hidden', 'true');
+            var NS = 'http://www.w3.org/2000/svg', R = [455, 365, 275], FS = [30, 27, 24], DIR = [1, -1, 1], SP = [5.5, 7.5, 10];
+            var phrase = 'Be the first to experience HUMAN \u2022 Invitations are rolling out globally \u2022 ';
+            var svg = document.createElementNS(NS, 'svg'); svg.setAttribute('viewBox', '0 0 1000 1000');
+            var defs = document.createElementNS(NS, 'defs'); svg.appendChild(defs);
+            var rings = [];
+            R.forEach(function(r, i) {
+                var id = 'ct' + i, path = document.createElementNS(NS, 'path');
+                path.setAttribute('id', id); path.setAttribute('d', 'M500,' + (500 - r) + ' a' + r + ',' + r + ' 0 1,1 0,' + (2 * r) + ' a' + r + ',' + r + ' 0 1,1 0,' + (-2 * r)); defs.appendChild(path);
+                var g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'ring');
+                var t = document.createElementNS(NS, 'text'); t.setAttribute('font-size', FS[i]);
+                var tp = document.createElementNS(NS, 'textPath'); tp.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#' + id); tp.setAttribute('href', '#' + id);
+                var circ = 2 * Math.PI * r, reps = Math.max(1, Math.round(circ / (phrase.length * FS[i] * .62)));
+                tp.setAttribute('textLength', circ.toFixed(1)); tp.setAttribute('lengthAdjust', 'spacing'); tp.textContent = new Array(reps + 1).join(phrase);
+                t.appendChild(tp); g.appendChild(t); svg.appendChild(g);
+                var gd = document.createElementNS(NS, 'circle'); gd.setAttribute('class', 'guide'); gd.setAttribute('cx', 500); gd.setAttribute('cy', 500); gd.setAttribute('r', r + FS[i] * 0.9); svg.appendChild(gd);
+                rings.push({ g: g, guide: gd, ang: Math.random() * 360, mult: 1, tgt: 1 });
+            });
+            wrap.appendChild(svg); sec.insertBefore(wrap, sec.firstChild);
+            // entrance: fade/bloom in when the section arrives
+            if ('IntersectionObserver' in window) new IntersectionObserver(function(es, o) { if (es[0].isIntersecting) { wrap.classList.add('in'); o.disconnect(); } }, { threshold: .15 }).observe(sec); else wrap.classList.add('in');
+            // hover focus: the ring nearest the pointer slows and lights up, the rest dim
+            sec.addEventListener('mousemove', function(e) {
+                var b = wrap.getBoundingClientRect(), sc = b.width / 1000, dx = (e.clientX - (b.left + b.width / 2)) / sc, dy = (e.clientY - (b.top + b.height / 2)) / sc, d = Math.sqrt(dx * dx + dy * dy), best = -1, bd = 40;
+                R.forEach(function(r, i) { var k = Math.abs(d - r); if (k < bd) { bd = k; best = i; } });
+                rings.forEach(function(o, i) { o.tgt = best < 0 ? 1 : (i === best ? .12 : 1); o.g.setAttribute('class', 'ring' + (best < 0 ? '' : i === best ? ' hot' : ' dim')); o.guide.setAttribute('class', 'guide' + (i === best ? ' hot' : '')); });
+            });
+            sec.addEventListener('mouseleave', function() { rings.forEach(function(o) { o.tgt = 1; o.g.setAttribute('class', 'ring'); o.guide.setAttribute('class', 'guide'); }); });
+            var pv = 0, vis2 = false;
+            function spin(ts) {
+                if (!vis2) { pv = 0; return; }
+                var dt = pv ? Math.min(.05, (ts - pv) / 1000) : 0; pv = ts;
+                rings.forEach(function(o, i) { o.mult += (o.tgt - o.mult) * Math.min(1, dt * 4); o.ang += DIR[i] * SP[i] * o.mult * dt; o.g.setAttribute('transform', 'rotate(' + o.ang.toFixed(2) + ' 500 500)'); });
+                requestAnimationFrame(spin);
+            }
+            if (!reduce && 'IntersectionObserver' in window) new IntersectionObserver(function(es) { var v = es[0].isIntersecting; if (v && !vis2) { vis2 = true; requestAnimationFrame(spin); } else if (!v) vis2 = false; }).observe(sec);
+            else rings.forEach(function(o, i) { o.g.setAttribute('transform', 'rotate(' + (i * 40) + ' 500 500)'); });
+        }
+    })(); } catch (e) { console.error('orbit/ctype failed', e); }
     </script>
 </body>
 </html>
