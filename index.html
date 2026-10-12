@@ -2873,7 +2873,7 @@
         var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
         function rnd(a, b) { return a + Math.random() * (b - a); }
         function build() {
-            var n = W < 700 ? 14 : 28;
+            var n = W < 700 ? 16 : 34;
             lines = [];
             for (var i = 0; i < n; i++) {
                 var u = n === 1 ? 0 : (i / (n - 1)) * 2 - 1;           // -1 .. 1 across the fan
@@ -2894,13 +2894,15 @@
             P.y = b.top - c.top + b.height / 2;
         }
         function geo(L, time) {
-            var span = Math.max(W - P.x, 0) + W * (W < 700 ? 0.9 : 0.5);   // how far out the fan starts
-            var ang = L.u * (W < 700 ? 1.25 : 1.0);
-            var sx = P.x + span * Math.cos(ang) + 40, sy = P.y + span * 0.85 * Math.sin(ang);
-            var w1 = Math.sin(time * L.sp + L.ph) * 70 * L.amp, w2 = Math.sin(time * L.sp * 1.3 + L.ph + 1.7) * 36 * L.amp;
+            // every line enters from the RIGHT EDGE of the screen (spread over the full height) and bends in to the prompt box
+            var sx = W + 50, sy = H * (0.5 + L.u * 0.62);
+            var d = Math.max(sx - P.x, 220);
+            // no line is ever straight: each gets its own sway, plus a bow that grows toward the top and bottom
+            var bow = (sy - P.y) * 0.18;
+            var w1 = Math.sin(time * L.sp + L.ph) * 60 * L.amp + bow, w2 = Math.sin(time * L.sp * 1.3 + L.ph + 1.7) * 34 * L.amp;
             return { sx: sx, sy: sy,
-                c1x: sx - span * 0.42, c1y: sy + w1,
-                c2x: P.x + span * 0.34, c2y: P.y + (sy - P.y) * 0.10 + w2 };
+                c1x: sx - d * 0.38, c1y: sy + w1,
+                c2x: P.x + d * 0.30, c2y: P.y + (sy - P.y) * 0.12 + w2 };
         }
         function pt(g, t) {
             var m = 1 - t, a = m * m * m, b = 3 * m * m * t, c = 3 * m * t * t, d = t * t * t;
@@ -2917,8 +2919,8 @@
                 var L = lines[i], g = geo(L, time);
                 // the line itself: invisible far away, brightening as it converges
                 var grd = ctx.createLinearGradient(g.sx, g.sy, P.x, P.y);
-                grd.addColorStop(0, 'rgba(150,110,255,0)'); grd.addColorStop(.55, 'rgba(150,110,255,.16)'); grd.addColorStop(1, 'rgba(255,170,110,.42)');
-                ctx.strokeStyle = grd; ctx.lineWidth = 1;
+                grd.addColorStop(0, 'rgba(160,120,255,.22)'); grd.addColorStop(.5, 'rgba(170,125,255,.34)'); grd.addColorStop(1, 'rgba(255,175,115,.7)');
+                ctx.strokeStyle = grd; ctx.lineWidth = 1.25;
                 ctx.beginPath(); ctx.moveTo(g.sx, g.sy); ctx.bezierCurveTo(g.c1x, g.c1y, g.c2x, g.c2y, P.x, P.y); ctx.stroke();
                 // light particles with trails
                 for (var k = 0; k < L.parts.length; k++) {
@@ -2956,6 +2958,7 @@
         window.addEventListener('scroll', check, { passive: true });
         document.addEventListener('visibilitychange', check);
         window.addEventListener('resize', function() { size(); });
+        window.__fx = { frame: frame, size: size };
         size(); requestAnimationFrame(frame);
         // layout shifts (fonts, header) move the prompt box: re-aim a couple of times after load
         setTimeout(target, 600); setTimeout(target, 1800); window.addEventListener('load', function() { size(); });
