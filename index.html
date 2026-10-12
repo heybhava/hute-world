@@ -1776,22 +1776,18 @@
         .orbit-head h2 { font-family: 'EB Garamond', serif; font-weight: 400; font-size: clamp(2.4rem, 5.5vw, 4.4rem); line-height: 1.02; letter-spacing: -.02em; margin: 0 auto 14px; max-width: 900px; color: var(--text-dark); }
         .orbit-head h2 i { font-style: italic; }
         .orbit-head p { color: var(--text-grey); font-size: 1.05rem; margin: 0 0 10px; }
-        .orbit { position: relative; height: clamp(430px, 62vw, 640px); max-width: 1200px; margin: 10px auto 0; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
+        .orbit { position: relative; height: clamp(460px, 68vw, 720px); max-width: 1200px; margin: 10px auto 0; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
         .orbit.drag { cursor: grabbing; }
-        .orbit-core { position: absolute; left: 50%; top: 50%; width: clamp(150px, 20vw, 230px); aspect-ratio: 1; transform: translate(-50%, -54%); border-radius: 50%; display: grid; place-items: center; pointer-events: none;
-            background: radial-gradient(circle at 50% 40%, #7a3dff 0%, #5E17EB 55%, #3b0fa0 100%); box-shadow: 0 30px 80px rgba(94,23,235,.45), inset 0 0 60px rgba(255,255,255,.18); }
-        .orbit-core::before, .orbit-core::after { content: ''; position: absolute; inset: -14%; border-radius: 50%; border: 1.5px solid rgba(94,23,235,.28); animation: orbPing 4.5s ease-out infinite; }
-        .orbit-core::after { animation-delay: 2.25s; }
-        @keyframes orbPing { 0% { transform: scale(.78); opacity: .9; } 100% { transform: scale(1.55); opacity: 0; } }
-        .orbit-core span { font-family: 'EB Garamond', serif; font-size: clamp(1.6rem, 3.2vw, 2.4rem); color: #fff; letter-spacing: -.01em; }
-        .orb-card { all: unset; box-sizing: border-box; position: absolute; left: 50%; top: 50%; display: flex; align-items: center; gap: 12px; padding: 12px 20px 12px 12px; border-radius: 22px; background: #fff; color: var(--text-dark);
-            border: 1.5px solid rgba(18,18,18,.1); box-shadow: 0 18px 40px rgba(18,18,18,.12); white-space: nowrap; cursor: pointer; will-change: transform, opacity; text-align: left; font-family: 'Inter', sans-serif; transition: box-shadow .25s, border-color .25s; }
-        .orb-card:hover, .orb-card.on { border-color: var(--c); box-shadow: 0 26px 60px color-mix(in srgb, var(--c) 40%, transparent); }
-        .orb-card:focus-visible { outline: 2px solid var(--accent-purple); outline-offset: 3px; }
-        .orb-av { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--c); color: #fff; font-weight: 700; font-size: 1rem; flex: none; }
-        .orb-t b { display: block; font-size: .98rem; font-weight: 600; line-height: 1.2; }
-        .orb-t small { display: block; font-size: .78rem; color: var(--text-grey); margin-top: 3px; }
-        @media (max-width: 700px) { .orbit-sec { padding: 80px 12px 60px; } .orb-card { padding: 9px 14px 9px 9px; gap: 9px; border-radius: 18px; } .orb-av { width: 34px; height: 34px; font-size: .85rem; } .orb-t b { font-size: .85rem; } .orb-t small { font-size: .7rem; } }
+        .orbit-core { position: absolute; left: 50%; top: 50%; width: min(38%, 340px); transform: translate(-50%, -50%); text-align: center; text-wrap: balance; pointer-events: none; z-index: 1; }
+        .orbit-core span { display: block; font: 600 clamp(1.05rem, 2.1vw, 1.6rem)/1.25 'Inter', sans-serif; letter-spacing: -.01em; color: var(--text-dark); transition: opacity .18s ease, transform .18s ease; }
+        .orbit-core span.swap { opacity: 0; transform: translateY(6px); }
+        .orb-card { all: unset; box-sizing: border-box; position: absolute; left: 50%; top: 50%; width: var(--d, 140px); height: var(--d, 140px); border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: var(--c); will-change: transform;
+            background: radial-gradient(circle at 32% 26%, #fff 0%, color-mix(in srgb, var(--c) 14%, #fff) 45%, color-mix(in srgb, var(--c) 32%, #fff) 100%);
+            box-shadow: 0 10px 28px rgba(18,18,18,.14), inset 0 -10px 24px color-mix(in srgb, var(--c) 16%, transparent); transition: box-shadow .25s; }
+        .orb-card svg { width: 38%; height: 38%; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+        .orb-card:hover, .orb-card.on { box-shadow: 0 18px 44px color-mix(in srgb, var(--c) 42%, transparent), inset 0 -10px 24px color-mix(in srgb, var(--c) 22%, transparent); }
+        .orb-card:focus-visible { outline: 2px solid var(--accent-purple); outline-offset: 4px; }
+        @media (max-width: 700px) { .orbit-sec { padding: 80px 12px 60px; } }
 
         /* ── Circular type: rotating rings of text behind the waitlist ── */
         .waitlist-section { position: relative; overflow: hidden; }
@@ -1817,6 +1813,7 @@
                     <nav class="hb" aria-label="Main">
                         <a class="hb-brand" href="index.html"><img src="HUTE.png" alt="HUTE" class="hb-logo"><span>HUMAN</span></a>
                         <div class="hb-seg" role="group" aria-label="HUMAN for">
+                            <a href="product.html">PRODUCT</a>
                             <a href="business.html">For Business</a>
                             <a href="education.html">For Education</a>
                         </div>
@@ -1827,6 +1824,7 @@
                             <button type="button" class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false" aria-controls="nav-drop"><i></i><i></i><i></i></button>
                         </div>
                         <div class="nav-drop" id="nav-drop">
+                            <a href="product.html">PRODUCT</a>
                             <a href="business.html">For Business</a>
                             <a href="education.html">For Education</a>
                             <button type="button" id="nav-drop-team">Team</button>
@@ -1944,11 +1942,18 @@
         <div class="orbit-head">
             <span class="orbit-kicker">Ask for anything</span>
             <h2>What will you ask <i>HUMAN</i> for?</h2>
-            <p>Scroll, drag or hover. Every card is a real kind of request.</p>
+            <p>Scroll, drag or hover. Every circle is a real kind of request.</p>
         </div>
         <div class="orbit" id="orbit-ring">
-            <div class="orbit-core"><span>HUMAN</span></div>
-            <button type="button" class="orb-card" style="--c:#FF6A00"><span class="orb-av">A</span><span class="orb-t"><b>A tennis partner this weekend</b><small>Sport</small></span></button><button type="button" class="orb-card" style="--c:#5E17EB"><span class="orb-av">A</span><span class="orb-t"><b>A technical co-founder</b><small>Startups</small></span></button><button type="button" class="orb-card" style="--c:#FF2E93"><span class="orb-av">C</span><span class="orb-t"><b>Coffee in Soho right now</b><small>Right now</small></span></button><button type="button" class="orb-card" style="--c:#00A8C6"><span class="orb-av">A</span><span class="orb-t"><b>A local guide in Tokyo</b><small>Travel</small></span></button><button type="button" class="orb-card" style="--c:#2D6BFF"><span class="orb-av">S</span><span class="orb-t"><b>Someone to fix my laptop</b><small>Help today</small></span></button><button type="button" class="orb-card" style="--c:#1FAA59"><span class="orb-av">A</span><span class="orb-t"><b>A study partner tonight</b><small>Study</small></span></button><button type="button" class="orb-card" style="--c:#C98A00"><span class="orb-av">A</span><span class="orb-t"><b>A guitar teacher</b><small>Learn</small></span></button><button type="button" class="orb-card" style="--c:#B2007A"><span class="orb-av">N</span><span class="orb-t"><b>New friends in a new city</b><small>Friends</small></span></button>
+            <div class="orbit-core" aria-live="polite"><span>Ask HUMAN for anything</span></div>
+            <button type="button" class="orb-card" style="--c:#E8590C" aria-label="A tennis partner this weekend"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5 6c4 3 4 9 0 12M19 6c-4 3-4 9 0 12"/></svg></button>
+            <button type="button" class="orb-card" style="--c:#5E17EB" aria-label="A technical co-founder"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></svg></button>
+            <button type="button" class="orb-card" style="--c:#E0307F" aria-label="Coffee in Soho right now"><svg viewBox="0 0 24 24"><path d="M5 9h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4zM16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3v3M12 3v3"/></svg></button>
+            <button type="button" class="orb-card" style="--c:#0E8FAA" aria-label="A local guide in Tokyo"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></button>
+            <button type="button" class="orb-card" style="--c:#2D6BFF" aria-label="Someone to fix my laptop"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM2 19h20"/></svg></button>
+            <button type="button" class="orb-card" style="--c:#1A9650" aria-label="A study partner tonight"><svg viewBox="0 0 24 24"><path d="M4 5.5C6 4 9 4 12 6c3-2 6-2 8-.5V19c-2-1.5-5-1.5-8 .5-3-2-6-2-8-.5zM12 6v13.5"/></svg></button>
+            <button type="button" class="orb-card" style="--c:#B97D00" aria-label="A guitar teacher"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg></button>
+            <button type="button" class="orb-card" style="--c:#A3006E" aria-label="New friends in a new city"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.5 0 4.5 2 4.5 4.5"/></svg></button>
         </div>
     </section>
 
@@ -3044,20 +3049,28 @@
     try { (function() {
         var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // ── Orbit: cards circle the HUMAN core; scroll, drag and hover all steer it ──
+        // ── Orbit: round discs circle the centre text; scroll, drag and hover all steer it ──
         var orbit = document.getElementById('orbit-ring');
         if (orbit) {
             var cards = [].slice.call(orbit.querySelectorAll('.orb-card')), N = cards.length;
-            var rot = 0, vel = 0, auto = reduce ? 0 : 7, hover = false, dragging = false, lastX = 0, lastY = window.scrollY, visible = false, selected = -1;
+            var core = orbit.querySelector('.orbit-core span'), dflt = core.textContent, swapT = 0, shown = dflt;
+            var SIZES = [140, 112, 150, 122, 132, 108, 146, 118], JIT = [0, 3, -3, 4, -3, 2, -4, 3];
+            var rot = 0, vel = 0, auto = reduce ? 0 : 6, hover = false, dragging = false, moved = false, lastX = 0, lastY = window.scrollY, visible = false, selected = -1, hot = -1;
+            function label() {
+                var i = hot >= 0 ? hot : selected, t = i >= 0 ? cards[i].getAttribute('aria-label') : dflt;
+                if (t === shown) return; shown = t;
+                core.classList.add('swap'); clearTimeout(swapT);
+                swapT = setTimeout(function() { core.textContent = t; core.classList.remove('swap'); }, 160);
+            }
             function layout() {
-                var w = orbit.clientWidth, h = orbit.clientHeight, rx = Math.min(w * (w < 700 ? .38 : .36), 470), ry = h * (w < 700 ? .3 : .27);
+                var w = orbit.clientWidth, h = orbit.clientHeight, u = Math.max(.5, Math.min(1.15, Math.min(w, h) / 640)), maxD = 160 * u;
+                var ry = h / 2 - maxD / 2 - 6, rx = Math.min(w / 2 - maxD / 2 - 6, ry * 1.15);
                 for (var i = 0; i < N; i++) {
-                    var a = (rot + i * 360 / N) * Math.PI / 180, z = Math.cos(a), x = Math.sin(a) * rx, y = z * ry * .55 - 6;
-                    var depth = (z + 1) / 2, sc = .6 + .4 * depth + (i === selected ? .08 : 0);
-                    cards[i].style.transform = 'translate(-50%,-50%) translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + sc.toFixed(3) + ')';
-                    cards[i].style.opacity = (.28 + .72 * depth).toFixed(3);
-                    cards[i].style.zIndex = Math.round(depth * 100);
-                    cards[i].style.filter = depth < .35 ? 'blur(' + ((.35 - depth) * 4).toFixed(1) + 'px)' : 'none';
+                    var a = (rot + JIT[i] + i * 360 / N) * Math.PI / 180, x = Math.sin(a) * rx, y = -Math.cos(a) * ry;
+                    var sc = (i === hot || i === selected) ? 1.08 : 1;
+                    cards[i].style.setProperty('--d', (SIZES[i] * u).toFixed(1) + 'px');
+                    cards[i].style.transform = 'translate(-50%,-50%) translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + sc + ')';
+                    cards[i].style.zIndex = (i === hot || i === selected) ? 2 : 1;
                 }
             }
             var prev = 0;
@@ -3077,18 +3090,22 @@
                 if (visible && !reduce) vel += Math.max(-90, Math.min(90, d * .45));
             }, { passive: true });
             // drag to spin
-            orbit.addEventListener('pointerdown', function(e) { dragging = true; lastX = e.clientX; orbit.classList.add('drag'); try { orbit.setPointerCapture(e.pointerId); } catch (x) {} });
-            orbit.addEventListener('pointermove', function(e) { if (!dragging) return; var dx = e.clientX - lastX; lastX = e.clientX; rot += dx * .35; vel = dx * 14; });
+            orbit.addEventListener('pointerdown', function(e) { dragging = true; moved = false; lastX = e.clientX; orbit.classList.add('drag'); });
+            orbit.addEventListener('pointermove', function(e) { if (!dragging) return; var dx = e.clientX - lastX; if (Math.abs(dx) > 1) moved = true; lastX = e.clientX; rot += dx * .35; vel = dx * 14; });
             function up() { dragging = false; orbit.classList.remove('drag'); }
-            orbit.addEventListener('pointerup', up); orbit.addEventListener('pointercancel', up);
-            // hover pauses; click / Enter brings a card to the front
+            window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+            // hover pauses; hovering / focusing / clicking a disc names it in the centre
             orbit.addEventListener('mouseenter', function() { hover = true; }); orbit.addEventListener('mouseleave', function() { hover = false; });
             cards.forEach(function(c, i) {
+                c.addEventListener('mouseenter', function() { hot = i; label(); layout(); });
+                c.addEventListener('mouseleave', function() { hot = -1; label(); layout(); });
+                c.addEventListener('focus', function() { hot = i; label(); layout(); });
+                c.addEventListener('blur', function() { hot = -1; label(); layout(); });
                 c.addEventListener('click', function() {
-                    selected = i; cards.forEach(function(k, j) { k.classList.toggle('on', j === i); });
-                    var cur = ((rot + i * 360 / N) % 360 + 360) % 360, d = cur > 180 ? 360 - cur : -cur;   // spin so this card faces front
-                    var start = rot, t0 = performance.now();
-                    (function glide(now) { var k = Math.min(1, (now - t0) / 700), e = 1 - Math.pow(1 - k, 3); rot = start + d * e; layout(); if (k < 1) requestAnimationFrame(glide); })(t0);
+                    if (moved) { moved = false; return; }
+                    selected = selected === i ? -1 : i;
+                    cards.forEach(function(k, j) { k.classList.toggle('on', j === selected); });
+                    label(); layout();
                 });
             });
             if ('IntersectionObserver' in window) new IntersectionObserver(function(es) { var v = es[0].isIntersecting; if (v && !visible) { visible = true; requestAnimationFrame(tick); } else if (!v) visible = false; }, { rootMargin: '120px' }).observe(orbit);
