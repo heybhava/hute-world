@@ -32,27 +32,12 @@
     return '#' + ((1 << 24) + (r << 16) + (gg << 8) + b).toString(16).slice(1);
   }
   HE.portrait = function (p) {
-    var id = 'pg' + Math.random().toString(36).slice(2, 8), h = p.hair, s = p.skin, sh = p.shirt, back = '', front = '';
-    if (p.style === 'long') back = '<path d="M31 62 Q28 20 60 19 Q92 20 89 62 L93 118 L27 118 Z" fill="' + h + '"/>';
-    if (p.style === 'bob') back = '<path d="M32 60 Q29 22 60 21 Q91 22 88 60 L89 86 Q60 92 31 86 Z" fill="' + h + '"/>';
-    if (p.style === 'curly') back = '<g fill="' + h + '"><circle cx="38" cy="50" r="11"/><circle cx="82" cy="50" r="11"/><circle cx="46" cy="34" r="12"/><circle cx="74" cy="34" r="12"/><circle cx="60" cy="30" r="13"/><circle cx="36" cy="66" r="8"/><circle cx="84" cy="66" r="8"/></g>';
-    if (p.style === 'bun') back = '<circle cx="60" cy="17" r="11" fill="' + h + '"/><path d="M35 58 Q33 26 60 25 Q87 26 85 58 Z" fill="' + h + '"/>';
-    if (p.style === 'short') front = '<path d="M35 56 Q34 28 60 28 Q86 28 85 56 Q78 40 60 40 Q42 40 35 56 Z" fill="' + h + '"/>';
-    else if (p.style === 'curly') front = '<g fill="' + h + '"><circle cx="46" cy="42" r="9"/><circle cx="60" cy="38" r="10"/><circle cx="74" cy="42" r="9"/></g>';
-    else front = '<path d="M36 58 Q36 30 60 30 Q84 30 84 58 Q74 44 60 44 Q46 44 36 58 Z" fill="' + h + '"/>';
-    var glasses = p.glasses ? '<g fill="none" stroke="#2b211c" stroke-width="1.6"><circle cx="50" cy="64" r="7"/><circle cx="70" cy="64" r="7"/><path d="M57 64h6"/></g>' : '';
-    return '<svg viewBox="0 0 120 150" role="img" aria-label="Illustrated portrait of ' + HE.esc(p.name) + '" xmlns="http://www.w3.org/2000/svg">' +
-      '<defs><linearGradient id="' + id + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + p.bg[0] + '"/><stop offset="1" stop-color="' + p.bg[1] + '"/></linearGradient></defs>' +
-      '<rect width="120" height="150" fill="url(#' + id + ')"/>' +
-      '<circle cx="96" cy="26" r="22" fill="#fff" opacity=".28"/><circle cx="18" cy="120" r="30" fill="#fff" opacity=".18"/>' +
-      back +
-      '<path d="M8 152 Q12 112 60 108 Q108 112 112 152 Z" fill="' + sh + '"/>' +
-      '<rect x="51" y="88" width="18" height="26" rx="8" fill="' + shade(s, -16) + '"/>' +
-      '<ellipse cx="60" cy="62" rx="24" ry="28" fill="' + s + '"/>' + front +
-      '<ellipse cx="45" cy="73" rx="5" ry="3" fill="#ff8a8a" opacity=".22"/><ellipse cx="75" cy="73" rx="5" ry="3" fill="#ff8a8a" opacity=".22"/>' +
-      '<circle cx="50" cy="64" r="2.2" fill="#2b211c"/><circle cx="70" cy="64" r="2.2" fill="#2b211c"/>' +
-      '<path d="M45 57 Q50 54 55 57 M65 57 Q70 54 75 57" fill="none" stroke="' + h + '" stroke-width="1.6" stroke-linecap="round"/>' +
-      '<path d="M52 77 Q60 84 68 77" fill="none" stroke="#7a3b3b" stroke-width="2" stroke-linecap="round"/>' + glasses + '</svg>';
+    var id = 'pg' + Math.random().toString(36).slice(2, 8), c = p.shirt || '#5E17EB';
+    return '<svg viewBox="0 0 120 150" preserveAspectRatio="xMidYMid slice" role="img" aria-label="' + HE.esc(p.name) + '" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs><linearGradient id="' + id + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + c + '"/><stop offset="1" stop-color="' + shade(c, -70) + '"/></linearGradient>' +
+      '<radialGradient id="' + id + 'r" cx=".3" cy=".25" r=".9"><stop offset="0" stop-color="#fff" stop-opacity=".32"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>' +
+      '<rect width="120" height="150" fill="url(#' + id + ')"/><rect width="120" height="150" fill="url(#' + id + 'r)"/>' +
+      '<text x="60" y="92" text-anchor="middle" font-family="EB Garamond, Georgia, serif" font-style="italic" font-size="78" fill="#fff" fill-opacity=".95">' + HE.esc(p.name.charAt(0)) + '</text></svg>';
   };
   HE.avatar = function (pid, cls) {
     var p = HD.people[pid]; return el('span', { class: 'av ' + (cls || ''), html: HE.portrait(p), 'aria-hidden': 'true' });

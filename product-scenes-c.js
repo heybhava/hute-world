@@ -266,7 +266,7 @@
     bNext.addEventListener('click', function () { if (cur < 0) { go(0, true); return; } if (runner && runner.state === 'running') { runner.advance(); return; } playing = false; bPlay.textContent = '▶ Play the day'; if (cur < stages.length - 1) go(cur + 1, true); });
     bRe.addEventListener('click', function () { outcomes = {}; HS.get().calendar = HS.get().calendar.filter(function (e) { return e.source !== 'HUMAN' && e.source !== 'HUMAN-meet'; }); var S0 = HS.get(); if (!S0.calendar.some(function (e) { return e.id === 'c3'; })) S0.calendar.push({ id: 'c3', day: 'Tomorrow', time: '10:00 AM', title: 'Dentist: Dr. Lee', source: 'Calendar' }); HS.emit('calendar'); playing = true; bPlay.textContent = '▶ Playing…'; go(0); });
     stage.appendChild(el('div', { class: 'empty', text: 'Press "Play the day", or pick any moment on the timeline.' }));
-    HE.onVisible(wrap, function () { /* autoplay is opt-in: keeps CPU low and never fights the reader */ });
+    HE.onVisible(wrap, function () { if (cur < 0) { stage.innerHTML = ''; go(0); } });
     return { go: go };
   };
 
