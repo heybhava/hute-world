@@ -1201,7 +1201,7 @@
             transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, background 0.2s ease;
         }
         .join-card:hover { transform: translateY(-3px); background: #f8f8f8; box-shadow: 0 14px 40px rgba(0,0,0,0.2); }
-        .join-card.hide {
+        .join-card.hide-never {
             opacity: 0; pointer-events: none;
             transform: translateY(-120vh);
         }
@@ -2461,23 +2461,10 @@
             select(0);
         })();
 
-        // Floating join card: hides on first screen and waitlist, slides down when scrolling past hero
+        // Floating join card: always visible at the bottom-right edge
         (function() {
             var card = document.getElementById('join-card');
-            var waitlist = document.getElementById('join');
-            if (!card) return;
-            
-            function updateCardState() {
-                var pastHero = window.scrollY > window.innerHeight * 0.7;
-                if (pastHero) {
-                    card.classList.remove('hide');
-                } else {
-                    card.classList.add('hide');
-                }
-            }
-            
-            window.addEventListener('scroll', function() { requestAnimationFrame(updateCardState); }, { passive: true });
-            updateCardState();
+            if (card) card.classList.remove('hide');
         })();
 
 </script>
