@@ -1765,7 +1765,10 @@
 
 
         /* ── Particle funnel: glowing lines converge into the right end of the prompt box ── */
+        @media (max-width: 699px) { .fx-funnel { display: none !important; } }
         .fx-funnel { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; }
+        .m-only { display: none; }
+        @media (max-width: 699px) { .m-only { display: inline; } .d-only { display: none; } }
 </style>
 </head>
 <body>
@@ -1804,7 +1807,7 @@
                         <i>just connect.</i>
                     </h1>
                     <p class="hero-sub" style="max-width: 720px; margin: 1.5rem auto; line-height: 1.6; font-size: 0.95rem;">
-                        We built Uber for human connections and relationships<br>AI that makes finding, connecting, communicating, managing relationships, and getting things done with the right people, for anything, anywhere in the world, as effortless as getting a ride.</p>
+                        We built Uber for human connections and relationships<span class="m-only">:</span> <br class="d-only">AI that makes finding, connecting, communicating, managing relationships, and getting things done with the right people, for anything, anywhere in the world, as effortless as getting a ride.</p>
                 </div>
 
                 <div class="prompt-container" style="margin-top: 0; margin-bottom: 3rem;">
@@ -2913,7 +2916,7 @@
         }
         var last = 0;
         function frame(ts) {
-            if (!running) return;
+            if (!running || window.innerWidth < 700) { running = false; return; }
             var time = ts / 1000, dt = Math.min(.05, (ts - last) / 1000 || .016); last = ts;
             ctx.clearRect(0, 0, W, H);
             ctx.globalCompositeOperation = 'lighter';
@@ -2974,13 +2977,13 @@
             if (!reduce) requestAnimationFrame(frame);
         }
         function check() {
-            var vis = (window.pageYOffset || 0) < window.innerHeight * 0.9 && !document.hidden;
+            var vis = (window.pageYOffset || 0) < window.innerHeight * 0.9 && !document.hidden && window.innerWidth >= 700;
             if (vis && !running) { running = true; requestAnimationFrame(frame); }
             else if (!vis) running = false;
         }
         window.addEventListener('scroll', check, { passive: true });
         document.addEventListener('visibilitychange', check);
-        window.addEventListener('resize', function() { size(); });
+        window.addEventListener('resize', function() { size(); check(); });
         window.__fx = { frame: frame, size: size };
         size(); requestAnimationFrame(frame);
         // layout shifts (fonts, header) move the prompt box: re-aim a couple of times after load
