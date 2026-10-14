@@ -38,7 +38,10 @@
             top: 0;
             height: 100vh;
             overflow: hidden;
-            background-color: #08070c;
+            background-color: var(--bg-cream); /* fallback */
+            background-image: url('11.png');
+            background-size: cover;
+            background-position: center;
         }
         .hero-section {
             height: 100vh;
@@ -138,7 +141,10 @@
             padding: 20px;
             box-sizing: border-box;
             overflow: hidden;
-            background-color: #08070c;
+            background-image: url('11.png');
+            background-size: cover;
+            background-position: center bottom;
+            background-repeat: no-repeat;
         }
 
         header {
@@ -1759,8 +1765,6 @@
 
 
         /* ── Particle funnel: glowing lines converge into the right end of the prompt box ── */
-        @media (max-width: 699px) { .fx-funnel { display: none !important; } }
-        .fx-funnel { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; }
         .m-only { display: none; }
         @media (max-width: 699px) { .m-only { display: inline; } .d-only { display: none; } }
 
@@ -2912,129 +2916,6 @@
     } catch (err) { console.error("sequence failed", err); }
     </script>
 
-    <script>
-    // Particle funnel: curved lines + light particles flowing in from the right and converging at the right end of the prompt box
-    try { (function() {
-        var hs = document.querySelector('.hero-section'), box = document.querySelector('.prompt-box');
-        if (!hs || !box) return;
-        var cv = document.createElement('canvas'); cv.className = 'fx-funnel'; cv.setAttribute('aria-hidden', 'true');
-        hs.insertBefore(cv, hs.firstChild);
-        var ctx = cv.getContext('2d'), dpr = 1, W = 0, H = 0, P = { x: 0, y: 0 }, Lx = 0, lines = [], running = true;
-        var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-        function rnd(a, b) { return a + Math.random() * (b - a); }
-        function build() {
-            var n = W < 700 ? 16 : 34;
-            lines = [];
-            for (var i = 0; i < n; i++) {
-                var u = n === 1 ? 0 : (i / (n - 1)) * 2 - 1;           // -1 .. 1 across the fan
-                lines.push({ u: u, ph: rnd(0, 6.28), sp: rnd(.5, 1.1), amp: rnd(.4, 1) * (0.5 + Math.abs(u) * .6),
-                    parts: [{ t: Math.random(), v: rnd(.07, .15) }, { t: Math.random(), v: rnd(.07, .15) }, { t: Math.random(), v: rnd(.07, .15) }] });
-            }
-        }
-        function size() {
-            dpr = Math.min(2, window.devicePixelRatio || 1);
-            W = hs.clientWidth; H = hs.clientHeight;
-            cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            target(); build();
-        }
-        function target() {
-            var b = box.getBoundingClientRect(), c = cv.getBoundingClientRect();
-            P.x = b.right - c.left - 36;            // centre of the arrow button = right end of the prompt box
-            P.y = b.top - c.top + b.height / 2;
-            Lx = b.left - c.left;                    // left end of the prompt box
-        }
-        function geo(L, time) {
-            // every line enters from the RIGHT EDGE of the screen (spread over the full height) and bends in to the prompt box
-            var sx = W + 50, sy = H * (0.5 + L.u * 0.62);
-            var d = Math.max(sx - P.x, 220);
-            // no line is ever straight: each gets its own sway, plus a bow that grows toward the top and bottom
-            var bow = (sy - P.y) * 0.18;
-            var w1 = Math.sin(time * L.sp + L.ph) * 60 * L.amp + bow, w2 = Math.sin(time * L.sp * 1.3 + L.ph + 1.7) * 34 * L.amp;
-            return { sx: sx, sy: sy,
-                c1x: sx - d * 0.38, c1y: sy + w1,
-                c2x: P.x + d * 0.30, c2y: P.y + (sy - P.y) * 0.12 + w2 };
-        }
-        function pt(g, t) {
-            var m = 1 - t, a = m * m * m, b = 3 * m * m * t, c = 3 * m * t * t, d = t * t * t;
-            return { x: a * g.sx + b * g.c1x + c * g.c2x + d * P.x, y: a * g.sy + b * g.c1y + c * g.c2y + d * P.y };
-        }
-        var last = 0;
-        function frame(ts) {
-            if (!running || window.innerWidth < 700) { running = false; return; }
-            var time = ts / 1000, dt = Math.min(.05, (ts - last) / 1000 || .016); last = ts;
-            ctx.clearRect(0, 0, W, H);
-            ctx.globalCompositeOperation = 'lighter';
-            ctx.lineCap = 'round';
-            // ── the straight line: runs in from the LEFT edge of the screen to the left end of the prompt box ──
-            if (Lx > 60) {
-                var ly = P.y;
-                var lg = ctx.createLinearGradient(0, ly, Lx, ly);
-                lg.addColorStop(0, 'rgba(255,170,110,0)'); lg.addColorStop(.35, 'rgba(190,140,255,.32)'); lg.addColorStop(.8, 'rgba(255,185,125,.75)'); lg.addColorStop(1, 'rgba(255,230,200,.95)');
-                ctx.strokeStyle = lg; ctx.lineWidth = 7; ctx.globalAlpha = .12; ctx.beginPath(); ctx.moveTo(0, ly); ctx.lineTo(Lx, ly); ctx.stroke();   // soft halo
-                ctx.globalAlpha = 1; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(0, ly); ctx.lineTo(Lx, ly); ctx.stroke();
-                for (var m = 0; m < 3; m++) {                                    // light pulses racing into the box
-                    var ph = reduce ? m / 3 : ((time * .32 + m / 3) % 1), ex = ph * ph * (3 - 2 * ph), hx = ex * Lx, fade = Math.sin(Math.min(1, ph) * Math.PI);
-                    var tl = Math.max(60, Lx * .22), tg = ctx.createLinearGradient(hx - tl, ly, hx, ly);
-                    tg.addColorStop(0, 'rgba(255,170,110,0)'); tg.addColorStop(1, 'rgba(255,235,210,' + (.9 * fade).toFixed(3) + ')');
-                    ctx.strokeStyle = tg; ctx.lineWidth = 2.6; ctx.beginPath(); ctx.moveTo(hx - tl, ly); ctx.lineTo(hx, ly); ctx.stroke();
-                    var hg = ctx.createRadialGradient(hx, ly, 0, hx, ly, 16);
-                    hg.addColorStop(0, 'rgba(255,255,255,' + (.95 * fade).toFixed(3) + ')'); hg.addColorStop(.4, 'rgba(255,175,105,' + (.5 * fade).toFixed(3) + ')'); hg.addColorStop(1, 'rgba(255,120,60,0)');
-                    ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(hx, ly, 16, 0, 6.2832); ctx.fill();
-                }
-                var lp = 1 + .15 * Math.sin(time * 3.2), lgl = ctx.createRadialGradient(Lx, ly, 0, Lx, ly, 46 * lp);   // glow where it meets the box
-                lgl.addColorStop(0, 'rgba(255,225,190,.6)'); lgl.addColorStop(.3, 'rgba(255,160,100,.28)'); lgl.addColorStop(1, 'rgba(255,120,60,0)');
-                ctx.fillStyle = lgl; ctx.beginPath(); ctx.arc(Lx, ly, 46 * lp, 0, 6.2832); ctx.fill();
-            }
-            for (var i = 0; i < lines.length; i++) {
-                var L = lines[i], g = geo(L, time);
-                // the line itself: invisible far away, brightening as it converges
-                var grd = ctx.createLinearGradient(g.sx, g.sy, P.x, P.y);
-                grd.addColorStop(0, 'rgba(160,120,255,.22)'); grd.addColorStop(.5, 'rgba(170,125,255,.34)'); grd.addColorStop(1, 'rgba(255,175,115,.7)');
-                ctx.strokeStyle = grd; ctx.lineWidth = 1.25;
-                ctx.beginPath(); ctx.moveTo(g.sx, g.sy); ctx.bezierCurveTo(g.c1x, g.c1y, g.c2x, g.c2y, P.x, P.y); ctx.stroke();
-                // light particles with trails
-                for (var k = 0; k < L.parts.length; k++) {
-                    var q = L.parts[k];
-                    if (!reduce) q.t += q.v * dt * (0.6 + q.t * 1.4);          // accelerate into the funnel
-                    if (q.t >= 1) { q.t = 0; q.v = rnd(.07, .15); }
-                    var head = pt(g, q.t), env = Math.sin(Math.min(1, q.t) * Math.PI) * 0.9 + 0.1;
-                    var tr = 10, prev = head;
-                    for (var j = 1; j <= tr; j++) {
-                        var tt = q.t - j * 0.011; if (tt < 0) break;
-                        var p2 = pt(g, tt);
-                        ctx.strokeStyle = 'rgba(255,190,130,' + (env * (1 - j / tr) * .55).toFixed(3) + ')';
-                        ctx.lineWidth = 2 * (1 - j / tr) + .4;
-                        ctx.beginPath(); ctx.moveTo(prev.x, prev.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-                        prev = p2;
-                    }
-                    var r = 3 + 4 * q.t, gr = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, r * 3);
-                    gr.addColorStop(0, 'rgba(255,255,255,' + (.95 * env).toFixed(3) + ')'); gr.addColorStop(.35, 'rgba(255,170,100,' + (.55 * env).toFixed(3) + ')'); gr.addColorStop(1, 'rgba(255,120,60,0)');
-                    ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(head.x, head.y, r * 3, 0, 6.2832); ctx.fill();
-                }
-            }
-            // glow where everything converges
-            var pulse = 1 + .12 * Math.sin(time * 3);
-            var pg = ctx.createRadialGradient(P.x, P.y, 0, P.x, P.y, 90 * pulse);
-            pg.addColorStop(0, 'rgba(255,255,255,.55)'); pg.addColorStop(.25, 'rgba(180,130,255,.35)'); pg.addColorStop(1, 'rgba(120,70,255,0)');
-            ctx.fillStyle = pg; ctx.beginPath(); ctx.arc(P.x, P.y, 90 * pulse, 0, 6.2832); ctx.fill();
-            ctx.globalCompositeOperation = 'source-over';
-            if (!reduce) requestAnimationFrame(frame);
-        }
-        function check() {
-            var vis = (window.pageYOffset || 0) < window.innerHeight * 0.9 && !document.hidden && window.innerWidth >= 700;
-            if (vis && !running) { running = true; requestAnimationFrame(frame); }
-            else if (!vis) running = false;
-        }
-        window.addEventListener('scroll', check, { passive: true });
-        document.addEventListener('visibilitychange', check);
-        window.addEventListener('resize', function() { size(); check(); });
-        window.__fx = { frame: frame, size: size };
-        size(); requestAnimationFrame(frame);
-        // layout shifts (fonts, header) move the prompt box: re-aim a couple of times after load
-        setTimeout(target, 600); setTimeout(target, 1800); window.addEventListener('load', function() { size(); });
-    })(); } catch (e) { console.error('funnel failed', e); }
-    </script>
 
     <script>
     // ═══ Orbit showcase + circular type (own implementations; keyboard / touch / reduced-motion aware) ═══
